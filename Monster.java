@@ -1,18 +1,26 @@
 public class Monster implements Character{
     private String name;
     private int hp; // health
+    private int xcor, ycor; // location
 
     public Monster(){
+	name = "Generic";
 	hp = 100;
+	xcor = 0;
+	ycor = 0;
     }
 
-    public Monster(String n, int level){
+    public Monster(String n, int level, int x, int y){
 	name = n;
 	hp = (10-level)*10 + 100;
+	xcor = x;
+	ycor = y;
     }
 
-    public void move(){
+    public void move(int x, int y){
 	//to be cont.
+        xcor = x;
+	ycor = y;
     }
    
     public void attack(){
@@ -33,6 +41,14 @@ public class Monster implements Character{
 
     public int getHP(){
 	return hp;
+    }
+
+    public int getX(){
+	return xcor;
+    }
+   
+    public int getY(){
+	return ycor;
     }
 
 }
