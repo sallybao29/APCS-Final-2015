@@ -21,7 +21,7 @@ public class Player implements Character{
 	y = 60;
 	image = null;
 	try {
-	    image = ImageIO.read(new File("/Sprites/Ghost_Sprites1.png"));
+	    image = ImageIO.read(new File("../Sprites/potato.jpg"));
 	}
 	catch (Exception e){}
     }
@@ -59,13 +59,13 @@ public class Player implements Character{
 	    dx = -1;
 	    break;
 	case KeyEvent.VK_RIGHT:
-	    dx  = 1;
+	    dx = 1;
 	    break;
 	case KeyEvent.VK_UP:
-	    dy = 1;
+	    dy = -1;
 	    break;
 	case KeyEvent.VK_DOWN:
-	    dy = -1;
+	    dy = 1;
 	    break;
 	}
     }
@@ -87,5 +87,10 @@ public class Player implements Character{
 	    dy = 0;
 	    break;
 	}
+    }
+
+    public static void main(String[] args){
+	Player p = new Player();
+	System.out.println(p.getImage().getHeight());
     }
 }
