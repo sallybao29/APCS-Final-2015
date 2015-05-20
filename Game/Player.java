@@ -1,3 +1,10 @@
+import java.io.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.awt.event.KeyEvent;
+
+
+
 public class Player implements Character{
 
     private int hp;
@@ -5,9 +12,19 @@ public class Player implements Character{
     private int y;
     private int dx;
     private int dy;
+    private int width, height;
+
+    private BufferedImage image;
 
     public Player(){
 	hp = 100;
+	x = 20;
+	y = 40;
+	image = null;
+	try {
+	    image = ImageIO.read(new File("\Sprites\Ghost_Sprites.png")).getSubimage(0, 0, 40, 40);
+	}
+	catch (Exception e){}
     }
 
     public int getX(){
@@ -16,6 +33,10 @@ public class Player implements Character{
 
     public int getY(){
 	return y;
+    }
+
+    public BufferedImage getImage(){
+	return image;
     }
 
     public void move(){
