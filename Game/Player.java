@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.event.KeyEvent;
 
 
-
 public class Player implements Character{
 
     private int hp;
@@ -18,11 +17,11 @@ public class Player implements Character{
 
     public Player(){
 	hp = 100;
-	x = 20;
-	y = 40;
+	x = 40;
+	y = 60;
 	image = null;
 	try {
-	    image = ImageIO.read(new File("\Sprites\Ghost_Sprites.png")).getSubimage(0, 0, 40, 40);
+	    image = ImageIO.read(new File("/Sprites/Ghost_Sprites1.png"));
 	}
 	catch (Exception e){}
     }
