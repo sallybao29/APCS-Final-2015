@@ -2,6 +2,7 @@ import java.io.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 
 public class Player implements Character{
@@ -21,7 +22,7 @@ public class Player implements Character{
 	y = 60;
 	image = null;
 	try {
-	    image = ImageIO.read(new File("../Sprites/potato.jpg"));
+	    image = ImageIO.read(new File("../Sprites/Ghost_Sprites1.png"));
 	}
 	catch (Exception e){}
     }

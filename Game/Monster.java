@@ -1,7 +1,12 @@
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+
 public class Monster implements Character{
     private String name;
     private int hp; // health
     private int xcor, ycor; // location
+    private BufferedImage image;
 
     public Monster(){
 	name = "Generic";
@@ -15,12 +20,18 @@ public class Monster implements Character{
 	hp = (10-level)*10 + 100;
 	xcor = x;
 	ycor = y;
+	image = null;
+	try {
+	    image = ImageIO.read(new File("../Sprites/Jiji.png"));
+	}
+	catch (Exception e){}
     }
 
-    public void move(int x, int y){
+    public void move(){
 	//to be cont.
-        xcor = x;
-	ycor = y;
+        //int x = p.getX();
+	//int y = p.getY();
+	xcor += 1;
     }
    
     public void attack(){
