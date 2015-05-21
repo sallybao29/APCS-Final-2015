@@ -20,7 +20,8 @@ public class Player implements Character{
     private BufferedImage[] walkingRight;
     private BufferedImage[] walkingUp;
     private BufferedImage[] walkingDown;
-    private BufferedImage[] idle;
+    
+    private boolean idle;
 
     private Animation animation;
 
@@ -28,6 +29,8 @@ public class Player implements Character{
 	hp = 100;
 	x = 40;
 	y = 60;
+        
+        idle = true;
 
 	animation = new Animation();
 
@@ -35,17 +38,11 @@ public class Player implements Character{
 	walkingRight = new BufferedImage[4];  
 	walkingUp = new BufferedImage[4];  
 	walkingDown = new BufferedImage[4]; 
-	idle = new BufferedImage[1]; 
 
 	loadFrames(walkingLeft, "../Sprites/Player/Red_L"); 
 	loadFrames(walkingRight, "../Sprites/Player/Red_R"); 
 	loadFrames(walkingUp, "../Sprites/Player/Red_U"); 
 	loadFrames(walkingDown, "../Sprites/Player/Red_D"); 
-
-	try {
-	    idle[0] = ImageIO.read(new File("../Sprites/Player/Red_L0.png"));
-	}
-	catch (Exception e){}
 
     }
 
@@ -65,10 +62,6 @@ public class Player implements Character{
 	this.dx = dx;
     }
 
-    public Animation getAnimation(){
-	return animation;
-    }
-
     private void loadFrames(BufferedImage[] frames, String path){
 	String s = "";
 	try{
@@ -82,7 +75,6 @@ public class Player implements Character{
 	}
     }
 
- 
     public void move(){
 	x += dx;
 	y += dy;
@@ -92,15 +84,15 @@ public class Player implements Character{
 	    animation.setFrames(walkingRight);
 	    animation.setDelay(100);
 	}
-	if (dx < 0){
+	else if (dx < 0){
 	    animation.setFrames(walkingLeft);
 	    animation.setDelay(100);
 	}
-	if (dy > 0){
+	else if (dy > 0){
 	    animation.setFrames(walkingDown);
 	    animation.setDelay(100);
 	}
-        if (dy < 0){
+        else if (dy < 0){
 	    animation.setFrames(walkingUp);
 	    animation.setDelay(100);
 	}
