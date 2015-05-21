@@ -1,27 +1,29 @@
 import java.io.*;
 import java.util.*;
 import java.awt.*;
+import java.awt.image.*;
+import javax.imageio.ImageIO;
 
 public class TileMap{
     private int x;
     private int y;
 
-    private int size;
+    private int tileSize;
     private int[][] map;
+
     private int width;
     private int height;
 
-    public TileMap(String name, int size){
-	this.size = size;
+    public TileMap(String bg, String file, int size){
+        tileSize = size;
 	Scanner sc = null;
 
 	try{
-	    //first two lines of file are height and width of map
-	    sc = new Scanner(new File(name));
-	    height = Integer.parseInt(sc.nextLine());
-	    width = Integer.parseInt(sc.nextLine());
-	    map = new int[height][width];
+	    //background image
+	    background = imageIO.read(new File(bg));
+	    sc = new Scanner(new File(file));
 
+      
 	    //read map into array
 	    while(sc.hasNext()){
 		int h = 0;
@@ -34,6 +36,11 @@ public class TileMap{
 	}
 	catch (Exception e){}
 
+    }
+
+
+    public BufferedImage getBG(){
+	return background;
     }
 
     public int getX(){
@@ -52,8 +59,4 @@ public class TileMap{
 	this.y = y;
     }
 
-    public static void main(String[] args){
-	TileMap t = new TileMap("map.txt", 20);
-	System.out.println(Arrays.deepToString(t.map));
-    }
 }

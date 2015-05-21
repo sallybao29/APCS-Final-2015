@@ -1,12 +1,15 @@
+import java.io.File;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.Dimension;
+import java.awt.image.*;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.imageio.ImageIO;
 
 
 public class GamePanel extends JPanel implements ActionListener{
@@ -50,16 +53,29 @@ public class GamePanel extends JPanel implements ActionListener{
     public void paint(Graphics g){
 	super.paint(g);
 
+	//Testing out background
+	BufferedImage bg = null;
+	try{
+	    bg = ImageIO.read(new File("../Sprites/Floors_1.jpg"));
+	} catch (Exception e){}
+
+	g.drawImage(bg, 0, 0, null);
+    
 	Graphics2D im = (Graphics2D)g;
-	im.drawImage(p.getImage(), p.getX(), p.getY(), null);
+	im.drawImage(p.getAnimation().getImage(), p.getX(), p.getY(), null);
 
 	Toolkit.getDefaultToolkit().sync();
 	g.dispose();
     }
-
-
+    /*
+    public void update(){
+	p.update();
+    }
+    */
+  
+ 
     public void actionPerformed(ActionEvent e){
-	p.move();
+        p.move();
 	repaint();
     }
 
