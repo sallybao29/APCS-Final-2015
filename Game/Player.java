@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;;
 import javax.imageio.ImageIO;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 
 public class Player implements Character{

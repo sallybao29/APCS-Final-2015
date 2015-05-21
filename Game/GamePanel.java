@@ -9,7 +9,14 @@ import java.awt.image.*;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+<<<<<<< HEAD
 import javax.imageio.ImageIO;
+=======
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.net.URL;
+import java.io.File;
+>>>>>>> 3a7a04493429a1b85f267c88ca2a74885fa1ba32
 
 
 public class GamePanel extends JPanel implements ActionListener{
@@ -19,6 +26,7 @@ public class GamePanel extends JPanel implements ActionListener{
     private final int DELAY = 5;
 
     private Player p;
+    private Monster m;
     private Timer timer;
 
 
@@ -45,6 +53,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	setVisible(true);
 
         p = new Player();
+
+	m = new Monster("Jiji", 0, 10, 10);
 
 	timer = new Timer(DELAY, this);
 	timer.start();
