@@ -9,18 +9,16 @@ public class TileMap{
     private int y;
 
     private int tileSize;
-    private int[][] map;
+    private char[][] map;
 
-    private int width;
-    private int height;
+    private int width = 40;
+    private int height = 40;
 
-    public TileMap(String bg, String file, int size){
+    public TileMap(String file, int size){
         tileSize = size;
 	Scanner sc = null;
 
 	try{
-	    //background image
-	    background = imageIO.read(new File(bg));
 	    sc = new Scanner(new File(file));
 
       
@@ -29,20 +27,20 @@ public class TileMap{
 		int h = 0;
 		String s = sc.nextLine();
 		for(int w = 0; w < width; w++){
-		    map[h][w] = Integer.parseInt("" + s.charAt(w));
-		    h++;
+		    map[h][w] = s.charAt(w);
 		}
+		h++;
 	    }
 	}
 	catch (Exception e){}
 
     }
 
-
-    public BufferedImage getBG(){
-	return background;
-    }
-
+    /*
+      public BufferedImage getBG(){
+      return background;
+      }
+    */
     public int getX(){
 	return x;
     }
@@ -59,4 +57,19 @@ public class TileMap{
 	this.y = y;
     }
 
+    public String toString(){
+	String s = "";
+	while (int i = 0; i < map.length; i++){
+	    while (int j = 0; j < map[i].length; j++){
+		s += "" + map[i][j];
+	    }
+	    s += "\n";
+	}
+	return s;
+    }
+
+    public static void main(String[] args){
+	TileMap t = new TileMap("map.txt", 10);
+	System.out.println(t);
+    }
 }
