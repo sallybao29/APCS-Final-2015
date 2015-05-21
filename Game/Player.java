@@ -57,6 +57,14 @@ public class Player implements Character{
 	return y;
     }
 
+    public void setDY(int dy){
+	this.dy = dy;
+    }
+
+    public void setDX(int dx){
+	this.dx = dx;
+    }
+
     public Animation getAnimation(){
 	return animation;
     }
@@ -74,13 +82,10 @@ public class Player implements Character{
 	}
     }
 
+ 
     public void move(){
 	x += dx;
 	y += dy;
-    }
- 
-    public void update(){
-	move();
 
 	//player animation
 	if (dx > 0){
@@ -116,48 +121,10 @@ public class Player implements Character{
 	//two+ forms of attack
     }
 
-    //move or attack input
-    public void keyPressed(KeyEvent e){
-	int key = e.getKeyCode();
-	switch(key){
-	case KeyEvent.VK_LEFT:
-	    dx = -1;
-	    break;
-	case KeyEvent.VK_RIGHT:
-	    dx = 1;
-	    break;
-	case KeyEvent.VK_UP:
-	    dy = -1;
-	    break;
-	case KeyEvent.VK_DOWN:
-	    dy = 1;
-	    break;
-	}
-    }
-
-    //stop moving or stop attacking
-    public void keyReleased(KeyEvent e){
-	int key = e.getKeyCode();
-	switch(key){
-	case KeyEvent.VK_LEFT:
-	    dx = 0;
-	    break;
-	case KeyEvent.VK_RIGHT:
-	    dx  = 0;
-	    break;
-	case KeyEvent.VK_UP:
-	    dy = 0;
-	    break;
-	case KeyEvent.VK_DOWN:
-	    dy = 0;
-	    break;
-	}
-    }
-    /*
     public void draw(Graphics2D g){
 	g.drawImage(animation.getImage(), x, y, null);
     }
-    */
+ 
 
     public static void main(String[] args){
 	Player p = new Player();

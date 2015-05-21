@@ -9,14 +9,11 @@ import java.awt.image.*;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
-<<<<<<< HEAD
-import javax.imageio.ImageIO;
-=======
+
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.net.URL;
-import java.io.File;
->>>>>>> 3a7a04493429a1b85f267c88ca2a74885fa1ba32
+
 
 
 public class GamePanel extends JPanel implements ActionListener{
@@ -29,24 +26,51 @@ public class GamePanel extends JPanel implements ActionListener{
     private Monster m;
     private Timer timer;
 
-
-    private class TAdapter extends KeyAdapter{
-	public void keyPressed(KeyEvent e){
-	    p.keyPressed(e);
+  
+    private class Key implements KeyListener {
+	public void keyPressed(KeyEvent e) {
+	    int c = e.getKeyCode();
+	    switch (c){
+	    case KeyEvent.VK_RIGHT:
+		p.setDX(1);
+		break;
+	    case KeyEvent.VK_LEFT:
+		p.setDX(-1);
+		break;
+	    case KeyEvent.VK_UP:
+		p.setDY(-1);
+		break;
+	    case KeyEvent.VK_DOWN:
+		p.setDY(1);
+		break;
+	    }
 	}
-
-	public void keyReleased(KeyEvent e){
-	    p.keyReleased(e);
+	
+	public void keyReleased(KeyEvent e) {
+	    int c = e.getKeyCode();
+	    switch (c){
+	    case KeyEvent.VK_RIGHT:
+		p.setDX(0);
+		break;
+	    case KeyEvent.VK_LEFT:
+		p.setDX(0);
+		break;
+	    case KeyEvent.VK_UP:
+		p.setDY(0);
+		break;
+	    case KeyEvent.VK_DOWN:
+		p.setDY(0);
+		break;
+	    }
 	}
+	
+	public void keyTyped(KeyEvent e) {}
     }
+    
 
     public GamePanel(){
 	super();
-	init();
-    }
-
-    public void init(){
-	addKeyListener(new TAdapter());
+	addKeyListener(new Key());
 	setFocusable(true);
 	setBackground(Color.BLACK);
 	setDoubleBuffered(true);
@@ -60,6 +84,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	timer.start();
     }
 
+
     public void paint(Graphics g){
 	super.paint(g);
 
@@ -70,23 +95,20 @@ public class GamePanel extends JPanel implements ActionListener{
 	} catch (Exception e){}
 
 	g.drawImage(bg, 0, 0, null);
-    
-	Graphics2D im = (Graphics2D)g;
-	im.drawImage(p.getAnimation().getImage(), p.getX(), p.getY(), null);
 
+	Graphics2D im = (Graphics2D)g;
+	p.draw(im);
+		    
 	Toolkit.getDefaultToolkit().sync();
 	g.dispose();
     }
-    /*
-    public void update(){
-	p.update();
-    }
-    */
   
- 
+  
+
     public void actionPerformed(ActionEvent e){
         p.move();
 	repaint();
+	//this.update(this.getGraphics());
     }
 
 
