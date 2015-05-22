@@ -26,8 +26,10 @@ public class Animation{
     }
 
     public void update(){
-	if (delay == -1)
+	if (delay == -1){
+	    currentImage = 0;
 	    return;
+	}
 
 	long elapsed = System.currentTimeMillis() - startTime;
 	if (elapsed > delay){

@@ -28,19 +28,24 @@ public class GamePanel extends JPanel implements ActionListener{
 
   
     private class Key implements KeyListener {
+
 	public void keyPressed(KeyEvent e) {
 	    int c = e.getKeyCode();
 	    switch (c){
 	    case KeyEvent.VK_RIGHT:
+		p.setDirection("right");
 		p.setDX(1);
 		break;
 	    case KeyEvent.VK_LEFT:
+		p.setDirection("left");
 		p.setDX(-1);
 		break;
 	    case KeyEvent.VK_UP:
+		p.setDirection("up");
 		p.setDY(-1);
 		break;
 	    case KeyEvent.VK_DOWN:
+		p.setDirection("down");
 		p.setDY(1);
 		break;
 	    }
@@ -71,8 +76,8 @@ public class GamePanel extends JPanel implements ActionListener{
     public GamePanel(){
 	super();
 	addKeyListener(new Key());
+	setPreferredSize(new Dimension(width, height));
 	setFocusable(true);
-	setBackground(Color.BLACK);
 	setDoubleBuffered(true);
 	setVisible(true);
 
@@ -90,6 +95,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	//Testing out background
 	BufferedImage bg = null;
+	BufferedImage wall = null;
 	try{
 	    bg = ImageIO.read(new File("../Sprites/Floors_1.jpg"));
 	} catch (Exception e){}
@@ -106,9 +112,9 @@ public class GamePanel extends JPanel implements ActionListener{
   
 
     public void actionPerformed(ActionEvent e){
-        p.move();
+	p.move();
 	repaint();
-	//this.update(this.getGraphics());
+
     }
 
 

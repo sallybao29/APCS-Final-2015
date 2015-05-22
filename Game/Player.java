@@ -21,16 +21,16 @@ public class Player implements Character{
     private BufferedImage[] walkingUp;
     private BufferedImage[] walkingDown;
     
-    private boolean idle;
-
     private Animation animation;
+
+    private String direction;
 
     public Player(){
 	hp = 100;
 	x = 40;
 	y = 60;
         
-        idle = true;
+        direction = "up";
 
 	animation = new Animation();
 
@@ -54,6 +54,14 @@ public class Player implements Character{
 	return y;
     }
 
+    public void setX(int x){
+	this.x = x;
+    }
+
+    public void setY(int y){
+	this.y = y;
+    }
+
     public void setDY(int dy){
 	this.dy = dy;
     }
@@ -62,6 +70,12 @@ public class Player implements Character{
 	this.dx = dx;
     }
 
+    public void setDirection(String s){
+	direction = s;
+    }
+
+
+    //read sprite images into array for animation
     private void loadFrames(BufferedImage[] frames, String path){
 	String s = "";
 	try{
@@ -75,31 +89,40 @@ public class Player implements Character{
 	}
     }
 
+    public void checkBounds(){
+	if (x < 0) x = 0;
+	if (x > 400) x = 400;
+	if (y < 0) y = 0;
+	if (y > 400) y = 400;
+    }
+
     public void move(){
 	x += dx;
 	y += dy;
 
+	checkBounds();
+
 	//player animation
-	if (dx > 0){
+	switch(direction){
+	case "right":
 	    animation.setFrames(walkingRight);
-	    animation.setDelay(100);
-	}
-	else if (dx < 0){
+	    break;
+	case "left":
 	    animation.setFrames(walkingLeft);
-	    animation.setDelay(100);
-	}
-	else if (dy > 0){
+	    break;
+	case "down":
 	    animation.setFrames(walkingDown);
-	    animation.setDelay(100);
-	}
-        else if (dy < 0){
+	    break;
+	case "up":
 	    animation.setFrames(walkingUp);
-	    animation.setDelay(100);
+	    break;
 	}
-	else {
-	    animation.setFrames(idle);
+
+	if (dx == 0 && dy == 0) 
 	    animation.setDelay(-1);
-	}
+	else 
+	    animation.setDelay(100);
+
 	animation.update();
 
     }
@@ -114,14 +137,10 @@ public class Player implements Character{
     }
 
     public void draw(Graphics2D g){
+	move();
 	g.drawImage(animation.getImage(), x, y, null);
     }
  
-
-    public static void main(String[] args){
-	Player p = new Player();
-	System.out.println(Arrays.toString(p.walkingUp));
-    }
 
 
 }
