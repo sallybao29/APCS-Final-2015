@@ -88,13 +88,14 @@ public class Player implements Character{
 	    e.printStackTrace();
 	}
     }
-
+   
     public void checkBounds(){
 	if (x < 0) x = 0;
 	if (x > 400) x = 400;
 	if (y < 0) y = 0;
 	if (y > 400) y = 400;
     }
+    
 
     public void move(){
 	x += dx;

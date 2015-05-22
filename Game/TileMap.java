@@ -14,7 +14,21 @@ public class TileMap{
     private int width = 40;
     private int height = 40;
 
-    public TileMap(String file, int size){
+    public TileMap(String type, String wall, String floor){
+
+	switch (type){
+	case "hall_1":
+	    break;
+	case "hall_2":
+	    break;
+	case "hall_3":
+	    break;
+	case "classroom":
+	    break;
+	    
+	}
+
+	if (type
         tileSize = size;
 	Scanner sc = null;
 
