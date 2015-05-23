@@ -73,8 +73,8 @@ public class TileMap{
 
     public String toString(){
 	String s = "";
-	while (int i = 0; i < map.length; i++){
-	    while (int j = 0; j < map[i].length; j++){
+	for (int i = 0; i < map.length; i++){
+	    for (int j = 0; j < map[i].length; j++){
 		s += "" + map[i][j];
 	    }
 	    s += "\n";
