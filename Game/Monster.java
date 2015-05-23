@@ -11,8 +11,8 @@ public class Monster implements Character{
     public Monster(){
 	name = "Generic";
 	hp = 100;
-	xcor = 0;
-	ycor = 0;
+	xcor = 1;
+	ycor = 1;
     }
 
     public Monster(String n, int level, int x, int y){

@@ -15,7 +15,7 @@ public class Tile{
     }
 
     public BufferedImage getImage(){
-	return iamge;
+	return image;
     }
 
 }
