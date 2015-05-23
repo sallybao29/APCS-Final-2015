@@ -50,7 +50,7 @@ public class AStar{
 	return xDist + yDist;
     }
 
-    public void find(Monster m, Player pl){
+    public void move(Monster m, Player pl){
 	int pX, pY, mX, mY;
 
 	pX = pl.getX() / 10;
@@ -120,7 +120,7 @@ public class AStar{
 	AStar b = new AStar("map.txt");
 	Monster m = new Monster();
 	Player p = new Player();
-	System.out.println(b);
-	b.find(m,p);
+	System.out.println(a);
+	a.move(m,p);
     }
 }

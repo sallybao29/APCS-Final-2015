@@ -28,10 +28,11 @@ public class Monster implements Character{
     }
 
     public void move(){
-	//to be cont.
-        //int x = p.getX();
-	//int y = p.getY();
-	xcor += 1;
+    }
+
+    public void move(String file, Player p){
+	AStar a = new AStar(file);
+	a.move(this, p);
     }
    
     public void attack(){
