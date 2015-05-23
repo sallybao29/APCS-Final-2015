@@ -14,4 +14,8 @@ public class Tile{
 	passable = p;
     }
 
+    public BufferedImage getImage(){
+	return iamge;
+    }
+
 }

@@ -18,8 +18,8 @@ import java.net.URL;
 
 public class GamePanel extends JPanel implements ActionListener{
 
-    private static final int width = 400;
-    private static final int height = 400;
+    private static final int width = 448;
+    private static final int height = 448;
     private final int DELAY = 5;
 
     private Player p;
