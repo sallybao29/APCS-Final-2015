@@ -8,8 +8,8 @@ public class Monster extends Character{
     public Monster(TileMap t){
 	super("../Sprites/Monster/Frog_", t);
 	setHP(100);
-	setX(50);
-	setY(60);
+	setX(300);
+	setY(300);
 
 	setDirection("up");
     }

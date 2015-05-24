@@ -134,8 +134,8 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
 	p.update();
-	m.update();
-	m.move(tilemap.getFile(),p);
+	//m.update();
+        (new Thread(new MRunnable(tilemap.getFile(),m,p))).start();
 	updateProjectiles();
 	repaint();
 

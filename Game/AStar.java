@@ -7,14 +7,14 @@ public class AStar{
     private Frontier f;
     private Node e, start;
     private int maxX, maxY;
-    private char plpos = 'p';
-    private char floor = 'f';
+    private char plpos = 'P';
+    private char floor = 'z';
     private char wall = 'w';
-    private char monpos = 'm';
+    private char monpos = 'M';
 
     public AStar(String file){
-	maxX = 10;
-	maxY = 10;
+	maxX = 16;
+	maxY = 16;
 	map = new char[maxX][maxY];
 
 	try{
@@ -53,10 +53,10 @@ public class AStar{
     public void move(Monster m, Player pl){
 	int pX, pY, mX, mY;
 
-	pX = pl.getX() / 10;
-	pY = pl.getY() / 10;
-	mX = m.getX() / 10;
-	mY = m.getY() / 10;
+	pX = pl.getX() / 32;
+	pY = pl.getY() / 32;
+	mX = m.getX() / 32;
+	mY = m.getY() / 32;
 
 	e = new Node(pX,pY);
 	map[pX][pY] = plpos;
@@ -84,7 +84,7 @@ public class AStar{
 	    addToFront(cx,cy-1,current);
 
 	    //delay(50);
-	    System.out.println(this);
+	    //System.out.println(this);
 	}
 
 	// path recovery
@@ -95,9 +95,11 @@ public class AStar{
 	    rec = temp;
 	}
 	for (Node r = rec; r != null; r = r.getNext()){
-	    map[r.getX()][r.getY()] = 'G';
-	    delay(100);
-	    System.out.println(this);
+	    //map[r.getX()][r.getY()] = 'G';
+	    m.setX(r.getX()*32);
+	    m.setY(r.getY()*32);
+	    delay(500);
+	    //System.out.println(this);
 	}
     }
     public void delay(int n){
