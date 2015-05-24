@@ -63,6 +63,7 @@ public class Tile{
 	Tile t = new Tile(i, true);
 	System.out.println(t.image.getHeight());
 	System.out.println(t.image.getWidth());
+    }
 
     public BufferedImage getImage(){
 	return image;

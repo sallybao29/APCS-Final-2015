@@ -136,9 +136,9 @@ public abstract class Character{
 	int ty = (y + dy) / 32;
 	Tile next = map.getTile(tx, ty);
         if (next.isBlocked()){
-	    if (dx == -1 || dx = 1)
+	    if (dx == -1 || dx == 1)
 		dx = 0;
-	    if (dy == -1 || dy = 1;
+	    if (dy == -1 || dy == 1)
 		dy = 0;
 	}
     }   
