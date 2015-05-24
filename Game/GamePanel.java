@@ -99,6 +99,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	Graphics2D im = (Graphics2D)g;
 	tilemap.draw(im);
 	p.draw(im);
+	m.draw(im);
 		    
 	Toolkit.getDefaultToolkit().sync();
 	g.dispose();
@@ -108,6 +109,8 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
 	p.update();
+	m.update();
+	m.move(tilemap.getFile(),p);
 	repaint();
 
     }

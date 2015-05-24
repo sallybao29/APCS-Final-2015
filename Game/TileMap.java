@@ -14,6 +14,7 @@ public class TileMap{
 
     private char[][] map;
     private Tile[][] tiles;
+    private String file;
 
 
     public TileMap(String type, String wall, String floor){
@@ -21,7 +22,7 @@ public class TileMap{
 	map = new char[height][width];
         tiles = new Tile[height][width];
 
-	String file = null;
+	file = null;
 
 	//only hall_1 exists at the moment
 	switch (type){
@@ -105,6 +106,10 @@ public class TileMap{
   
     public Tile getTile(int x, int y){
 	return tiles[y][x];
+    }
+
+    public String getFile(){
+	return file;
     }
 
     public void draw(Graphics2D g){

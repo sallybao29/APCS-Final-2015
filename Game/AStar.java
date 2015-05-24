@@ -55,8 +55,8 @@ public class AStar{
 
 	pX = pl.getX() / 10;
 	pY = pl.getY() / 10;
-	mX = m.getX();
-	mY = m.getY();
+	mX = m.getX() / 10;
+	mY = m.getY() / 10;
 
 	e = new Node(pX,pY);
 	map[pX][pY] = plpos;
@@ -115,6 +115,7 @@ public class AStar{
 	}
 	return s;
     }
+    /*
     public static void main(String[] args){
 	AStar a = new AStar("../Maps/Hall_1.txt");
 	AStar b = new AStar("map.txt");
@@ -123,4 +124,5 @@ public class AStar{
 	System.out.println(a);
 	a.move(m,p);
     }
+    */
 }

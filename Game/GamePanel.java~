@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     private Player p;
     private TileMap tilemap;
-    // private Monster m;
+    private Monster m;
     private Timer timer;
 
   
@@ -86,7 +86,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
         p = new Player(tilemap);
 
-	//m = new Monster("Jiji", 0, 10, 10);
+	m = new Monster(tilemap);
 
 	timer = new Timer(DELAY, this);
 	timer.start();
