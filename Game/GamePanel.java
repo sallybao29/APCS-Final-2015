@@ -96,17 +96,6 @@ public class GamePanel extends JPanel implements ActionListener{
     public void paint(Graphics g){
 	super.paint(g);
 
-	/*
-	//Testing out background
-	BufferedImage bg = null;
-     
-	try{
-	    bg = ImageIO.read(new File("../Sprites/Floors_1.jpg"));
-	} catch (Exception e){}
-      
-	g.drawImage(bg, 0, 0, null);
-	*/
-
 	Graphics2D im = (Graphics2D)g;
 	tilemap.draw(im);
 	p.draw(im);

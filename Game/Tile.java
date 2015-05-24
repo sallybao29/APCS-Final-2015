@@ -53,19 +53,5 @@ public class Tile{
 	g.drawImage(image, x, y, null);
     }
 
-    public static void main(String[] args){
-	BufferedImage i = null;
-	try {
-	    i = ImageIO.read(new File("../Tileset/Floor_Tiles/Tile_5.png"));
-	}
-	catch (Exception e){}
-
-	Tile t = new Tile(i, true);
-	System.out.println(t.image.getHeight());
-	System.out.println(t.image.getWidth());
-
-    public BufferedImage getImage(){
-	return image;
-    }
 
 }

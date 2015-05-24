@@ -50,6 +50,8 @@ public abstract class Character{
 	currentImage = walkingUp[0];
     }
  
+    //move rectangle to sprite's new position
+    //change size accordingly
     public void adjustRect(){
 	bounds.setLocation(x, y);
 	bounds.setSize(currentImage.getWidth(), currentImage.getHeight());
@@ -77,6 +79,14 @@ public abstract class Character{
 
     public int getDY(){
 	return dy;
+    }
+
+    public int getHeight(){
+	return currentImage.getHeight();
+    }
+
+    public int getWidth(){
+	return currentImage.getWidth();
     }
 
     public String getDirection(){
@@ -126,26 +136,8 @@ public abstract class Character{
 	}
     }
    
-    public boolean intersects(Character other){
-	return this.bounds.intersects(other.bounds);
-    }
-
-   
-    public void checkBounds(){
-	int tx = (x + dx) / 32;
-	int ty = (y + dy) / 32;
-	Tile next = map.getTile(tx, ty);
-        if (next.isBlocked()){
-	    if (dx == -1 || dx = 1)
-		dx = 0;
-	    if (dy == -1 || dy = 1;
-		dy = 0;
-	}
-    }   
-  
  
     public void update(){
-	checkBounds();
 	move();  
 
 	//player animation
@@ -177,6 +169,7 @@ public abstract class Character{
     public Rectangle getBounds(){
 	return bounds;
     }
+
     public void draw(Graphics2D g){
 	update();
 	g.drawImage(animation.getImage(), x, y, null);

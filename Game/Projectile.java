@@ -1,6 +1,8 @@
 import java.awt.image.*;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
+import java.io.File;
+import java.awt.Rectangle;
 
 public class Projectile{
     private String type;
@@ -12,6 +14,8 @@ public class Projectile{
     private int y;
     private int dx;
     private int dy;
+    private int width;
+    private int height;
 
     private BufferedImage image;
     private Rectangle bounds;
@@ -36,12 +40,12 @@ public class Projectile{
 
 	image = null;
 
-	try {
-	    image = ImageIO.read(new File(file));
-	}
+	try { image = ImageIO.read(new File(file));}
 	catch (Exception e){}
 
 	bounds = new Rectangle(x, y, image.getWidth(), image.getHeight());
+	width = image.getWidth();
+	height = image.getHeight();
 
     }
 
@@ -61,6 +65,14 @@ public class Projectile{
 	return cost;
     }
 
+    public int getHeight(){
+	return height;
+    }
+
+    public int getWidth(){
+	return height;
+    }
+
     public Rectangle getBounds(){
 	return bounds;
     }
@@ -73,9 +85,14 @@ public class Projectile{
 	this.y = y;
     }
 
+    public void adjustRect(){
+	bounds.setLocation(x, y);
+    }
+
     public void update(){
 	x += dx;
 	y += dy;
+	adjustRect();
     }
 
     public void draw(Graphics2D g){
