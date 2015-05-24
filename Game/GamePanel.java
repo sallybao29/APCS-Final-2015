@@ -18,12 +18,13 @@ import java.net.URL;
 
 public class GamePanel extends JPanel implements ActionListener{
 
-    private static final int width = 448;
-    private static final int height = 448;
-    private final int DELAY = 5;
+    private static final int width = 512;
+    private static final int height = 512;
+    private final int DELAY = 15;
 
     private Player p;
-    private Monster m;
+    private TileMap tilemap;
+    // private Monster m;
     private Timer timer;
 
   
@@ -81,28 +82,33 @@ public class GamePanel extends JPanel implements ActionListener{
 	setDoubleBuffered(true);
 	setVisible(true);
 
-        p = new Player();
+	tilemap = new TileMap("hall_1", "../Tileset/Wall_Tiles/WT_", "../Tileset/Floor_Tiles/Tile_5.png");
 
-	m = new Monster("Jiji", 0, 10, 10);
+        p = new Player(tilemap);
+
+	//m = new Monster("Jiji", 0, 10, 10);
 
 	timer = new Timer(DELAY, this);
 	timer.start();
     }
-
-
+  
+ 
     public void paint(Graphics g){
 	super.paint(g);
 
+	/*
 	//Testing out background
 	BufferedImage bg = null;
-	BufferedImage wall = null;
+     
 	try{
 	    bg = ImageIO.read(new File("../Sprites/Floors_1.jpg"));
 	} catch (Exception e){}
-
+      
 	g.drawImage(bg, 0, 0, null);
+	*/
 
 	Graphics2D im = (Graphics2D)g;
+	tilemap.draw(im);
 	p.draw(im);
 		    
 	Toolkit.getDefaultToolkit().sync();
@@ -112,7 +118,7 @@ public class GamePanel extends JPanel implements ActionListener{
   
 
     public void actionPerformed(ActionEvent e){
-	p.move();
+	p.update();
 	repaint();
 
     }
