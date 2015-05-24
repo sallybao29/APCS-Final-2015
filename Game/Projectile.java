@@ -10,6 +10,7 @@ public class Projectile{
 
     private int damage;
     private int cost;
+    private int speed;
     private int x;
     private int y;
     private int dx;
@@ -28,24 +29,44 @@ public class Projectile{
 	switch (t){
 	case "English":
 	    file += "English_";
+	    speed = 3;
 	    break;
-	case "History Textbook":
+	case "History":
+	    speed = 1;
 	    break;
-	case "Regents Physics Textbook":
+	case "Physics":
 	    break;
-	case "Trigonometry Textbook":
+	case "Precalc":
 	    break;
 	}
-	file += direction.substring(0, 1).toUpperCase();
+	file += direction.substring(0, 1).toUpperCase() + ".png";
 
 	image = null;
 
 	try { image = ImageIO.read(new File(file));}
-	catch (Exception e){}
+	catch (Exception e){
+	    System.out.println("Something went wrong.");
+	}
 
-	bounds = new Rectangle(x, y, image.getWidth(), image.getHeight());
 	width = image.getWidth();
 	height = image.getHeight();
+
+	bounds = new Rectangle(x, y, width, height);
+
+	switch (direction){
+	case "up":
+	    dy = -1 * speed;
+	    break;
+	case "down":
+	    dy = 1 * speed;
+	    break;
+	case "right":
+	    dx = 1 * speed;
+	    break;
+	case "left":
+	    dx = -1 * speed;
+	    break;
+	}
 
     }
 
@@ -89,7 +110,7 @@ public class Projectile{
 	bounds.setLocation(x, y);
     }
 
-    public void update(){
+    public void move(){
 	x += dx;
 	y += dy;
 	adjustRect();
@@ -98,4 +119,6 @@ public class Projectile{
     public void draw(Graphics2D g){
 	g.drawImage(image, x, y, null);
     }
+
+  
 }

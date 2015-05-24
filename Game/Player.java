@@ -10,7 +10,7 @@ public class Player extends Character{
     private LinkedList<Projectile> projectiles;
 
     public Player(TileMap t){
-	super("../Sprites/Player/Red_", t);
+	super("../Sprites/Player/PlayerM_" , t);
 	setHP(100);
 	setPower(100);
 	setX(40);
@@ -20,7 +20,7 @@ public class Player extends Character{
 	projectiles = new LinkedList<Projectile>();
     }
 
-
+    //keep track of all projectiles and their positions
     public LinkedList<Projectile> getProjectiles(){
 	return projectiles;
     }
@@ -41,25 +41,27 @@ public class Player extends Character{
 	int px = 0;
 	int py = 0;
 
+	//determine coordinates of projectile
 	switch(direction){
 
-	case "Up":
-	    px = (int)((getX() + getWidth()) / 2 - (p.getWidth() / 2));
+	case "up":
+	    px = (int)((getX() + getWidth()) / 2);
 	    py = getY() + p.getHeight();
 	    break;
-	case "Down":
-	    px = (int)((getX() + getWidth()) / 2 - (p.getWidth() / 2));
+	case "down":
+	    px = (int)((getX() + getWidth()) / 2);
 	    py = getY() + getHeight();
 	    break;
-	case "Right":
+	case "right":
 	    px = getX() + getWidth();
-	    py = (int)((getY() + getHeight()) / 2  - (p.getHeight() / 2));
+	    py = (int)((getY() + getHeight()) / 2);
 	    break;
-	case "Left":
+	case "left":
 	    px = getX() + p.getWidth();
-	    py = (int)((getY() + getHeight()) / 2  - (p.getHeight() / 2));
+	    py = (int)((getY() + getHeight()) / 2);
 	    break;
 	}
+
 
 	p.setX(px);
 	p.setY(py);
@@ -67,7 +69,6 @@ public class Player extends Character{
 	projectiles.add(p);
 
     }
-
 
  
 
