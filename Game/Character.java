@@ -135,7 +135,7 @@ public abstract class Character{
 	    e.printStackTrace();
 	}
     }
-   
+
  
     public void update(){
 	move();  
