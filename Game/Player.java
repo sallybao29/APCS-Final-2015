@@ -10,7 +10,7 @@ public class Player extends Character{
     private LinkedList<Projectile> projectiles;
 
     public Player(TileMap t){
-	super("../Sprites/Player/PlayerM_" , t);
+	super("../Sprites/Player/PlayerF_" , t);
 	setHP(100);
 	setPower(100);
 	setX(40);

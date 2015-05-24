@@ -33,8 +33,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	    switch (c){
 	    case KeyEvent.VK_SPACE:
 		p.attack();
-		p.setDX(0);
-		p.setDY(0);
 		break;
 	    case KeyEvent.VK_RIGHT:
 		p.setDirection("right");
@@ -85,7 +83,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	setDoubleBuffered(true);
 	setVisible(true);
 
-	tilemap = new TileMap("hall_1", "../Tileset/Wall_Tiles/WT_", "../Tileset/Floor_Tiles/Tile_5.png");
+	tilemap = new TileMap("hall_2", "WT_", "../Tileset/Floor_Tiles/Tile_5.png");
 
         p = new Player(tilemap);
 
@@ -99,10 +97,10 @@ public class GamePanel extends JPanel implements ActionListener{
     public void paint(Graphics g){
 	super.paint(g);
 
-	g.fillRect((int)p.getBounds().getX(), (int)p.getBounds().getY(), (int)p.getBounds().getWidth(), (int)p.getBounds().getHeight());
+	//g.fillRect((int)p.getBounds().getX(), (int)p.getBounds().getY(), (int)p.getBounds().getWidth(), (int)p.getBounds().getHeight());
 
 	Graphics2D im = (Graphics2D)g;
-	//tilemap.draw(im);
+	tilemap.draw(im);
 	p.draw(im);
 
 	LinkedList<Projectile> books = p.getProjectiles();

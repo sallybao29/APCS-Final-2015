@@ -136,9 +136,14 @@ public abstract class Character{
 	}
     }
 
+    public void checkBounds(){
+
+    }
+
  
     public void update(){
 	move();  
+	checkBounds();
 
 	//player animation
 	switch(direction){

@@ -115,6 +115,7 @@ public class AStar{
 	}
 	return s;
     }
+    /*
     public static void main(String[] args){
 	AStar a = new AStar("../Maps/Hall_1.txt");
 	AStar b = new AStar("map.txt");
@@ -123,4 +124,5 @@ public class AStar{
 	System.out.println(a);
 	a.move(m,p);
     }
+    */
 }

@@ -28,7 +28,6 @@ public class TileMap{
 	case "hall_1":
 	    file = "../Maps/Hall_1.txt";
 	    break;
-	    /*
 	case "hall_2":
 	    file = "../Maps/Hall_2.txt";
 	    break;
@@ -36,8 +35,7 @@ public class TileMap{
 	    file = "../Maps/Hall_3.txt";
 	    break;
 	case "classroom":
-	    break;
-	    */	    
+	    break;    
 	}
 
 	Scanner sc = null;
@@ -89,7 +87,7 @@ public class TileMap{
 		    t = new Tile(b, false);
 		}
 		else {
-		    String s = wall + map[row][col] + ".png";
+		    String s = "../Tileset/Wall_Tiles/" + wall + map[row][col] + ".png";
 		    try {
 			b = ImageIO.read(new File(s));
 		    }
