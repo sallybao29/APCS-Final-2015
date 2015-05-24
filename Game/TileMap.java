@@ -121,7 +121,6 @@ public class TileMap{
 	    for (int col = 0; col < width; col++){
 		s += map[row][col];
 	    }
-	    s += "\n";
 	}
 	return s;
     }
