@@ -11,7 +11,7 @@ public class Monster extends Character{
 	setX(300);
 	setY(300);
 
-	setDirection("up");
+	setDirection("Up");
     }
 
     public Monster(String n, int level, int x, int y, TileMap t){

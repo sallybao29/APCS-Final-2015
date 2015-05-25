@@ -31,8 +31,6 @@ public abstract class Character{
 
     public Character(String path, TileMap t){
         
-        direction = "up";
-
 	bounds = new Rectangle();
 	map = t;       
 	animation = new Animation();
@@ -47,6 +45,9 @@ public abstract class Character{
 	loadFrames(walkingUp, path + "U"); 
 	loadFrames(walkingDown, path + "D"); 
 
+	direction = "Up";
+	animation.setFrames(walkingUp);
+	animation.setDelay(-1);
 	currentImage = walkingUp[0];
     }
  
@@ -136,47 +137,50 @@ public abstract class Character{
 	}
     }
 
-    public void checkBounds(){
-	int tx = (int)x / 32;
-	int ty = (int)y / 32;
+ 
+     public void checkBounds(){
+	int tx = x / 32;
+	int ty = y / 32;
 	Tile t = map.getTile(tx, ty);
 	if (t.isBlocked() == true){
-	    if (dx == -1){
-		x += 1;
-	    }
-	    if (dx == 1){
-		x -= 1;
-	    }
-	    if (dy == -1){
+	    switch (direction){
+	    case "Up":
 		y += 1;
-	    }
-	    if (dy == 1){
+		break;
+	    case "Down":
 		y -= 1;
+		break;
+	    case "Right":
+		x -= 1;
+		break;
+	    case "Left":
+		x += 1;
+		break;
 	    }
 	}
     }
-
  
     public void update(){
-	move();  
+	move(); 
 	checkBounds();
+	attack(); 
 
 	//player animation
 	switch(direction){
-	case "right":
+	case "Right":
 	    animation.setFrames(walkingRight);
 	    break;
-	case "left":
+	case "Left":
 	    animation.setFrames(walkingLeft);
 	    break;
-	case "down":
+	case "Down":
 	    animation.setFrames(walkingDown);
 	    break;
-	case "up":
+	case "Up":
 	    animation.setFrames(walkingUp);
 	    break;
 	}
-
+		 
 	if (dx == 0 && dy == 0) 
 	    animation.setDelay(-1);
 	else 
@@ -192,7 +196,6 @@ public abstract class Character{
     }
 
     public void draw(Graphics2D g){
-	update();
 	g.drawImage(animation.getImage(), x, y, null);
     }
 

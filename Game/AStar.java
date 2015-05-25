@@ -61,7 +61,6 @@ public class AStar{
 	e = new Node(pX,pY);
 	map[pX][pY] = plpos;
 	map[mX][mY] = monpos;
-	System.out.println(this);
 
 	f = new Frontier();
 	start = new Node(mX,mY);
@@ -84,7 +83,6 @@ public class AStar{
 	    addToFront(cx,cy-1,current);
 
 	    //delay(50);
-	    //System.out.println(this);
 	}
 
 	// path recovery
@@ -97,17 +95,17 @@ public class AStar{
 	for (Node r = rec; r != null; r = r.getNext()){
 	    //map[r.getX()][r.getY()] = 'G';
 	    if ((r.getX() - m.getX()) > 0)
-		m.setDirection("right");
+		m.setDirection("Right");
 	    else if ((r.getX() - m.getX()) < 0)
-		m.setDirection("left");
+		m.setDirection("Left");
 	    else if ((r.getY() - m.getY()) > 0)
-		m.setDirection("down");
+		m.setDirection("Down");
 	    else
-		m.setDirection("up");
+		m.setDirection("Up");
 	    m.setX(r.getX()*32);
 	    m.setY(r.getY()*32);
 	    delay(500);
-	    //System.out.println(this);
+       
 	}
     }
     public void delay(int n){
@@ -125,14 +123,5 @@ public class AStar{
 	}
 	return s;
     }
-    /*
-    public static void main(String[] args){
-	AStar a = new AStar("../Maps/Hall_1.txt");
-	AStar b = new AStar("map.txt");
-	Monster m = new Monster();
-	Player p = new Player();
-	System.out.println(a);
-	a.move(m,p);
-    }
-    */
+  
 }

@@ -16,3 +16,5 @@ Project Log
  
 5/23/15 - Worked on AStar search for monster movement (since the monsters' movements depend on the current location of the player) - Tiffany
 
+5/25/15 - Boundary detection mostly functional. Does not work when approaching from left or above. Attack function working. - Sally
+

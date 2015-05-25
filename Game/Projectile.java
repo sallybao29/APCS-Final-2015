@@ -39,7 +39,7 @@ public class Projectile{
 	case "Precalc":
 	    break;
 	}
-	file += direction.substring(0, 1).toUpperCase() + ".png";
+	file += direction.substring(0, 1) + ".png";
 
 	image = null;
 
@@ -54,16 +54,16 @@ public class Projectile{
 	bounds = new Rectangle(x, y, width, height);
 
 	switch (direction){
-	case "up":
+	case "Up":
 	    dy = -1 * speed;
 	    break;
-	case "down":
+	case "Down":
 	    dy = 1 * speed;
 	    break;
-	case "right":
+	case "Right":
 	    dx = 1 * speed;
 	    break;
-	case "left":
+	case "Left":
 	    dx = -1 * speed;
 	    break;
 	}

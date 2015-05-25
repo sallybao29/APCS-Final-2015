@@ -20,6 +20,8 @@ public class GamePanel extends JPanel implements ActionListener{
     private static final int height = 512;
     private final int DELAY = 15;
 
+    private boolean inGame;
+
     private Player p;
     private TileMap tilemap;
     private Monster m;
@@ -31,23 +33,23 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void keyPressed(KeyEvent e) {
 	    int c = e.getKeyCode();
 	    switch (c){
-	    case KeyEvent.VK_SPACE:
-		p.attack();
+	    case KeyEvent.VK_A:
+		p.attacking(true);
 		break;
 	    case KeyEvent.VK_RIGHT:
-		p.setDirection("right");
+		p.setDirection("Right");
 		p.setDX(1);
 		break;
 	    case KeyEvent.VK_LEFT:
-		p.setDirection("left");
+		p.setDirection("Left");
 		p.setDX(-1);
 		break;
 	    case KeyEvent.VK_UP:
-		p.setDirection("up");
+		p.setDirection("Up");
 		p.setDY(-1);
 		break;
 	    case KeyEvent.VK_DOWN:
-		p.setDirection("down");
+		p.setDirection("Down");
 		p.setDY(1);
 		break;
 	    }
@@ -56,6 +58,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void keyReleased(KeyEvent e) {
 	    int c = e.getKeyCode();
 	    switch (c){
+	    case KeyEvent.VK_A:
+		p.attacking(false);
+		break;
 	    case KeyEvent.VK_RIGHT:
 		p.setDX(0);
 		break;
@@ -82,6 +87,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	setFocusable(true);
 	setDoubleBuffered(true);
 	setVisible(true);
+
+	inGame = true;
 
 	tilemap = new TileMap("hall_1", "WT_", "../Tileset/Floor_Tiles/Tile_5.png");
 
@@ -131,11 +138,28 @@ public class GamePanel extends JPanel implements ActionListener{
   
 
     public void actionPerformed(ActionEvent e){
+	inGame();
 	p.update();
-	//m.update();
+
         (new Thread(new MRunnable(tilemap.getFile(),m,p))).start();
 	updateProjectiles();
+
+	checkCollisions();
+
 	repaint();
+
+    }
+
+    public void inGame(){
+	if (!inGame)
+	    timer.stop();
+    }
+
+    public void checkCollisions(){
+
+	//collision between player and monster
+
+	//collision between projectile and monster
 
     }
 

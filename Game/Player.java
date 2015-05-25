@@ -8,21 +8,27 @@ import java.awt.event.KeyEvent;
 
 public class Player extends Character{
     private LinkedList<Projectile> projectiles;
+    private boolean attacking;
 
     public Player(TileMap t){
 	super("../Sprites/Player/PlayerF_" , t);
 	setHP(100);
 	setPower(100);
-	setX(100);
-	setY(100);
+	setX(96);
+	setY(160);
+	attacking = false;
         
-	setDirection("up");
+	setDirection("Up");
 	projectiles = new LinkedList<Projectile>();
     }
 
     //keep track of all projectiles and their positions
     public LinkedList<Projectile> getProjectiles(){
 	return projectiles;
+    }
+
+    public void attacking(boolean b){
+	attacking = b;
     }
 
     public void move(){
@@ -35,38 +41,15 @@ public class Player extends Character{
     }
 
     public void attack(){
-	String direction = getDirection();
-	Projectile p = new Projectile("English", direction);
+	if  (attacking){
+	    String direction = getDirection();
+	    Projectile p = new Projectile("English", direction);
 
-	int px = 0;
-	int py = 0;
+	    p.setX(getX());
+	    p.setY(getY());
 
-	//determine coordinates of projectile
-	switch(direction){
-
-	case "up":
-	    px = (int)((getX() + getWidth()) / 2);
-	    py = getY() + p.getHeight();
-	    break;
-	case "down":
-	    px = (int)((getX() + getWidth()) / 2);
-	    py = getY() + getHeight();
-	    break;
-	case "right":
-	    px = getX() + getWidth();
-	    py = (int)((getY() + getHeight()) / 2);
-	    break;
-	case "left":
-	    px = getX() + p.getWidth();
-	    py = (int)((getY() + getHeight()) / 2);
-	    break;
+	    projectiles.add(p);
 	}
-
-
-	p.setX(px);
-	p.setY(py);
-
-	projectiles.add(p);
 
     }
 
