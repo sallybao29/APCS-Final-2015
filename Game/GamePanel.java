@@ -83,7 +83,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	setDoubleBuffered(true);
 	setVisible(true);
 
-	tilemap = new TileMap("hall_2", "WT_", "../Tileset/Floor_Tiles/Tile_5.png");
+	tilemap = new TileMap("hall_1", "WT_", "../Tileset/Floor_Tiles/Tile_5.png");
 
         p = new Player(tilemap);
 
