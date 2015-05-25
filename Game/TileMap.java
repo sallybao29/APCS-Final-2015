@@ -139,7 +139,7 @@ public class TileMap{
 
 	for (int row = 0; row < t.height; row++){
 	    for (int col = 0; col < t.width; col++){
-		System.out.println("" + t.tiles[row][col].getX() + " ," +  t.tiles[row][col].getY());
+		System.out.println(t.tiles[row][col].isBlocked());
 	    }
 	}
 

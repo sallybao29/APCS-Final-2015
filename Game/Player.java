@@ -13,8 +13,8 @@ public class Player extends Character{
 	super("../Sprites/Player/PlayerF_" , t);
 	setHP(100);
 	setPower(100);
-	setX(40);
-	setY(60);
+	setX(100);
+	setY(100);
         
 	setDirection("up");
 	projectiles = new LinkedList<Projectile>();

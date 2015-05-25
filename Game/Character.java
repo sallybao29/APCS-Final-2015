@@ -137,7 +137,23 @@ public abstract class Character{
     }
 
     public void checkBounds(){
-
+	int tx = (int)x / 32;
+	int ty = (int)y / 32;
+	Tile t = map.getTile(tx, ty);
+	if (t.isBlocked() == true){
+	    if (dx == -1){
+		x += 1;
+	    }
+	    if (dx == 1){
+		x -= 1;
+	    }
+	    if (dy == -1){
+		y += 1;
+	    }
+	    if (dy == 1){
+		y -= 1;
+	    }
+	}
     }
 
  
