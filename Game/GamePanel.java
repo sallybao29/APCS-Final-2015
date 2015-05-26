@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.image.*;
 import java.awt.image.BufferedImage;
 
@@ -18,15 +19,17 @@ public class GamePanel extends JPanel implements ActionListener{
 
     private static final int width = 512;
     private static final int height = 512;
-    private final int DELAY = 15;
+    private final int DELAY = 10;
 
     private boolean inGame;
 
     private Player p;
     private TileMap tilemap;
     private Monster m;
+    private LinkedList<Monster> monsters;
+    private LinkedList<Projectile> books;
     private Timer timer;
-
+ 
   
     private class Key implements KeyListener {
 
@@ -61,15 +64,11 @@ public class GamePanel extends JPanel implements ActionListener{
 	    case KeyEvent.VK_A:
 		p.attacking(false);
 		break;
-	    case KeyEvent.VK_RIGHT:
-		p.setDX(0);
-		break;
+	    case KeyEvent.VK_RIGHT: 
 	    case KeyEvent.VK_LEFT:
 		p.setDX(0);
 		break;
 	    case KeyEvent.VK_UP:
-		p.setDY(0);
-		break;
 	    case KeyEvent.VK_DOWN:
 		p.setDY(0);
 		break;
@@ -96,33 +95,39 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	m = new Monster(tilemap);
 
+	makeMonsters();
+
 	timer = new Timer(DELAY, this);
 	timer.start();
     }
+
+    public void makeMonsters(){
+	monsters = new LinkedList<Monster>();
+    }
   
- 
     public void paint(Graphics g){
 	super.paint(g);
-
-	//g.fillRect((int)p.getBounds().getX(), (int)p.getBounds().getY(), (int)p.getBounds().getWidth(), (int)p.getBounds().getHeight());
 
 	Graphics2D im = (Graphics2D)g;
 	tilemap.draw(im);
 	p.draw(im);
 	m.draw(im);
 
-	LinkedList<Projectile> books = p.getProjectiles();
+        books = p.getProjectiles();
 
 	for (Projectile p: books){
 	    p.draw(im);
 	}
+
+	g.drawString("HP: " + p.getHP(), 128, 100);
+	g.drawString("PP: " + p.getPower(), 128, 128);
 		    
 	Toolkit.getDefaultToolkit().sync();
 	g.dispose();
     }
 
     public void updateProjectiles(){
-	LinkedList<Projectile> books = p.getProjectiles();
+        books = p.getProjectiles();
 
 	for (int i = 0; i < books.size(); i++){
 	    Projectile b = books.get(i);
@@ -158,6 +163,15 @@ public class GamePanel extends JPanel implements ActionListener{
     public void checkCollisions(){
 
 	//collision between player and monster
+	Rectangle pl = p.getBounds();
+
+	for (Monster monster: monsters){
+	    Rectangle mon = monster.getBounds();
+
+	    if (pl.intersects(mon)){
+		p.setHP(p.getHP() - monster.getDamage());
+	    }
+	}
 
 	//collision between projectile and monster
 

@@ -30,6 +30,7 @@ public class Projectile{
 	case "English":
 	    file += "English_";
 	    speed = 3;
+	    cost = 2;
 	    break;
 	case "History":
 	    speed = 1;

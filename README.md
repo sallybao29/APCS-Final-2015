@@ -18,3 +18,5 @@ Project Log
 
 5/25/15 - Boundary detection mostly functional. Does not work when approaching from left or above. Attack function working. - Sally
 
+5/25/15 - Boundary detection complete. Working on collision detection. - Sally
+

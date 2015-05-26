@@ -135,13 +135,15 @@ public class TileMap{
 	String floor = "../Tileset/Floor_Tiles/Tile_5.png";
 	TileMap t = new TileMap(type, wall, floor);
 
-	System.out.println(t);
+	String s = "";
 
 	for (int row = 0; row < t.height; row++){
 	    for (int col = 0; col < t.width; col++){
-		System.out.println(t.tiles[row][col].isBlocked());
+	        s += t.tiles[row][col].isBlocked() + " ";
 	    }
+	    s += "\n";
 	}
+	System.out.println(s);
 
 
     }

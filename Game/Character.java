@@ -10,7 +10,6 @@ import java.io.File;
 public abstract class Character{
 
     private int hp;
-    private int power;
     private int x;
     private int y;
     private int dx;
@@ -70,10 +69,6 @@ public abstract class Character{
 	return hp;
     }
 
-    public int getPower(){
-	return power;
-    }
-
     public int getDX(){
 	return dx;
     }
@@ -106,10 +101,6 @@ public abstract class Character{
 	this.hp = hp;
     }
 
-    public void setPower(int power){
-	this.power = power;				    
-    }
-
     public void setDY(int dy){
 	this.dy = dy;
     }
@@ -139,26 +130,33 @@ public abstract class Character{
 
  
      public void checkBounds(){
-	int tx = x / 32;
-	int ty = y / 32;
-	Tile t = map.getTile(tx, ty);
-	if (t.isBlocked() == true){
-	    switch (direction){
-	    case "Up":
-		y += 1;
-		break;
-	    case "Down":
-		y -= 1;
-		break;
-	    case "Right":
-		x -= 1;
-		break;
-	    case "Left":
-		x += 1;
-		break;
-	    }
-	}
-    }
+	 int tx = x / 32;
+	 int ty = y / 32;
+	 Tile t;
+
+	 if (dy == -1 || dx == -1){
+	     t = map.getTile(tx, ty);
+	     if (t.isBlocked()){
+		 if (dy == -1)
+		     y = ty * 32 + 32;     
+		 else 
+		     x = tx * 32 + 32; 
+	     }
+	 }
+	 if (dy == 1){
+	     ty = y / 32 + 1;
+	     t = map.getTile(tx, ty);
+	     if (t.isBlocked())
+		 y = ty * 32 - 32;
+	 }
+	 if (dx == 1){
+	     tx = x / 32 + 1;
+	     t = map.getTile(tx, ty);
+	     if (t.isBlocked())
+		 x = tx * 32 - 32;
+	 }
+     }
+
  
     public void update(){
 	move(); 

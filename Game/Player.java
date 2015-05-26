@@ -9,14 +9,15 @@ import java.awt.event.KeyEvent;
 public class Player extends Character{
     private LinkedList<Projectile> projectiles;
     private boolean attacking;
+    private int power;
 
     public Player(TileMap t){
 	super("../Sprites/Player/PlayerF_" , t);
 	setHP(100);
-	setPower(100);
-	setX(96);
+	setX(160);
 	setY(160);
 	attacking = false;
+	power = 100;
         
 	setDirection("Up");
 	projectiles = new LinkedList<Projectile>();
@@ -29,6 +30,14 @@ public class Player extends Character{
 
     public void attacking(boolean b){
 	attacking = b;
+    }
+
+    public int getPower(){
+	return power;
+    }
+
+    public void setPower(int np){
+	power = np;
     }
 
     public void move(){
@@ -45,10 +54,14 @@ public class Player extends Character{
 	    String direction = getDirection();
 	    Projectile p = new Projectile("English", direction);
 
-	    p.setX(getX());
-	    p.setY(getY());
+	    power = power - p.getCost();
+	    if (power > 0){
 
-	    projectiles.add(p);
+		p.setX(getX());
+		p.setY(getY());
+
+		projectiles.add(p);
+	    }
 	}
 
     }

@@ -4,12 +4,14 @@ import java.io.File;
 
 public class Monster extends Character{
     private String name;
+    private int damage;
 
     public Monster(TileMap t){
 	super("../Sprites/Monster/Frog_", t);
 	setHP(100);
 	setX(300);
 	setY(300);
+	damage = 12;
 
 	setDirection("Up");
     }
@@ -21,6 +23,10 @@ public class Monster extends Character{
 	setHP(tmp);
         setX(x);
 	setY(y);
+    }
+
+    public int getDamage(){
+	return damage;
     }
 
     public void move(){
