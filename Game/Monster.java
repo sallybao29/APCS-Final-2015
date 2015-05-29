@@ -15,12 +15,10 @@ public class Monster extends Character{
 	setDirection('U');
     }
 
-    public Monster(String s, int level, int x, int y, TileMap t){
+    public Monster(String s, int level, TileMap t){
 	super(s, t);
 	int tmp = (10-level)*10 + 100;
 	setHP(tmp);
-        setX(x);
-	setY(y);
     }
 
     public void loadImage(){
