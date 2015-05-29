@@ -4,6 +4,7 @@ import java.io.File;
 
 public class Monster extends Character{
     private int damage;
+    private int cycle;
 
     public Monster(TileMap t){
 	super("Frog_", t);
@@ -15,12 +16,10 @@ public class Monster extends Character{
 	setDirection('U');
     }
 
-    public Monster(String s, int level, int x, int y, TileMap t){
+    public Monster(String s, int level, TileMap t){
 	super(s, t);
 	int tmp = (10-level)*10 + 100;
 	setHP(tmp);
-        setX(x);
-	setY(y);
     }
 
     public void loadImage(){
@@ -36,8 +35,15 @@ public class Monster extends Character{
     }
 
     public void move(String file, Player p){
-	AStar a = new AStar(file);
-	a.move(this, p);
+	AStar a = new AStar(file, this);
+	a.move(p);
+	if (cycle == 10){
+	    a = new AStar(file, this);
+	    a.move(p);
+	    cycle = 0;
+	}
+	a.nextStep();
+	cycle++;
     }
    
     public void attack(){

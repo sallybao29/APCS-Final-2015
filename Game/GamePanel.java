@@ -94,6 +94,8 @@ public class GamePanel extends JPanel implements ActionListener{
         p = new Player(tilemap);
 
 	m = new Monster(tilemap);
+	m.setX(200);
+	m.setY(200);
 
 	makeMonsters();
 
