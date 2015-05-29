@@ -20,3 +20,5 @@ Project Log
 
 5/25/15 - Boundary detection complete. Working on collision detection. - Sally
 
+5/28/15 - Refactored common methods into superclass MapObject. Added function of regaining power by walking. - Sally
+

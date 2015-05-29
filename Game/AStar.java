@@ -95,13 +95,13 @@ public class AStar{
 	for (Node r = rec; r != null; r = r.getNext()){
 	    //map[r.getX()][r.getY()] = 'G';
 	    if ((r.getX() - m.getX()) > 0)
-		m.setDirection("Right");
+		m.setDirection('R');
 	    else if ((r.getX() - m.getX()) < 0)
-		m.setDirection("Left");
+		m.setDirection('L');
 	    else if ((r.getY() - m.getY()) > 0)
-		m.setDirection("Down");
+		m.setDirection('D');
 	    else
-		m.setDirection("Up");
+		m.setDirection('U');
 	    m.setX(r.getX()*32);
 	    m.setY(r.getY()*32);
 	    delay(500);

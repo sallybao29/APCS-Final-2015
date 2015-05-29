@@ -9,35 +9,17 @@ public class TileMap{
     private final int width = 16;
     private final int height = 16;
 
-    private int x;
-    private int y;
-
     private char[][] map;
     private Tile[][] tiles;
     private String file;
 
 
-    public TileMap(String type, String wall, String floor){
+    public TileMap(String type){
 
 	map = new char[height][width];
         tiles = new Tile[height][width];
 
-	file = null;
-
-	//only hall_1 exists at the moment
-	switch (type){
-	case "hall_1":
-	    file = "../Maps/Hall_1.txt";
-	    break;
-	case "hall_2":
-	    file = "../Maps/Hall_2.txt";
-	    break;
-	case "hall_3":
-	    file = "../Maps/Hall_3.txt";
-	    break;
-	case "classroom":
-	    break;    
-	}
+	file = "../Maps/" + type + ".txt";
 
 	Scanner sc = null;
 
@@ -68,34 +50,41 @@ public class TileMap{
 	    sc.close();
 	}
 
-	loadTiles(wall, floor);
+	loadTiles();
 
     }
 
     //created 2d array of tile objects based on map
-    public void loadTiles(String wall, String floor){
+    public void loadTiles(){
 
-	BufferedImage b = null;
 	Tile t = null;
+	String id = "";
+	boolean blocked = false;
 
 	for (int row = 0; row < height; row++){
 	    for (int col = 0; col < width; col++){
-		if (map[row][col] == ' '){
-		    try {
-			b = ImageIO.read(new File(floor));
-		    } 
-		    catch (Exception e) {}
-		    t = new Tile(b, false);
+
+		char curr = map[row][col];
+
+		if (curr >= 'a' && curr <= 'z'){
+		    id = "Border_";
+		    blocked = true;
 		}
-		else {
-		    String s = "../Tileset/Wall_Tiles/" + wall + map[row][col] + ".png";
-		    try {
-			b = ImageIO.read(new File(s));
-		    }
-		    catch (Exception e){}
-		    t = new Tile(b, true);
+		if (curr >= 'A' && curr <= 'Z'){
+		    id = "Wall_";
+		    blocked = true;
 		}
-		t.setXY(col * t.getWidth(), row * t.getHeight());
+		if (curr >= '0' && curr <= '9'){
+		    id = "Floor_";		   
+		    blocked = false;
+		}
+
+		id += curr;
+		t = new Tile(id, blocked);
+
+		t.setX(col * t.getWidth());
+		t.setY(row * t.getHeight());
+
 		tiles[row][col] = t;
 	    }
 	}
@@ -130,10 +119,8 @@ public class TileMap{
 
   
     public static void main(String[] args){
-	String type = "hall_1";
-	String wall =  "../Tileset/Wall_Tiles/WT_";
-	String floor = "../Tileset/Floor_Tiles/Tile_5.png";
-	TileMap t = new TileMap(type, wall, floor);
+	String type = "Hall_1";
+	TileMap t = new TileMap(type);
 
 	String s = "";
 

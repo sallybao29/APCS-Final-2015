@@ -40,19 +40,19 @@ public class GamePanel extends JPanel implements ActionListener{
 		p.attacking(true);
 		break;
 	    case KeyEvent.VK_RIGHT:
-		p.setDirection("Right");
+		p.setDirection('R');
 		p.setDX(1);
 		break;
 	    case KeyEvent.VK_LEFT:
-		p.setDirection("Left");
+		p.setDirection('L');
 		p.setDX(-1);
 		break;
 	    case KeyEvent.VK_UP:
-		p.setDirection("Up");
+		p.setDirection('U');
 		p.setDY(-1);
 		break;
 	    case KeyEvent.VK_DOWN:
-		p.setDirection("Down");
+		p.setDirection('D');
 		p.setDY(1);
 		break;
 	    }
@@ -89,7 +89,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	inGame = true;
 
-	tilemap = new TileMap("hall_1", "WT_", "../Tileset/Floor_Tiles/Tile_5.png");
+	tilemap = new TileMap("Hall_1");
 
         p = new Player(tilemap);
 
@@ -144,6 +144,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
 	inGame();
+
 	p.update();
 
         (new Thread(new MRunnable(tilemap.getFile(),m,p))).start();

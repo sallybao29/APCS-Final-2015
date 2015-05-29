@@ -5,53 +5,27 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 
-public class Tile{
+public class Tile extends MapObject{
 
-    //x and y coordinates of top-left corner
-    private int x;
-    private int y;
-
-    private BufferedImage image;
     private boolean blocked;
-    private Rectangle bounds;
 
-    private final int height = 32;
-    private final int width = 32;
-
-    public Tile(BufferedImage b, boolean p){
-	image = b;
-        blocked = p;
-	bounds = new Rectangle(x, y, width, height);
+    public Tile(String s, boolean b){
+	super(s, ' ');
+	blocked = b;
     }
 
-    public int getX(){
-	return x;
+    public void loadImage(){
+	setPath("../Tileset/Tiles/");
+	super.loadImage();
     }
 
-    public int getY(){
-	return y;
-    }
-
+  
     public boolean isBlocked(){
 	return blocked;
     }
 
-    public int getHeight(){
-	return height;
+    public void setBlocked(boolean b){
+	blocked = b;
     }
-
-    public int getWidth(){
-	return width;
-    }
-
-    public void setXY(int x, int y){
-	this.x = x;
-	this.y = y;
-    }
-
-    public void draw(Graphics2D g){
-	g.drawImage(image, x, y, null);
-    }
-
 
 }

@@ -7,15 +7,12 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 
-public abstract class Character{
+public abstract class Character extends MapObject{
 
     private int hp;
-    private int x;
-    private int y;
     private int dx;
     private int dy;
-    private int width; 
-    private int height;
+    private int power;
 
     private BufferedImage[] walkingLeft;
     private BufferedImage[] walkingRight;
@@ -23,48 +20,35 @@ public abstract class Character{
     private BufferedImage[] walkingDown;
     
     private Animation animation;
-    private BufferedImage currentImage;
     private TileMap map;
-    private String direction;
-    private Rectangle bounds;
 
-    public Character(String path, TileMap t){
-        
-	bounds = new Rectangle();
+    public Character(String s, TileMap t){
+	super(s, 'U');
+
 	map = t;       
-	animation = new Animation();
+    }
+    
 
+    public void loadImage(){
 	walkingLeft = new BufferedImage[4];  
 	walkingRight = new BufferedImage[4];  
 	walkingUp = new BufferedImage[4];  
 	walkingDown = new BufferedImage[4]; 
 
-	loadFrames(walkingLeft, path + "L"); 
-	loadFrames(walkingRight, path + "R"); 
-	loadFrames(walkingUp, path + "U"); 
-	loadFrames(walkingDown, path + "D"); 
+	String path = getPath();
+	String id = getID();
 
-	direction = "Up";
+	loadFrames(walkingLeft, path + id + "L"); 
+	loadFrames(walkingRight, path + id + "R"); 
+	loadFrames(walkingUp, path + id + "U"); 
+	loadFrames(walkingDown, path + id + "D"); 
+
+	animation = new Animation();
 	animation.setFrames(walkingUp);
 	animation.setDelay(-1);
-	currentImage = walkingUp[0];
+	setImage(walkingUp[0]);
     }
  
-    //move rectangle to sprite's new position
-    //change size accordingly
-    public void adjustRect(){
-	bounds.setLocation(x, y);
-	bounds.setSize(currentImage.getWidth(), currentImage.getHeight());
-    }
- 
-    public int getX(){
-	return x;
-    }
-
-    public int getY(){
-	return y;
-    }
-
     public int getHP(){
 	return hp;
     }
@@ -77,24 +61,8 @@ public abstract class Character{
 	return dy;
     }
 
-    public int getHeight(){
-	return currentImage.getHeight();
-    }
-
-    public int getWidth(){
-	return currentImage.getWidth();
-    }
-
-    public String getDirection(){
-	return direction;
-    }
-
-    public void setX(int x){
-	this.x = x;
-    }
-
-    public void setY(int y){
-	this.y = y;
+    public int getPower(){
+	return power;
     }
 
     public void setHP(int hp){
@@ -109,10 +77,9 @@ public abstract class Character{
 	this.dx = dx;
     }
 
-    public void setDirection(String s){
-	direction = s;
+    public void setPower(int p){
+	power = p;
     }
-
 
     //read sprite images into array for animation
     private void loadFrames(BufferedImage[] frames, String path){
@@ -130,6 +97,9 @@ public abstract class Character{
 
  
      public void checkBounds(){
+	 int x = getX();
+	 int y = getY();
+
 	 int tx = x / 32;
 	 int ty = y / 32;
 	 Tile t;
@@ -138,43 +108,57 @@ public abstract class Character{
 	     t = map.getTile(tx, ty);
 	     if (t.isBlocked()){
 		 if (dy == -1)
-		     y = ty * 32 + 32;     
+		     setY(ty * 32 + 32);     
 		 else 
-		     x = tx * 32 + 32; 
+		     setX(tx * 32 + 32); 
 	     }
 	 }
 	 if (dy == 1){
 	     ty = y / 32 + 1;
 	     t = map.getTile(tx, ty);
 	     if (t.isBlocked())
-		 y = ty * 32 - 32;
+		 setY(ty * 32 - 32);
 	 }
 	 if (dx == 1){
 	     tx = x / 32 + 1;
 	     t = map.getTile(tx, ty);
 	     if (t.isBlocked())
-		 x = tx * 32 - 32;
+		 setX(tx * 32 - 32);
 	 }
      }
 
  
     public void update(){
+	int tmpx = getX();
+	int tmpy = getY();
+
 	move(); 
 	checkBounds();
+
+	int x = getX();
+	int y = getY();
+
+	if (x != tmpx || y != tmpy){
+	    if (power < 100){
+		power++;
+	    }
+	}
+
 	attack(); 
 
 	//player animation
+	char direction = getDirection();
 	switch(direction){
-	case "Right":
+	case 'R':
 	    animation.setFrames(walkingRight);
 	    break;
-	case "Left":
+	case 'L':
 	    animation.setFrames(walkingLeft);
 	    break;
-	case "Down":
+	case 'D':
 	    animation.setFrames(walkingDown);
 	    break;
-	case "Up":
+	case 'U':
 	    animation.setFrames(walkingUp);
 	    break;
 	}
@@ -185,16 +169,11 @@ public abstract class Character{
 	    animation.setDelay(100);
 
 	animation.update();
-	currentImage = animation.getImage();
 	adjustRect();
     }
 
-    public Rectangle getBounds(){
-	return bounds;
-    }
-
     public void draw(Graphics2D g){
-	g.drawImage(animation.getImage(), x, y, null);
+	g.drawImage(animation.getImage(), getX(), getY(), null);
     }
 
     abstract void move();

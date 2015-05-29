@@ -9,18 +9,22 @@ import java.awt.event.KeyEvent;
 public class Player extends Character{
     private LinkedList<Projectile> projectiles;
     private boolean attacking;
-    private int power;
 
     public Player(TileMap t){
-	super("../Sprites/Player/PlayerF_" , t);
+	super("PlayerF_" , t);
 	setHP(100);
 	setX(160);
 	setY(160);
+	setPower(100);
 	attacking = false;
-	power = 100;
         
-	setDirection("Up");
+	setDirection('U');
 	projectiles = new LinkedList<Projectile>();
+    }
+
+    public void loadImage(){
+	setPath("../Sprites/Player/");
+	super.loadImage();
     }
 
     //keep track of all projectiles and their positions
@@ -30,14 +34,6 @@ public class Player extends Character{
 
     public void attacking(boolean b){
 	attacking = b;
-    }
-
-    public int getPower(){
-	return power;
-    }
-
-    public void setPower(int np){
-	power = np;
     }
 
     public void move(){
@@ -51,11 +47,11 @@ public class Player extends Character{
 
     public void attack(){
 	if  (attacking){
-	    String direction = getDirection();
-	    Projectile p = new Projectile("English", direction);
+	    char direction = getDirection();
+	    Projectile p = new Projectile("English_", direction);
 
-	    power = power - p.getCost();
-	    if (power > 0){
+	    if (getPower() > p.getCost()){
+		setPower(getPower() - p.getCost());
 
 		p.setX(getX());
 		p.setY(getY());

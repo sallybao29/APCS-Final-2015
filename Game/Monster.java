@@ -3,26 +3,29 @@ import javax.imageio.ImageIO;
 import java.io.File;
 
 public class Monster extends Character{
-    private String name;
     private int damage;
 
     public Monster(TileMap t){
-	super("../Sprites/Monster/Frog_", t);
+	super("Frog_", t);
 	setHP(100);
 	setX(300);
 	setY(300);
 	damage = 12;
 
-	setDirection("Up");
+	setDirection('U');
     }
 
-    public Monster(String n, int level, int x, int y, TileMap t){
-	super("../Sprites/Monster/"+n+"_", t);
-	name = n;
+    public Monster(String s, int level, int x, int y, TileMap t){
+	super(s, t);
 	int tmp = (10-level)*10 + 100;
 	setHP(tmp);
         setX(x);
 	setY(y);
+    }
+
+    public void loadImage(){
+	setPath("../Sprites/Monster/");
+	super.loadImage();
     }
 
     public int getDamage(){
@@ -45,7 +48,4 @@ public class Monster extends Character{
 	//to be cont.
     }
 
-    public String getName(){
-	return name;
-    }
 }
