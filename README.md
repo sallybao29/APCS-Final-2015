@@ -22,3 +22,5 @@ Project Log
 
 5/28/15 - Refactored common methods into superclass MapObject. Added function of regaining power by walking. - Sally
 
+5/31/15 - Fixed boundary detection issues. Having issues with monster generation. - Sally
+

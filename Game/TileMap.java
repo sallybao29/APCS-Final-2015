@@ -134,8 +134,8 @@ public class TileMap{
 
 	    Monster mon = new Monster(s, level, this);
 
-	    int x = (int)(Math.random() * 512);
-	    int y = (int)(Math.random() * 512);
+	    int x = (int)(Math.random() * 480);
+	    int y = (int)(Math.random() * 480);
 
 	    Tile t = tiles[y/32][x/32];
 	    Tile t2 = null;
@@ -143,8 +143,10 @@ public class TileMap{
 	    int ax = x / 32 + 1;
 	    int ay = y / 32 + 1;
 
-	    if (ax != 16 && ay != 16)
-		t2 = tiles[ay][ax];
+	    if (ax != 16)
+		t2 = tiles[y/32][ax];
+	    else if (ay != 16)
+		t2 = tiles[ay][x/32];
 	    else 
 		t2 = t;
 
@@ -152,7 +154,18 @@ public class TileMap{
 		x = (int)(Math.random() * 480);
 		y = (int)(Math.random() * 480);
 		t = tiles[y/32][x/32];
+
+		ax = x / 32 + 1;
+		ay = y / 32 + 1;
+
+		if (ax != 16)
+		    t2 = tiles[y/32][ax];
+		else if (ay != 16)
+		    t2 = tiles[ay][x/32];
+		else 
+		    t2 = t;
 	    }
+
 	    mon.setX(x);
 	    mon.setY(y);
 
