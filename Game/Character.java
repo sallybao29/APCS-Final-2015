@@ -12,7 +12,7 @@ public abstract class Character extends MapObject{
     private int hp;
     private int dx;
     private int dy;
-    private int power;
+    private int speed;
 
     private BufferedImage[] walkingLeft;
     private BufferedImage[] walkingRight;
@@ -53,6 +53,10 @@ public abstract class Character extends MapObject{
 	return hp;
     }
 
+    public int getSpeed(){
+	return speed;
+    }
+
     public int getDX(){
 	return dx;
     }
@@ -61,8 +65,8 @@ public abstract class Character extends MapObject{
 	return dy;
     }
 
-    public int getPower(){
-	return power;
+    public Animation getAnimation(){
+	return animation;
     }
 
     public void setHP(int hp){
@@ -77,9 +81,10 @@ public abstract class Character extends MapObject{
 	this.dx = dx;
     }
 
-    public void setPower(int p){
-	power = p;
+    public void setSpeed(int s){
+	speed = s;
     }
+
 
     //read sprite images into array for animation
     private void loadFrames(BufferedImage[] frames, String path){
@@ -95,14 +100,25 @@ public abstract class Character extends MapObject{
 	}
     }
 
- 
+    //Keep character in bounds and walls
      public void checkBounds(){
 	 int x = getX();
 	 int y = getY();
 
+	 if (y + getHeight() > 511)
+	     setY(511 - getHeight());
+	 if (x + getWidth() > 511)
+	     setX(511 - getWidth());
+
+	 if (y < 1)
+	     setY(1);
+	 if (x < 1)
+	     setX(1);
+
 	 int tx = x / 32;
 	 int ty = y / 32;
 	 Tile t;
+
 
 	 if (dy == -1 || dx == -1){
 	     t = map.getTile(tx, ty);
@@ -115,38 +131,29 @@ public abstract class Character extends MapObject{
 	 }
 	 if (dy == 1){
 	     ty = y / 32 + 1;
-	     t = map.getTile(tx, ty);
-	     if (t.isBlocked())
-		 setY(ty * 32 - 32);
+	     if (ty != 16){
+		 t = map.getTile(tx, ty);
+		 if (t.isBlocked())
+		     setY(ty * 32 - 32);
+	     }
 	 }
 	 if (dx == 1){
 	     tx = x / 32 + 1;
-	     t = map.getTile(tx, ty);
-	     if (t.isBlocked())
-		 setX(tx * 32 - 32);
+	     if (tx != 16){
+		 t = map.getTile(tx, ty);
+		 if (t.isBlocked())
+		     setX(tx * 32 - 32);
+	     }
 	 }
      }
 
  
     public void update(){
-	int tmpx = getX();
-	int tmpy = getY();
-
 	move(); 
 	checkBounds();
-
-	int x = getX();
-	int y = getY();
-
-	if (x != tmpx || y != tmpy){
-	    if (power < 100){
-		power++;
-	    }
-	}
-
 	attack(); 
 
-	//player animation
+	//character animation
 	char direction = getDirection();
 	switch(direction){
 	case 'R':

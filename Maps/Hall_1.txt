@@ -1,16 +1,16 @@
-aae011111110caaa
-aae011111110caaa
-fbo011111110caaa
-eDD011111110caaa
-eDD011111110caaa
-e00011111110wbbg
-e00011111110sDDc
-e00011111110sDDc
-idn011111110s00c
-aae011111110s00c
-aae011111110v00c
-aae011111110D00c
-aae000000000D00c
-aae011111111111c
-aae011111111111c
-aae011111qdddddh
+aae      caaaaaa
+fbk      lbbbbbg
+eAA      AAAAAAc
+eBB      BBBBBBc
+e              c
+e              c
+e              c
+e              c
+e              c
+e    mddddj    c
+e    caaaae    c
+e    caaaae    c
+e    caaaae    c
+e    caaaae    c
+iddddhaaaaiddddh
+aaaaaaaaaaaaaaaa

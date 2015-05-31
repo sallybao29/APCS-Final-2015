@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.Scanner;
+import java.util.LinkedList;
 import java.awt.image.*;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
@@ -12,9 +13,15 @@ public class TileMap{
     private char[][] map;
     private Tile[][] tiles;
     private String file;
+    private String id;
+    private BufferedImage floor;
 
-
+    private LinkedList<Monster> monsters;
+ 
     public TileMap(String type){
+
+	id = type;
+	floor = null;
 
 	map = new char[height][width];
         tiles = new Tile[height][width];
@@ -79,6 +86,11 @@ public class TileMap{
 		    blocked = false;
 		}
 
+		if (curr == ' '){
+		    id = "None";
+		    blocked = false;
+		}
+
 		id += curr;
 		t = new Tile(id, blocked);
 
@@ -90,14 +102,85 @@ public class TileMap{
 	}
     }
 
-  
+    //generate monsters in random locations
+    public void makeMonsters(int level){
+	monsters = new LinkedList<Monster>();
+
+	int num = (int)(Math.random() * (20 - level)) + 5;
+
+	for (int i = 0; i < num; i++){
+	    String s = "";
+	    switch (level){
+	    case 10:
+		s = "WM_";
+		break;
+	    case 9:
+		break;
+	    case 8:
+		break;
+	    case 7:
+		break;
+	    case 6:
+		break;
+	    case 5:
+		break;
+	    case 4:
+		break;
+	    case 3:
+		break;
+	    case 2:
+		break;
+	    }
+
+	    Monster mon = new Monster(s, level, this);
+
+	    int x = (int)(Math.random() * 512);
+	    int y = (int)(Math.random() * 512);
+
+	    Tile t = tiles[y/32][x/32];
+	    Tile t2 = null;
+	    
+	    int ax = x / 32 + 1;
+	    int ay = y / 32 + 1;
+
+	    if (ax != 16 && ay != 16)
+		t2 = tiles[ay][ax];
+	    else 
+		t2 = t;
+
+	    while(t.isBlocked() && t2.isBlocked()){
+		x = (int)(Math.random() * 480);
+		y = (int)(Math.random() * 480);
+		t = tiles[y/32][x/32];
+	    }
+	    mon.setX(x);
+	    mon.setY(y);
+
+	    monsters.add(mon);
+	}
+    }
+
+    public LinkedList<Monster> getMonsters(){
+	return monsters;
+    }
+
+    public String getID(){
+	return id;
+    }
+ 
     public Tile getTile(int x, int y){
 	return tiles[y][x];
     }
 
+
     public String getFile(){
 	return file;
     }
+
+    public void setFloor(BufferedImage im){
+	floor = im;
+    }
+
 
     public void draw(Graphics2D g){
 	for (int row = 0; row < height; row++){
@@ -106,6 +189,7 @@ public class TileMap{
 	    }
 	}
     }
+
     
     public String toString(){
 	String s = "";

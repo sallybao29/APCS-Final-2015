@@ -11,6 +11,7 @@ public class AStar{
     private char floor = 'z';
     private char wall = 'w';
     private char monpos = 'M';
+    private Node rec;
 
     public AStar(String file){
 	maxX = 16;
@@ -86,28 +87,35 @@ public class AStar{
 	}
 
 	// path recovery
-	Node rec = new Node(current.getX(),current.getY()); 
+	rec = new Node(current.getX(),current.getY()); 
 	for (Node path = current.getPrev(); path != null ; path = path.getPrev()){	    
 	    Node temp = new Node(path.getX(),path.getY());
 	    temp.setNext(rec);
 	    rec = temp;
 	}
-	for (Node r = rec; r != null; r = r.getNext()){
-	    //map[r.getX()][r.getY()] = 'G';
-	    if ((r.getX() - m.getX()) > 0)
+    }
+
+
+    public void nextStep(){
+	if (rec != null){
+
+	    if ((rec.getX() - m.getX()) > 0)
 		m.setDirection('R');
-	    else if ((r.getX() - m.getX()) < 0)
+	    else if ((rec.getX() - m.getX()) < 0)
 		m.setDirection('L');
-	    else if ((r.getY() - m.getY()) > 0)
+	    else if ((rec.getY() - m.getY()) > 0)
 		m.setDirection('D');
 	    else
 		m.setDirection('U');
-	    m.setX(r.getX()*32);
-	    m.setY(r.getY()*32);
+	    m.setX(rec.getX()*32);
+	    m.setY(rec.getY()*32);
 	    delay(500);
-       
+	    rec = rec.getNext();
+	  
 	}
     }
+
+
     public void delay(int n){
 	try {
 	    Thread.sleep(n);

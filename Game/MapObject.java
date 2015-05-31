@@ -34,20 +34,22 @@ public class MapObject{
     }
 
     public void loadImage(){
-	String s = path + id;
-	if (direction != ' '){
-	    s += direction;
-	}
-	s +=  ".png";
+	if (!id.equals("None")){
+	    String s = path + id;
+	    if (direction != ' '){
+		s += direction;
+	    }
+	    s +=  ".png";
 
-	image = null;
+	    image = null;
 
-	try{
-	    image = ImageIO.read(new File(s));
-	}
+	    try{
+		image = ImageIO.read(new File(s));
+	    }
 
-	catch (Exception e){
-	    System.out.println("Something went wrong.");
+	    catch (Exception e){
+		System.out.println("Something went wrong.");
+	    }
 	}
     }
 	    
@@ -112,8 +114,10 @@ public class MapObject{
     }
 
     public void draw(Graphics2D g){
-	g.drawImage(image, x, y, null);
+	if (!id.equals("None"))
+	    g.drawImage(image, x, y, null);
     }
+	    
  
 
 }
