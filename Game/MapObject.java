@@ -53,7 +53,6 @@ public class MapObject{
 	    }
 
 	    catch (Exception e){
-		System.out.println("Something went wrong.");
 	    }
 	}
     }
