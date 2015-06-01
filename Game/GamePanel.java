@@ -39,32 +39,37 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void keyPressed(KeyEvent e) {
 	    int c = e.getKeyCode();
 	    switch (c){
-	    case KeyEvent.VK_A:
+	    case KeyEvent.VK_SPACE:
 		p.attacking(true);
 		break;
 	    case KeyEvent.VK_RIGHT:
 		p.setDirection('R');
 		p.setDX(1);
+		p.setDY(0);
 		break;
 	    case KeyEvent.VK_LEFT:
 		p.setDirection('L');
 		p.setDX(-1);
+		p.setDY(0);
 		break;
 	    case KeyEvent.VK_UP:
 		p.setDirection('U');
 		p.setDY(-1);
+		p.setDX(0);
 		break;
 	    case KeyEvent.VK_DOWN:
 		p.setDirection('D');
 		p.setDY(1);
+		p.setDX(0);
 		break;
 	    }
 	}
+
 	
 	public void keyReleased(KeyEvent e) {
 	    int c = e.getKeyCode();
 	    switch (c){
-	    case KeyEvent.VK_A:
+	    case KeyEvent.VK_SPACE:
 		p.attacking(false);
 		break;
 	    case KeyEvent.VK_RIGHT: 
@@ -108,7 +113,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	m.setX(200);
 	m.setY(200);
 
-	makeMonsters();
+	//makeMonsters();
 	monsters = tilemap.getMonsters();
 
 	timer = new Timer(DELAY, this);
