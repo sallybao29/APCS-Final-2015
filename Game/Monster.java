@@ -99,8 +99,15 @@ public class Monster extends Character{
   
     /*
     public void move(String file, Player p){
-	    a = new AStar(file);
-	    a.move(this, p);
+	AStar a = new AStar(file, this);
+	a.move(p);
+	if (cycle == 10){
+	    a = new AStar(file, this);
+	    a.move(p);
+	    cycle = 0;
+	}
+	a.nextStep();
+	cycle++;
     }
     */
 

@@ -12,11 +12,14 @@ public class AStar{
     private char wall = 'w';
     private char monpos = 'M';
     private Node rec;
+    private Monster m;
 
-    public AStar(String file){
+    public AStar(String file, Monster mon){
 	maxX = 16;
 	maxY = 16;
 	map = new char[maxX][maxY];
+
+	m = mon;
 
 	try{
 	    Scanner sc = new Scanner(new File(file));
@@ -51,7 +54,7 @@ public class AStar{
 	return xDist + yDist;
     }
 
-    public void move(Monster m, Player pl){
+    public void move(Player pl){
 	int pX, pY, mX, mY;
 
 	pX = pl.getX() / 32;
@@ -95,10 +98,8 @@ public class AStar{
 	}
     }
 
-
     public void nextStep(){
 	if (rec != null){
-
 	    if ((rec.getX() - m.getX()) > 0)
 		m.setDirection('R');
 	    else if ((rec.getX() - m.getX()) < 0)
@@ -108,11 +109,11 @@ public class AStar{
 	    else
 		m.setDirection('U');
 	    m.setX(rec.getX()*32);
+	    System.out.println(rec.getX());
 	    m.setY(rec.getY()*32);
-	    delay(500);
 	    rec = rec.getNext();
-	  
 	}
+	
     }
 
 
