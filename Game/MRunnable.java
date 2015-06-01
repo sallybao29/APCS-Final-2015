@@ -8,7 +8,9 @@ public class MRunnable implements Runnable{
 	mon = m;
 	pl = p;
     }
+    /*
     public void run(){
 	mon.move(file, pl);
     }
+    */
 }

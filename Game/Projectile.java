@@ -19,6 +19,7 @@ public class Projectile extends MapObject{
 	case "English_":
 	    speed = 3;
 	    cost = 2;
+	    damage = 20;
 	    break;
 	case "History_":
 	    speed = 1;

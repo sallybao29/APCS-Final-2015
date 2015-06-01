@@ -9,14 +9,19 @@ import java.awt.event.KeyEvent;
 public class Player extends Character{
     private LinkedList<Projectile> projectiles;
     private boolean attacking;
+    private int power;
+    private int maxPower;
 
     public Player(TileMap t){
 	super("PlayerF_" , t);
-	setHP(100);
+	setHP(200);
 	setX(160);
 	setY(160);
-	setPower(100);
+	setSpeed(2);
+
 	attacking = false;
+	maxPower = 200;
+	power = maxPower;
         
 	setDirection('U');
 	projectiles = new LinkedList<Projectile>();
@@ -36,9 +41,21 @@ public class Player extends Character{
 	attacking = b;
     }
 
+    public int getPower(){
+	return power;
+    }
+
+    public void setPower(int p){
+	power = p;
+    }
+
+    public int getMaxP(){
+	return maxPower;
+    }
+
     public void move(){
-	setX(getX() + getDX());
-	setY(getY() + getDY());
+	setX(getX() + getDX() * getSpeed());
+	setY(getY() + getDY() * getSpeed());
     }
 
     public void die(){
@@ -46,12 +63,12 @@ public class Player extends Character{
     }
 
     public void attack(){
-	if  (attacking){
+	if (attacking){
 	    char direction = getDirection();
 	    Projectile p = new Projectile("English_", direction);
 
-	    if (getPower() > p.getCost()){
-		setPower(getPower() - p.getCost());
+	    if (power > p.getCost()){
+		power -= p.getCost();
 
 		p.setX(getX());
 		p.setY(getY());
@@ -59,7 +76,22 @@ public class Player extends Character{
 		projectiles.add(p);
 	    }
 	}
+    }
 
+    public void update(){
+	int tmpx = getX();
+	int tmpy = getY();
+
+	super.update();
+
+	int x = getX();
+	int y = getY();
+
+	//if player has moved, increase power
+	if (x != tmpx || y != tmpy){
+	    if (power < maxPower)
+		power++;
+	}
     }
 
  

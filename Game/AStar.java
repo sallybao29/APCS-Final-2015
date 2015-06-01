@@ -115,6 +115,8 @@ public class AStar{
 	}
 	
     }
+
+
     public void delay(int n){
 	try {
 	    Thread.sleep(n);

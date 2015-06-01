@@ -19,13 +19,16 @@ public class GamePanel extends JPanel implements ActionListener{
 
     private static final int width = 512;
     private static final int height = 512;
-    private final int DELAY = 10;
+    private final int DELAY = 15;
 
     private boolean inGame;
 
     private Player p;
     private TileMap tilemap;
     private Monster m;
+    // private Floor[] floors;
+    private int level = 10;
+
     private LinkedList<Monster> monsters;
     private LinkedList<Projectile> books;
     private Timer timer;
@@ -89,37 +92,53 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	inGame = true;
 
+	/*
+	floors = new Floor[11];
+
+	for (int i = 2; i < 11; i++){
+	    floors[i] = new Floor(i);
+	}
+	*/
+
 	tilemap = new TileMap("Hall_1");
+	tilemap.makeMonsters(level);
 
         p = new Player(tilemap);
-
 	m = new Monster(tilemap);
 	m.setX(200);
 	m.setY(200);
 
 	makeMonsters();
+	monsters = tilemap.getMonsters();
 
 	timer = new Timer(DELAY, this);
 	timer.start();
     }
 
-    public void makeMonsters(){
-	monsters = new LinkedList<Monster>();
-    }
-  
+    //draw all components on screen 
     public void paint(Graphics g){
 	super.paint(g);
+
+	//BufferedImage f = tilemap.getFloor();
+
+	/*
+	if (f != null){
+	    g.drawImage(f, 0, 0 null);
+	}
+	*/
 
 	Graphics2D im = (Graphics2D)g;
 	tilemap.draw(im);
 	p.draw(im);
-	m.draw(im);
 
         books = p.getProjectiles();
 
-	for (Projectile p: books){
+	for (Projectile p: books)
 	    p.draw(im);
-	}
+      
+	for (Monster monster: monsters)
+	    monster.draw(im);
+
 
 	g.drawString("HP: " + p.getHP(), 128, 100);
 	g.drawString("PP: " + p.getPower(), 128, 128);
@@ -128,17 +147,65 @@ public class GamePanel extends JPanel implements ActionListener{
 	g.dispose();
     }
 
+
     public void updateProjectiles(){
         books = p.getProjectiles();
 
-	for (int i = 0; i < books.size(); i++){
-	    Projectile b = books.get(i);
-	    if  (b.getX() < 0 || b.getX() > width ||
-		 b.getY() < 0 || b.getY() > height){
+	int i = 0; 
+	while (i < books.size()){
+	    Projectile b = books.get(i); 
+	    boolean removed = false;
+
+	    int x = b.getX();
+	    int y = b.getY();
+	    int tx = x / 32;
+	    int ty = y / 32;
+	    Tile t;
+
+	    //go out of bounds
+	    if  (x < 0 || x + b.getWidth() > width ||
+		 y < 0 || y + b.getHeight() > height){
 		books.remove(i);
+		removed = true;
 	    }
+
+	    //crash into walls
 	    else {
+		if (b.getDirection() == 'D')
+		    ty = y / 32 + 1;   
+		else if (b.getDirection() == 'R')
+		    tx = x / 32 + 1;
+		if (ty != 16 && tx != 16){
+		    t = tilemap.getTile(tx, ty);
+		    if (t.isBlocked()){
+			books.remove(i); 
+			removed = true;
+		    }
+		}	
+	    }
+	    if (removed == false){
 		b.move();
+		i++;
+	    }
+	}
+    }
+
+    public void updateMonsters(){
+	int i = 0;
+	while (i < monsters.size()){
+	    Monster m = monsters.get(i);
+
+	    if (m.getHP() <= 0)
+		monsters.remove(i);
+	    else {
+		//if in range of monster, attack
+		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
+			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
+		    m.setIdle(false);
+		else 
+		    m.setIdle(true);
+		i++;
+		m.update();
 	    }
 	}
     }
@@ -148,8 +215,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	inGame();
 
 	p.update();
+	updateMonsters();
 
-        (new Thread(new MRunnable(tilemap.getFile(),m,p))).start();
+        //(new Thread(new MRunnable(tilemap.getFile(),m,p))).start();
 	updateProjectiles();
 
 	checkCollisions();
@@ -165,19 +233,34 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void checkCollisions(){
 
-	//collision between player and monster
 	Rectangle pl = p.getBounds();
 
 	for (Monster monster: monsters){
 	    Rectangle mon = monster.getBounds();
 
+	    //collision between player and monster
+	    //player loses hp
+	 
 	    if (pl.intersects(mon)){
 		p.setHP(p.getHP() - monster.getDamage());
 	    }
+
+	    //collision between projectile and monster
+	    //if projectile collides, it disappears
+	    //and monster loses hp
+
+	    int i = 0;
+	    while (i < books.size()){
+		Rectangle proj = books.get(i).getBounds();
+		if (mon.intersects(proj)){
+		    monster.setHP(monster.getHP() - books.get(i).getDamage());
+		    books.remove(i);
+		}
+		else {
+		    i++;
+		}
+	    }	  
 	}
-
-	//collision between projectile and monster
-
     }
 
 
