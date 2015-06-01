@@ -20,6 +20,8 @@ public class MapObject{
     private BufferedImage image;
     private Rectangle bounds;
 
+    private boolean bottomRight, bottomLeft, topLeft, topRight;
+
     public MapObject(String s, char d){
 	id = s;
 	direction = d;
@@ -56,6 +58,26 @@ public class MapObject{
 		System.out.println("Something went wrong.");
 	    }
 	}
+    }
+
+    public void findCorners(){
+
+    }
+
+    public boolean getBottomRight(){
+	return bottomRight;
+    }
+
+    public boolean getBottomLeft(){
+	return bottomLeft;
+    }
+
+    public boolean getTopRight(){
+	return topRight;
+    }
+
+    public boolean getTopLeft(){
+	return topLeft;
     }
 	    
     public BufferedImage getImage(){
