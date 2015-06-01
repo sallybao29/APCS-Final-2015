@@ -100,7 +100,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	*/
 
-	tilemap = new TileMap("Hall_2");
+	tilemap = new TileMap("Hall_1");
 	tilemap.makeMonsters(level);
 
         p = new Player(tilemap);

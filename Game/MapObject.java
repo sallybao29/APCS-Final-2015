@@ -24,10 +24,17 @@ public class MapObject{
 	id = s;
 	direction = d;
 
+	image = null;
 	loadImage();
 
-	width = image.getWidth();
-	height = image.getHeight();
+	if (image == null){
+	    width = 32;
+	    height = 32;
+	}
+	else {
+	    width = image.getWidth();
+	    height = image.getHeight();
+	}
 
 	bounds = new Rectangle(x, y, width, height);
         
@@ -40,8 +47,6 @@ public class MapObject{
 		s += direction;
 	    }
 	    s +=  ".png";
-
-	    image = null;
 
 	    try{
 		image = ImageIO.read(new File(s));

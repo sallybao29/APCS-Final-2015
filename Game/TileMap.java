@@ -210,6 +210,7 @@ public class TileMap{
 	    for (int col = 0; col < width; col++){
 		s += map[row][col];
 	    }
+	s += "\n";
 	}
 	return s;
     }
@@ -219,8 +220,10 @@ public class TileMap{
 	String type = "Hall_1";
 	TileMap t = new TileMap(type);
 
+	System.out.println(t);
 	String s = "";
 
+	/*
 	for (int row = 0; row < t.height; row++){
 	    for (int col = 0; col < t.width; col++){
 	        s += t.tiles[row][col].isBlocked() + " ";
@@ -228,6 +231,7 @@ public class TileMap{
 	    s += "\n";
 	}
 	System.out.println(s);
+	*/
 
 
     }
