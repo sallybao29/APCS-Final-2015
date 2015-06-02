@@ -13,11 +13,14 @@ public class Player extends Character{
     private int maxPower;
     private int stepcount;
 
+
+  /*----------------------------- Constructor + Initialization ---------------------------------*/ 
+
     public Player(TileMap t){
 	super("PlayerF_" , t);
 	setHP(200);
-	setX(160);
-	setY(160);
+	setX(256);
+	setY(256);
 	setSpeed(2);
 
 	attacking = false;
@@ -32,6 +35,8 @@ public class Player extends Character{
 	setPath("../Sprites/Player/");
 	super.loadImage();
     }
+
+    /*----------------------------- Getters and Setters ---------------------------------*/ 
 
     //keep track of all projectiles and their positions
     public LinkedList<Projectile> getProjectiles(){
@@ -54,6 +59,8 @@ public class Player extends Character{
 	return maxPower;
     }
 
+
+    /*---------------------------------- Updating ------------------------------------*/ 
     public void move(){
 	setX(getX() + getDX() * getSpeed());
 	setY(getY() + getDY() * getSpeed());
@@ -79,6 +86,7 @@ public class Player extends Character{
 	}
     }
 
+  
     public void update(){
 	int tmpx = getX();
 	int tmpy = getY();

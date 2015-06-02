@@ -31,6 +31,8 @@ public class Animation{
 	    return;
 	}
 
+	//if enough time passes
+	//go to next frame
 	long elapsed = System.currentTimeMillis() - startTime;
 	if (elapsed > delay){
 	    currentImage++;

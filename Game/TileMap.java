@@ -14,7 +14,6 @@ public class TileMap{
     private Tile[][] tiles;
     private String file;
     private String id;
-    private BufferedImage floor;
 
     private LinkedList<Monster> monsters;
 
@@ -24,7 +23,6 @@ public class TileMap{
     public TileMap(String type){
 
 	id = type;
-	floor = null;
 
 	map = new char[height][width];
         tiles = new Tile[height][width];
@@ -182,11 +180,6 @@ public class TileMap{
     public String getFile(){
 	return file;
     }
-
-    public void setFloor(BufferedImage im){
-	floor = im;
-    }
-
 
     public void draw(Graphics2D g){
 	for (int row = 0; row < height; row++){

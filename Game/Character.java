@@ -177,15 +177,6 @@ public abstract class Character extends MapObject{
 	 int x = getX();
 	 int y = getY();
 
-	 if (y + getHeight() > 511)
-	     setY(511 - getHeight());
-	 if (x + getWidth() > 511)
-	     setX(511 - getWidth());
-	 if (y < 1)
-	     setY(1);
-	 if (x < 1)
-	     setX(1);
-
 	 findCorners(x, y);
 
 	 if (dx == -1){
@@ -222,23 +213,22 @@ public abstract class Character extends MapObject{
 
 	tmpx = (x + getWidth()) / 32;
 
-	if (map.getTile(tmpx, tmpy).isBlocked() &&
-	    x % 32 != 0)
+	if ( x % 32 != 0 && map.getTile(tmpx, tmpy).isBlocked())
 	    topRight = true;
 
 	tmpx = x / 32;
 	tmpy = (y + getHeight()) / 32;
 
-	if (map.getTile(tmpx, tmpy).isBlocked() &&
-	    y % 32 != 0)
+	if (y % 32 != 0 && map.getTile(tmpx, tmpy).isBlocked())
 	    bottomLeft = true;
 
 	tmpx = (x + getWidth()) / 32;
 
-	if (map.getTile(tmpx, tmpy).isBlocked() &&
-	    x % 32 != 0 && y % 32 != 0)
+	if ( x % 32 != 0 && y % 32 != 0 && 
+	     map.getTile(tmpx, tmpy).isBlocked())
 	    bottomRight = true;
     }
+  
 
 
     public void draw(Graphics2D g){

@@ -24,3 +24,5 @@ Project Log
 
 5/31/15 - Fixed boundary detection issues. Having issues with monster generation. - Sally
 
+6/2/15 - Previous issue resolved. Updated Floor class. Player can now move around entire floor. - Sally
+
