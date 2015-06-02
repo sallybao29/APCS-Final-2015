@@ -113,7 +113,13 @@ public class Monster extends Character{
 
    
     public void attack(){
-	//System.out.println("You've been caught!");
+    }
+
+    public void repel(Player pl, char dir){
+	p = pl;
+	//to be continued: Check for walls
+	p.setX(p.getX()-32);
+	p.setY(p.getY()-32);
     }
 
     public void update(){

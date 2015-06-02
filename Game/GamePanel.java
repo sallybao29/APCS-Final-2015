@@ -204,9 +204,17 @@ public class GamePanel extends JPanel implements ActionListener{
 		monsters.remove(i);
 	    else {
 		//if in range of monster, attack
+		/*
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
 			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
+		*/
+		System.out.println(p.getX()/32);
+		if ( (Math.abs(p.getX()/32-m.getX()/32)) < 0.5 &&
+		     (Math.abs(p.getY()/32-m.getY()/32)) < 0.5){
+		    System.out.println("You've been caught!");
+		    m.repel(p,p.getDirection());
 		    m.setIdle(false);
+		}
 		else 
 		    m.setIdle(true);
 		i++;
