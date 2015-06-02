@@ -11,6 +11,7 @@ public class Player extends Character{
     private boolean attacking;
     private int power;
     private int maxPower;
+    private int stepcount;
 
     public Player(TileMap t){
 	super("PlayerF_" , t);
@@ -87,13 +88,15 @@ public class Player extends Character{
 	int x = getX();
 	int y = getY();
 
-	//if player has moved, increase power
+	//if player has moved a certain number of steps, 
+	//increase power
 	if (x != tmpx || y != tmpy){
-	    if (power < maxPower)
+	    stepcount++;
+
+      	    if (stepcount % 5 == 0 && power < maxPower)
 		power++;
 	}
     }
 
- 
 
 }

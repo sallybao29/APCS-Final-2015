@@ -20,7 +20,8 @@ public class MapObject{
     private BufferedImage image;
     private Rectangle bounds;
 
-    private boolean bottomRight, bottomLeft, topLeft, topRight;
+
+    /*-------------------------------------- Constructor -----------------------------------------*/
 
     public MapObject(String s, char d){
 	id = s;
@@ -54,31 +55,12 @@ public class MapObject{
 		image = ImageIO.read(new File(s));
 	    }
 
-	    catch (Exception e){
-		System.out.println("Something went wrong.");
-	    }
+	    catch (Exception e){}
 	}
     }
 
-    public void findCorners(){
 
-    }
-
-    public boolean getBottomRight(){
-	return bottomRight;
-    }
-
-    public boolean getBottomLeft(){
-	return bottomLeft;
-    }
-
-    public boolean getTopRight(){
-	return topRight;
-    }
-
-    public boolean getTopLeft(){
-	return topLeft;
-    }
+ /*-------------------------------------- Getters and Setters -----------------------------------------*/
 	    
     public BufferedImage getImage(){
 	return image;

@@ -32,31 +32,36 @@ public class GamePanel extends JPanel implements ActionListener{
     private LinkedList<Monster> monsters;
     private LinkedList<Projectile> books;
     private Timer timer;
- 
+
+    /*------------------------------------------ Key Class ----------------------------------------------*/
   
     private class Key implements KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 	    int c = e.getKeyCode();
 	    switch (c){
-	    case KeyEvent.VK_A:
+	    case KeyEvent.VK_SPACE:
 		p.attacking(true);
 		break;
 	    case KeyEvent.VK_RIGHT:
 		p.setDirection('R');
 		p.setDX(1);
+		p.setDY(0);
 		break;
 	    case KeyEvent.VK_LEFT:
 		p.setDirection('L');
 		p.setDX(-1);
+		p.setDY(0);
 		break;
 	    case KeyEvent.VK_UP:
 		p.setDirection('U');
 		p.setDY(-1);
+		p.setDX(0);
 		break;
 	    case KeyEvent.VK_DOWN:
 		p.setDirection('D');
 		p.setDY(1);
+		p.setDX(0);
 		break;
 	    }
 	}
@@ -64,7 +69,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void keyReleased(KeyEvent e) {
 	    int c = e.getKeyCode();
 	    switch (c){
-	    case KeyEvent.VK_A:
+	    case KeyEvent.VK_SPACE:
 		p.attacking(false);
 		break;
 	    case KeyEvent.VK_RIGHT: 
@@ -80,7 +85,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	
 	public void keyTyped(KeyEvent e) {}
     }
-    
+
+
+    /*------------------------------------------ Constructor ----------------------------------------------*/    
 
     public GamePanel(){
 	super();
@@ -104,16 +111,15 @@ public class GamePanel extends JPanel implements ActionListener{
 	tilemap.makeMonsters(level);
 
         p = new Player(tilemap);
-	m = new Monster(tilemap);
-	m.setX(200);
-	m.setY(200);
 
-	makeMonsters();
 	monsters = tilemap.getMonsters();
 
 	timer = new Timer(DELAY, this);
 	timer.start();
     }
+
+
+    /*--------------------------------------- Displaying Content ------------------------------------------*/
 
     //draw all components on screen 
     public void paint(Graphics g){
@@ -136,8 +142,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (Projectile p: books)
 	    p.draw(im);
       
-	for (Monster monster: monsters)
+	for (Monster monster: monsters){	   
 	    monster.draw(im);
+	}
 
 
 	g.drawString("HP: " + p.getHP(), 128, 100);
@@ -147,6 +154,27 @@ public class GamePanel extends JPanel implements ActionListener{
 	g.dispose();
     }
 
+    /*------------------------------------------ Updating ----------------------------------------------*/
+
+    public void actionPerformed(ActionEvent e){
+	inGame();
+
+	p.update();
+	updateMonsters();
+
+        //(new Thread(new MRunnable(tilemap.getFile(),m,p))).start();
+	updateProjectiles();
+
+	checkCollisions();
+
+	repaint();
+
+    }
+
+    public void inGame(){
+	if (!inGame)
+	    timer.stop();
+    }
 
     public void updateProjectiles(){
         books = p.getProjectiles();
@@ -198,7 +226,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	    if (m.getHP() <= 0)
 		monsters.remove(i);
 	    else {
-		//if in range of monster, attack
+		//if player in range of monster, enter chasing state
+		//otherwise remain idle
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
 			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
 		    m.setIdle(false);
@@ -210,26 +239,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
     }
   
-
-    public void actionPerformed(ActionEvent e){
-	inGame();
-
-	p.update();
-	updateMonsters();
-
-        //(new Thread(new MRunnable(tilemap.getFile(),m,p))).start();
-	updateProjectiles();
-
-	checkCollisions();
-
-	repaint();
-
-    }
-
-    public void inGame(){
-	if (!inGame)
-	    timer.stop();
-    }
 
     public void checkCollisions(){
 

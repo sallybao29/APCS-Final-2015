@@ -55,9 +55,10 @@ public class Monster extends Character{
 	    int delx = (int) (Math.random() * 3) - 1;
 	    int dely = 0;
 
-	    int r = (int) Math.random() * 2;
+	    int r = (int) Math.random() * 20;
 
-	    if (r == 1){
+	    //if even, move in a random direction
+	    if (r % 2 == 0){
 	      
 		if (delx == 0)
 		    dely = (int) (Math.random() * 3) - 1;
@@ -71,6 +72,7 @@ public class Monster extends Character{
 		if (dely == 1)
 		    setDirection(dir[1]);
 	    }
+	    //otherwise change direction
 	    else {
 		setDirection(dir[(int)(Math.random() * 3)]);
 		delx = 0;
