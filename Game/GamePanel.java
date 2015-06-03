@@ -284,15 +284,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	    else {
 
 		//if in range of monster, attack
-		/*
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
-			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
-		*/
-		//System.out.println(p.getX()/32);
-		if ( (Math.abs(p.getX()/32 - m.getX()/32)) < 0.5 &&
-		     (Math.abs(p.getY()/32 - m.getY()/32)) < 0.5){
-		    System.out.println("You've been caught!");
-		    m.repel(p,p.getDirection());
+			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius()){
 		    m.setIdle(false);
 		}
 		else 
@@ -309,17 +302,16 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	Rectangle pl = p.getBounds();
 
-	for (Monster monster: monsters){
-	    Rectangle mon = monster.getBounds();
+	for (Monster m: monsters){
+	    Rectangle mon = m.getBounds();
 
 	    //collision between player and monster
 	    //player loses hp
-	    /*
-	    if (pl.intersects(mon)){
-		p.setHP(p.getHP() - monster.getDamage());
+	    if ( (Math.abs(p.getX()/32 - m.getX()/32)) < 0.5 &&
+		 (Math.abs(p.getY()/32 - m.getY()/32)) < 0.5){
+		System.out.println("You've been caught!");
+		m.repel(p,p.getDirection());
 	    }
-	    */
-
 	    //collision between projectile and monster
 	    //if projectile collides, it disappears
 	    //and monster loses hp
@@ -328,7 +320,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    while (i < books.size()){
 		Rectangle proj = books.get(i).getBounds();
 		if (mon.intersects(proj)){
-		    monster.setHP(monster.getHP() - books.get(i).getDamage());
+		    m.setHP(m.getHP() - books.get(i).getDamage());
 		    books.remove(i);
 		}
 		else {

@@ -126,8 +126,9 @@ public class Monster extends Character{
     public void repel(Player pl, char dir){
 	p = pl;
 	//to be continued: Check for walls
-	p.setX(p.getX()-32);
-	p.setY(p.getY()-32);
+	p.setDX(getDX());
+	p.setDY(getDY());
+	p.checkBounds();
     }
 
     public void update(){
