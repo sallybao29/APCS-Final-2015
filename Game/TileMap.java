@@ -14,14 +14,15 @@ public class TileMap{
     private Tile[][] tiles;
     private String file;
     private String id;
-    private BufferedImage floor;
 
     private LinkedList<Monster> monsters;
+
+
+    /*----------------------------------------- Constructor ----------------------------------------*/
  
     public TileMap(String type){
 
 	id = type;
-	floor = null;
 
 	map = new char[height][width];
         tiles = new Tile[height][width];
@@ -58,9 +59,11 @@ public class TileMap{
 	}
 
 	loadTiles();
-
     }
 
+   
+    /*--------------------------------------- Initialization --------------------------------------*/
+ 
     //created 2d array of tile objects based on map
     public void loadTiles(){
 
@@ -108,11 +111,12 @@ public class TileMap{
 
 	int num = (int)(Math.random() * (20 - level)) + 5;
 
+	//different monsters based on level
 	for (int i = 0; i < num; i++){
 	    String s = "";
 	    switch (level){
 	    case 10:
-		s = "WM_";
+		s = "Rabbit_";
 		break;
 	    case 9:
 		break;
@@ -134,38 +138,22 @@ public class TileMap{
 
 	    Monster mon = new Monster(s, level, this);
 
-	    int x = (int)(Math.random() * 480);
-	    int y = (int)(Math.random() * 480);
+	    //limit spawning to 320 * 320 area centered within panel
+	    int x = (int)(Math.random() * 321) + 96;
+	    int y = (int)(Math.random() * 321) + 96;
 
-	    Tile t = tiles[y/32][x/32];
-	    Tile t2 = null;
-	    
-	    int ax = x / 32 + 1;
-	    int ay = y / 32 + 1;
+	    mon.findCorners(x, y);
 
-	    if (ax != 16)
-		t2 = tiles[y/32][ax];
-	    else if (ay != 16)
-		t2 = tiles[ay][x/32];
-	    else 
-		t2 = t;
+	    //if monster generated in invalid position
+	    //recalculate x and y cor
+	    while (mon.topLeft() || mon.topRight() || mon.bottomLeft() || mon.bottomRight()){
 
-	    while(t.isBlocked() && t2.isBlocked()){
-		x = (int)(Math.random() * 480);
-		y = (int)(Math.random() * 480);
-		t = tiles[y/32][x/32];
+		x = (int)(Math.random() * 321) + 96;
+		y = (int)(Math.random() * 321) + 96;
 
-		ax = x / 32 + 1;
-		ay = y / 32 + 1;
-
-		if (ax != 16)
-		    t2 = tiles[y/32][ax];
-		else if (ay != 16)
-		    t2 = tiles[ay][x/32];
-		else 
-		    t2 = t;
+		mon.findCorners(x, y);
 	    }
-
+	  
 	    mon.setX(x);
 	    mon.setY(y);
 
@@ -173,6 +161,9 @@ public class TileMap{
 	}
     }
 
+
+    /*----------------------------------------- Getters and Setters ----------------------------------------*/
+ 
     public LinkedList<Monster> getMonsters(){
 	return monsters;
     }
@@ -190,11 +181,6 @@ public class TileMap{
 	return file;
     }
 
-    public void setFloor(BufferedImage im){
-	floor = im;
-    }
-
-
     public void draw(Graphics2D g){
 	for (int row = 0; row < height; row++){
 	    for (int col = 0; col < width; col++){
@@ -202,7 +188,6 @@ public class TileMap{
 	    }
 	}
     }
-
     
     public String toString(){
 	String s = "";
@@ -215,7 +200,8 @@ public class TileMap{
 	return s;
     }
 
-  
+   /*----------------------------------------- Testing ----------------------------------------*/
+ 
     public static void main(String[] args){
 	String type = "Hall_1";
 	TileMap t = new TileMap(type);

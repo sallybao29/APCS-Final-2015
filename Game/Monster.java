@@ -9,6 +9,8 @@ public class Monster extends Character{
     private boolean idle;
     Player p;
 
+    /*------------------------------------------ Constructor ----------------------------------------------*/
+
     public Monster(TileMap t){
 	super("Frog_", t);
 	setHP(100);
@@ -27,12 +29,15 @@ public class Monster extends Character{
 	setHP(tmp);
 	radius = 5;
 	damage = 5;
+	idle = true;
     }
 
     public void loadImage(){
 	setPath("../Sprites/Monster/");
 	super.loadImage();
     }
+
+    /*--------------------------------------- Getters and Setters ---------------------------------------*/
 
     public int getDamage(){
 	return damage;
@@ -46,6 +51,8 @@ public class Monster extends Character{
 	idle = b;
     }
 
+    /*------------------------------------------ Updating ----------------------------------------------*/
+
     public void wander(){
 
 	if (cycle % 20 == 0){
@@ -57,8 +64,8 @@ public class Monster extends Character{
 
 	    int r = (int) Math.random() * 20;
 
-	    if (r%2 == 0){
-	      
+	    if (r % 2 == 0){
+		
 		if (delx == 0)
 		    dely = (int) (Math.random() * 3) - 1;
 
@@ -71,6 +78,7 @@ public class Monster extends Character{
 		if (dely == 1)
 		    setDirection(dir[1]);
 	    }
+	    //otherwise change direction
 	    else {
 		setDirection(dir[(int)(Math.random() * 3)]);
 		delx = 0;
@@ -113,7 +121,13 @@ public class Monster extends Character{
 
    
     public void attack(){
-	//System.out.println("You've been caught!");
+    }
+
+    public void repel(Player pl, char dir){
+	p = pl;
+	//to be continued: Check for walls
+	p.setX(p.getX()-32);
+	p.setY(p.getY()-32);
     }
 
     public void update(){

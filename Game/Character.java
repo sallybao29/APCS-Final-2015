@@ -14,6 +14,11 @@ public abstract class Character extends MapObject{
     private int dy;
     private int speed;
 
+    private boolean bottomRight;
+    private boolean bottomLeft;
+    private boolean topLeft;
+    private boolean topRight;
+
     private BufferedImage[] walkingLeft;
     private BufferedImage[] walkingRight;
     private BufferedImage[] walkingUp;
@@ -22,12 +27,15 @@ public abstract class Character extends MapObject{
     private Animation animation;
     private TileMap map;
 
+
+    /*-------------------------------- Constructor ------------------------------------*/ 
+
     public Character(String s, TileMap t){
 	super(s, 'U');
 
 	map = t;       
-    }
-    
+    }  
+    /*------------------------------ Initialization ----------------------------------*/ 
 
     public void loadImage(){
 	walkingLeft = new BufferedImage[4];  
@@ -48,7 +56,24 @@ public abstract class Character extends MapObject{
 	animation.setDelay(-1);
 	setImage(walkingUp[0]);
     }
- 
+
+
+    //read sprite images into array for animation
+    private void loadFrames(BufferedImage[] frames, String path){
+	String s = "";
+	try{
+	    for (int i = 0; i < frames.length; i++){
+		s = path + i + ".png";
+		frames[i] = ImageIO.read(new File(s));
+	    }
+	}
+	catch (Exception e){
+	    e.printStackTrace();
+	}
+    }
+
+    /*----------------------------- Getters and Setters ---------------------------------*/ 
+
     public int getHP(){
 	return hp;
     }
@@ -63,6 +88,22 @@ public abstract class Character extends MapObject{
 
     public int getDY(){
 	return dy;
+    }
+
+    public boolean topLeft(){
+	return topLeft;
+    }
+
+    public boolean topRight(){
+	return topRight;
+    }
+
+    public boolean bottomLeft(){
+	return bottomLeft;
+    }
+
+    public boolean bottomRight(){
+	return bottomRight;
     }
 
     public Animation getAnimation(){
@@ -85,69 +126,22 @@ public abstract class Character extends MapObject{
 	speed = s;
     }
 
-
-    //read sprite images into array for animation
-    private void loadFrames(BufferedImage[] frames, String path){
-	String s = "";
-	try{
-	    for (int i = 0; i < frames.length; i++){
-		s = path + i + ".png";
-		frames[i] = ImageIO.read(new File(s));
-	    }
-	}
-	catch (Exception e){
-	    e.printStackTrace();
-	}
+    public void setMap(TileMap m){
+	map = m;
     }
 
-    //Keep character in bounds and walls
-     public void checkBounds(){
-	 int x = getX();
-	 int y = getY();
 
-	 if (y + getHeight() > 511)
-	     setY(511 - getHeight());
-	 if (x + getWidth() > 511)
-	     setX(511 - getWidth());
+    /*--------------------------- Abstract Methods --------------------------------*/ 
 
-	 if (y < 1)
-	     setY(1);
-	 if (x < 1)
-	     setX(1);
-
-	 int tx = x / 32;
-	 int ty = y / 32;
-	 Tile t;
-
-
-	 if (dy == -1 || dx == -1){
-	     t = map.getTile(tx, ty);
-	     if (t.isBlocked()){
-		 if (dy == -1)
-		     setY(ty * 32 + 32);     
-		 else 
-		     setX(tx * 32 + 32); 
-	     }
-	 }
-	 if (dy == 1){
-	     ty = y / 32 + 1;
-	     if (ty != 16){
-		 t = map.getTile(tx, ty);
-		 if (t.isBlocked())
-		     setY(ty * 32 - 32);
-	     }
-	 }
-	 if (dx == 1){
-	     tx = x / 32 + 1;
-	     if (tx != 16){
-		 t = map.getTile(tx, ty);
-		 if (t.isBlocked())
-		     setX(tx * 32 - 32);
-	     }
-	 }
-     }
-
+    abstract void move();
  
+    abstract void die();
+
+    abstract void attack();
+
+
+    /*------------------------------ Updating --------------------------------*/ 
+
     public void update(){
 	move(); 
 	checkBounds();
@@ -168,27 +162,77 @@ public abstract class Character extends MapObject{
 	case 'U':
 	    animation.setFrames(walkingUp);
 	    break;
-	}
-		 
+	}		 
 	if (dx == 0 && dy == 0) 
 	    animation.setDelay(-1);
 	else 
 	    animation.setDelay(100);
-
 	animation.update();
 	adjustRect();
     }
 
+
+    //Keep character in bounds and walls
+     public void checkBounds(){
+	 int x = getX();
+	 int y = getY();
+
+	 findCorners(x, y);
+
+	 if (dx == -1){
+	     if (topLeft || bottomLeft)
+		 setX((x / 32 + 1) * 32);
+	 }
+	 if (dx == 1){
+	     if (topRight || bottomRight)
+		 setX((x / 32) * 32);
+	 }
+	 if (dy == -1){
+	     if (topLeft || topRight)
+		 setY((y / 32 + 1) * 32);
+	 }
+	 if (dy == 1){
+	     if (bottomRight || bottomLeft)
+		 setY((y / 32) * 32);
+	 }
+     }
+
+
+    //checks if four corners of character lie on blocked tiles
+    public void findCorners(int x, int y){
+	topRight = false;
+	topLeft = false;
+	bottomRight = false;
+	bottomLeft = false;
+
+	int tmpx = x / 32;
+	int tmpy = y / 32;
+
+	if (map.getTile(tmpx, tmpy).isBlocked())
+	    topLeft = true;
+
+	tmpx = (x + getWidth()) / 32;
+
+	if ( x % 32 != 0 && map.getTile(tmpx, tmpy).isBlocked())
+	    topRight = true;
+
+	tmpx = x / 32;
+	tmpy = (y + getHeight()) / 32;
+
+	if (y % 32 != 0 && map.getTile(tmpx, tmpy).isBlocked())
+	    bottomLeft = true;
+
+	tmpx = (x + getWidth()) / 32;
+
+	if ( x % 32 != 0 && y % 32 != 0 && 
+	     map.getTile(tmpx, tmpy).isBlocked())
+	    bottomRight = true;
+    }
+  
+
+
     public void draw(Graphics2D g){
 	g.drawImage(animation.getImage(), getX(), getY(), null);
     }
-
-    abstract void move();
- 
-    abstract void die();
-
-    abstract void attack();
-
- 
 
 }

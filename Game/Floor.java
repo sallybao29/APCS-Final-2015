@@ -5,11 +5,12 @@ import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.awt.image.*;
 
-/*
+
 public class Floor{
 
     private int x;
     private int y;
+
     private TileMap[][] areas;
 
     private boolean visited;
@@ -26,13 +27,18 @@ public class Floor{
 	TileMap hall1, hall2, hall3, hall4, hall5, 
 	    classroom1, classroom2, classroom3;
 
+	hall1 = new TileMap("Hall_1");
+	hall2 = new TileMap("Hall_2");
+	hall3 = new TileMap("Hall_3");
+	hall4 = new TileMap("Hall_4");
+	hall5 = new TileMap("Hall_5");
+
 	switch(level){
 	case 10:
 	    id = "Art";
-	    areas = {{classroom1, classroom2, null},
-		     {hall3, hall4, hall5},
+	    areas = new TileMap[][]{{hall3, hall4, hall5},
 		     {hall2, null, null},
-		     {hall1, classroom3, null}};
+		     {hall1, null, null}};
 	    break;
 	case 9:
 	    id = "Chemistry";
@@ -59,7 +65,7 @@ public class Floor{
 	    break;
 	}
 
-	String path = "../Tileset/" + id + ".png";
+	String path = "../Tileset/Tiles/" + id + ".png";
 
 	floor = null;
 	try {
@@ -74,12 +80,24 @@ public class Floor{
 	return areas[y][x];
     }
 
+    public BufferedImage getFloor(){
+	return floor;
+    }
+
     public void setVisited(boolean b){
 	visited = b;
     }
 
     public boolean wasVisited(){
 	return visited;
+    }
+
+    public int getX(){
+	return x;
+    }
+
+    public int getY(){
+	return y;
     }
 
     public String getID(){
@@ -92,7 +110,8 @@ public class Floor{
 
     public void setY(int y){
 	this.y = y;
+    }
 
   
 }
-*/
+

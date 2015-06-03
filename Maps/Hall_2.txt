@@ -1,16 +1,16 @@
-aae011111110caaa
-aae011111110caaa
-fbk011111110caaa
-eAA011111110caaa
-eBB011111110caaa
-e00011111110sbbg
-e00011111110oAAc
-e00011111110oBBc
-idj011111110o00c
-aae011111110o00c
-aae011111110r00c
-aae011111110A00c
-aae000000000B00c
-aae011111111111c
-aae011111111111c
-aae011111mdddddh
+aae         caaa
+aae         caaa
+fbk         caaa
+eAA         caaa
+eBB         caaa
+e           sbbg
+e           oAAc
+e           oBBc
+idj         o  c
+aae         o  c
+aae         r  c
+aae         A  c
+aae         B  c
+aae            c
+aae            c
+aae      mdddddh

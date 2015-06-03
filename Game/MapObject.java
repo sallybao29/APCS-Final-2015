@@ -20,6 +20,9 @@ public class MapObject{
     private BufferedImage image;
     private Rectangle bounds;
 
+
+    /*-------------------------------------- Constructor -----------------------------------------*/
+
     public MapObject(String s, char d){
 	id = s;
 	direction = d;
@@ -52,10 +55,12 @@ public class MapObject{
 		image = ImageIO.read(new File(s));
 	    }
 
-	    catch (Exception e){
-	    }
+	    catch (Exception e){}
 	}
     }
+
+
+ /*-------------------------------------- Getters and Setters -----------------------------------------*/
 	    
     public BufferedImage getImage(){
 	return image;

@@ -25,14 +25,16 @@ public class GamePanel extends JPanel implements ActionListener{
 
     private Player p;
     private TileMap tilemap;
-    private Monster m;
-    // private Floor[] floors;
+    private Floor[] floors;
+    private Floor currentFloor;
+
     private int level = 10;
 
     private LinkedList<Monster> monsters;
     private LinkedList<Projectile> books;
     private Timer timer;
- 
+
+    /*------------------------------------------ Key Class ----------------------------------------------*/
   
     private class Key implements KeyListener {
 
@@ -84,7 +86,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	
 	public void keyTyped(KeyEvent e) {}
     }
-    
+
+
+    /*------------------------------------------ Constructor ----------------------------------------------*/    
 
     public GamePanel(){
 	super();
@@ -96,21 +100,21 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	inGame = true;
 
-	/*
+
 	floors = new Floor[11];
 
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-	*/
 
-	tilemap = new TileMap("Hall_1");
+	currentFloor = floors[level];
+	currentFloor.setX(2);
+	currentFloor.setY(0);
+
+	tilemap = currentFloor.getCurrent();
 	tilemap.makeMonsters(level);
 
         p = new Player(tilemap);
-	m = new Monster(tilemap);
-	m.setX(200);
-	m.setY(200);
 
 	monsters = tilemap.getMonsters();
 
@@ -118,17 +122,19 @@ public class GamePanel extends JPanel implements ActionListener{
 	timer.start();
     }
 
+
+    /*--------------------------------------- Displaying Content ------------------------------------------*/
+
     //draw all components on screen 
     public void paint(Graphics g){
 	super.paint(g);
 
-	//BufferedImage f = tilemap.getFloor();
+	BufferedImage f = currentFloor.getFloor();
 
-	/*
-	if (f != null){
-	    g.drawImage(f, 0, 0 null);
+	if (tilemap.getID().contains("Hall")){
+	    g.drawImage(f, 0, 0, this);
 	}
-	*/
+
 
 	Graphics2D im = (Graphics2D)g;
 	tilemap.draw(im);
@@ -139,8 +145,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (Projectile p: books)
 	    p.draw(im);
       
-	for (Monster monster: monsters)
+	for (Monster monster: monsters){	   
 	    monster.draw(im);
+	}
 
 
 	g.drawString("HP: " + p.getHP(), 128, 100);
@@ -150,6 +157,74 @@ public class GamePanel extends JPanel implements ActionListener{
 	g.dispose();
     }
 
+    /*------------------------------------------ Updating ----------------------------------------------*/
+
+    public void actionPerformed(ActionEvent e){
+	inGame();
+
+	updateBoard();
+
+	p.update();
+
+	updateMonsters();
+
+        //(new Thread(new MRunnable(tilemap.getFile(),m,p))).start();
+	updateProjectiles();
+
+	checkCollisions();
+
+	repaint();
+
+    }
+
+    public void inGame(){
+	if (!inGame)
+	    timer.stop();
+    }
+
+    /*------------------------------------------ Update Board -----------------------------------------------*/
+
+    //change tilemap as player moves to next area
+    public void updateBoard(){
+	int px = p.getX();
+	int py = p.getY();
+	int fx = currentFloor.getX();
+	int fy = currentFloor.getY();
+
+	if (px < 0 || px + p.getWidth() >= width ||
+	    py < 0 || py + p.getHeight() >= height){
+
+	    if (px < 0){
+		px = (15 - px / 32) * 32;
+		fx -= 1;
+	    }
+	    else if (px + p.getWidth() >= width){
+		px = 0;
+		fx += 1;
+	    }
+	    else if (py < 0){
+		py = (15 - py / 32) * 32;
+		fy -= 1;
+	    }
+	    else if (py + p.getHeight() >= height){
+		py = 0;
+		fy += 1;
+	    }
+
+	    p.setX(px);
+	    p.setY(py);
+
+	    currentFloor.setX(fx);
+	    currentFloor.setY(fy);
+
+	    tilemap = currentFloor.getCurrent();
+	    tilemap.makeMonsters(level);
+	    monsters = tilemap.getMonsters();
+	    p.setMap(tilemap);
+	}
+    }
+
+    /*------------------------------------------ Update Projectiles ----------------------------------------------*/
 
     public void updateProjectiles(){
         books = p.getProjectiles();
@@ -165,7 +240,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	    int ty = y / 32;
 	    Tile t;
 
-	    //go out of bounds
+	    //if projectiles go out of bounds
+	    //they disappear
 	    if  (x < 0 || x + b.getWidth() > width ||
 		 y < 0 || y + b.getHeight() > height){
 		books.remove(i);
@@ -193,6 +269,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
     }
 
+    /*------------------------------------------ Update Monsters ----------------------------------------------*/
+
     public void updateMonsters(){
 	int i = 0;
 	while (i < monsters.size()){
@@ -200,11 +278,23 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	    if (m.getHP() <= 0)
 		monsters.remove(i);
+	    else if (m.getX() < 0 || m.getX() + m.getWidth() >= width ||
+		     m.getY() < 0 || m.getY() + m.getHeight() >= height)
+		monsters.remove(i);
 	    else {
+
 		//if in range of monster, attack
+		/*
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
 			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
+		*/
+		//System.out.println(p.getX()/32);
+		if ( (Math.abs(p.getX()/32 - m.getX()/32)) < 0.5 &&
+		     (Math.abs(p.getY()/32 - m.getY()/32)) < 0.5){
+		    System.out.println("You've been caught!");
+		    m.repel(p,p.getDirection());
 		    m.setIdle(false);
+		}
 		else 
 		    m.setIdle(true);
 		i++;
@@ -213,26 +303,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
     }
   
-
-    public void actionPerformed(ActionEvent e){
-	inGame();
-
-	p.update();
-	updateMonsters();
-
-        //(new Thread(new MRunnable(tilemap.getFile(),m,p))).start();
-	updateProjectiles();
-
-	checkCollisions();
-
-	repaint();
-
-    }
-
-    public void inGame(){
-	if (!inGame)
-	    timer.stop();
-    }
+    /*------------------------------------------ Check Collisions ----------------------------------------------*/
 
     public void checkCollisions(){
 
@@ -243,10 +314,11 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	    //collision between player and monster
 	    //player loses hp
-	 
+	    /*
 	    if (pl.intersects(mon)){
 		p.setHP(p.getHP() - monster.getDamage());
 	    }
+	    */
 
 	    //collision between projectile and monster
 	    //if projectile collides, it disappears
