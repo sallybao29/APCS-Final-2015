@@ -64,9 +64,8 @@ public class Monster extends Character{
 
 	    int r = (int) Math.random() * 20;
 
-
 	    if (r % 2 == 0){
-	      
+		
 		if (delx == 0)
 		    dely = (int) (Math.random() * 3) - 1;
 
