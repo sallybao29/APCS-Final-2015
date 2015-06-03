@@ -37,8 +37,8 @@ public class Floor{
 	case 10:
 	    id = "Art";
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
-		     {hall2, null, null},
-		     {hall1, null, null}};
+				    {hall2, null, null},
+				    {hall1, null, null}};
 	    break;
 	case 9:
 	    id = "Chemistry";
