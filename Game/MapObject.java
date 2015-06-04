@@ -44,7 +44,7 @@ public class MapObject{
     }
 
     public MapObject(String s, int x, int y){
-	this(s, "None");
+	this(s, ' ');
 	this.x = x;
 	this.y = y;
 	bounds = new Rectangle(x, y, width, height);
