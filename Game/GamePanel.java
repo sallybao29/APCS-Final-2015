@@ -168,7 +168,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	updateMonsters();
 
-        //(new Thread(new MRunnable(tilemap.getFile(),m,p))).start();
 	updateProjectiles();
 
 	checkCollisions();
@@ -285,9 +284,8 @@ public class GamePanel extends JPanel implements ActionListener{
 
 		//if in range of monster, attack
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
-			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius()){
+			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
 		    m.setIdle(false);
-		}
 		else 
 		    m.setIdle(true);
 		i++;

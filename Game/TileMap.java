@@ -27,6 +27,9 @@ public class TileMap{
 	map = new char[height][width];
         tiles = new Tile[height][width];
 
+	if (type.contains("Classroom"))
+	    file = "../Maps/Classroom.txt";
+
 	file = "../Maps/" + type + ".txt";
 
 	Scanner sc = null;
