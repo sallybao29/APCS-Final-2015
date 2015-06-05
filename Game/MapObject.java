@@ -43,6 +43,15 @@ public class MapObject{
         
     }
 
+    public MapObject(String s, int x, int y){
+	this(s, ' ');
+	this.x = x;
+	this.y = y;
+	bounds = new Rectangle(x, y, width, height);
+
+        
+    }
+
     public void loadImage(){
 	if (!id.equals("None")){
 	    String s = path + id;
