@@ -117,6 +117,9 @@ public class GamePanel extends JPanel implements ActionListener{
         p = new Player(tilemap);
 
 	monsters = tilemap.getMonsters();
+	for (Monster m: monsters){
+	    m.resetP(p);
+	}
 
 	timer = new Timer(DELAY, this);
 	timer.start();
@@ -219,6 +222,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	    tilemap = currentFloor.getCurrent();
 	    tilemap.makeMonsters(level);
 	    monsters = tilemap.getMonsters();
+	    for (Monster m: monsters){
+		m.resetP(p);
+	    }
 	    p.setMap(tilemap);
 	}
     }
@@ -302,6 +308,8 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	for (Monster m: monsters){
 	    Rectangle mon = m.getBounds();
+
+	    m.resetP(p);
 
 	    //collision between player and monster
 	    //player loses hp

@@ -27,7 +27,7 @@ public class Monster extends Character{
 	super(s, t);
 	int tmp = (10-level)*10 + 100;
 	setHP(tmp);
-	radius = 5;
+	radius = 128;
 	damage = 5;
 	idle = true;
     }
@@ -52,6 +52,10 @@ public class Monster extends Character{
     }
 
     /*------------------------------------------ Updating ----------------------------------------------*/
+
+    public void resetP(Player pl){
+	p = pl;
+    }
 
     public void wander(){
 
@@ -90,8 +94,23 @@ public class Monster extends Character{
 	cycle++;
     }
 
-    public void pursue(){
-
+    public void pursue(int x, int y){
+	if (getX() < x){
+	    setDX(1);
+	    setDY(0);
+	}
+	else if (getX() > x){
+	    setDX(-1);
+	    setDY(0);
+	}
+	else if (getY() < y){
+	    setDY(1);
+	    setDX(0);
+	}
+	else if (getY() > y){
+	    setDY(-1);
+	    setDX(0);
+	}
     }
    
 
@@ -99,7 +118,7 @@ public class Monster extends Character{
 	if (idle)
 	    wander();
 	else 
-	    pursue();
+	    pursue(p.getX(), p.getY());
 
 	setX(getX() + getDX());
 	setY(getY() + getDY());
