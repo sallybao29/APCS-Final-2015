@@ -16,6 +16,7 @@ public class TileMap{
     private String id;
 
     private LinkedList<Monster> monsters;
+    private SuperList props; 
 
 
     /*----------------------------------------- Constructor ----------------------------------------*/
@@ -24,13 +25,15 @@ public class TileMap{
 
 	id = type;
 
+	props = new SuperList(id);
+
 	map = new char[height][width];
         tiles = new Tile[height][width];
 
-	if (type.contains("Classroom"))
-	    file = "../Maps/Classroom.txt";
-
-	file = "../Maps/" + type + ".txt";
+	if (type.contains("Class"))
+	    file = "../Maps/Class.txt";
+	else 
+	    file = "../Maps/" + type + ".txt";
 
 	Scanner sc = null;
 
@@ -60,7 +63,6 @@ public class TileMap{
 	finally {
 	    sc.close();
 	}
-
 	loadTiles();
 	makeMonsters(level);
     }
@@ -97,7 +99,6 @@ public class TileMap{
 		    id = "None";
 		    blocked = false;
 		}
-
 		id += curr;
 		t = new Tile(id, blocked);
 
@@ -194,6 +195,9 @@ public class TileMap{
 	    for (int col = 0; col < width; col++){
 		tiles[row][col].draw(g);
 	    }
+	}
+	for (int i = 0; i < props.size(); i++){
+	    props.get(i).draw(g);
 	}
     }
     

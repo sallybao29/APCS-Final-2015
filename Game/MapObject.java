@@ -53,7 +53,7 @@ public class MapObject{
     }
 
     public void loadImage(){
-	if (!id.equals("None")){
+	if (!id.contains("None")){
 	    String s = path + id;
 	    if (direction != ' '){
 		s += direction;
@@ -66,6 +66,7 @@ public class MapObject{
 
 	    catch (IOException e){
 		System.out.println("Error");
+		System.out.println(s);
 	    }
 	}
     }
@@ -134,7 +135,7 @@ public class MapObject{
     }
 
     public void draw(Graphics2D g){
-	if (!id.equals("None"))
+	if (!id.contains("None"))
 	    g.drawImage(image, x, y, null);
     }
 	    

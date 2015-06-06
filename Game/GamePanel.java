@@ -220,9 +220,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	    tilemap = currentFloor.getCurrent();
 	    monsters = tilemap.getMonsters();
-	    for (Monster m: monsters){
-		m.resetP(p);
-	    }
 	    p.setMap(tilemap);
 	}
     }
@@ -279,6 +276,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	int i = 0;
 	while (i < monsters.size()){
 	    Monster m = monsters.get(i);
+	    m.resetP(p);
 
 	    if (m.getHP() <= 0){
 		monsters.remove(i);
@@ -292,6 +290,8 @@ public class GamePanel extends JPanel implements ActionListener{
 		//if in range of monster, attack
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
 			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
+		    m.setIdle(false);
+		else if (m.getHP() < m.getMaxHP())
 		    m.setIdle(false);
 		else 
 		    m.setIdle(true);
@@ -318,7 +318,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    if ( (Math.abs(p.getX()/32 - m.getX()/32)) < 0.5 &&
 		 (Math.abs(p.getY()/32 - m.getY()/32)) < 0.5){
 		System.out.println("You've been caught!");
-		m.repel(p,p.getDirection());
+		m.repel();
 	    }
 	    //collision between projectile and monster
 	    //if projectile collides, it disappears
@@ -337,7 +337,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    }	  
 	}
     }
-
+    /*
     public static void main(String[] args){
 	GamePanel g = new GamePanel();
 	for (Monster m: g.monsters){
@@ -345,6 +345,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    //System.out.println(m.getPath());
 	}
     }
+    */
 
 
 }

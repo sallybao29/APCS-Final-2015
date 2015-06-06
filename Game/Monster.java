@@ -10,24 +10,14 @@ public class Monster extends Character{
     Player p = null;
 
     /*------------------------------------------ Constructor ----------------------------------------------*/
-    /*
-    public Monster(TileMap t){
-	super("Frog_", t);
-	setHP(100);
-	setX(300);
-	setY(300);
-	damage = 12;
-	radius = 5;
-
-	setDirection('U');
-    }
-    */
+ 
 
     public Monster(String s, int level, TileMap t){
 	super(s, t);
-	int tmp = (10-level)*10 + 100;
+	int tmp = (10-level) * 10 + 100;
 	setHP(tmp);
-	radius = 128;
+	setMaxHP(tmp);
+	radius = 96;
 	damage = 5;
 	idle = true;
     }
@@ -142,11 +132,10 @@ public class Monster extends Character{
     public void attack(){
     }
 
-    public void repel(Player pl, char dir){
-	p = pl;
-	//to be continued: Check for walls
+    public void repel(){
 	p.setDX(getDX());
 	p.setDY(getDY());
+	p.getAnimation().setDelay(-1);
 	p.checkBounds();
     }
 
