@@ -7,10 +7,10 @@ public class Monster extends Character{
     private int cycle;
     private int radius;
     private boolean idle;
-    Player p;
+    Player p = null;
 
     /*------------------------------------------ Constructor ----------------------------------------------*/
-
+    /*
     public Monster(TileMap t){
 	super("Frog_", t);
 	setHP(100);
@@ -21,7 +21,7 @@ public class Monster extends Character{
 
 	setDirection('U');
     }
-
+    */
 
     public Monster(String s, int level, TileMap t){
 	super(s, t);
@@ -68,19 +68,10 @@ public class Monster extends Character{
 
 	    int r = (int) Math.random() * 20;
 
-	    if (r % 2 == 0){
+	    if (r % 5 == 0){
 		
 		if (delx == 0)
 		    dely = (int) (Math.random() * 3) - 1;
-
-		if (delx == -1)
-		    setDirection(dir[2]);
-		if (delx == 1)
-		    setDirection(dir[3]);
-		if (dely == -1)
-		    setDirection(dir[0]);
-		if (dely == 1)
-		    setDirection(dir[1]);
 	    }
 	    //otherwise change direction
 	    else {
@@ -122,6 +113,15 @@ public class Monster extends Character{
 
 	setX(getX() + getDX());
 	setY(getY() + getDY());
+
+	if (getDX() == -1)
+	    setDirection('L');
+	if (getDX() == 1)
+	    setDirection('R');
+	if (getDY() == -1)
+	    setDirection('U');
+	if (getDY() == 1)
+	    setDirection('D');
     }
   
     /*

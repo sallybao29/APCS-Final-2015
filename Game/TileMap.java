@@ -20,7 +20,7 @@ public class TileMap{
 
     /*----------------------------------------- Constructor ----------------------------------------*/
  
-    public TileMap(String type){
+    public TileMap(String type, int level){
 
 	id = type;
 
@@ -62,6 +62,7 @@ public class TileMap{
 	}
 
 	loadTiles();
+	makeMonsters(level);
     }
 
    
@@ -184,6 +185,10 @@ public class TileMap{
 	return file;
     }
 
+    public void setMonsters(LinkedList<Monster> m){
+	monsters = m;
+    }
+
     public void draw(Graphics2D g){
 	for (int row = 0; row < height; row++){
 	    for (int col = 0; col < width; col++){
@@ -207,21 +212,14 @@ public class TileMap{
  
     public static void main(String[] args){
 	String type = "Hall_1";
-	TileMap t = new TileMap(type);
+	TileMap t = new TileMap(type, 10);
 
 	System.out.println(t);
 	String s = "";
 
-	/*
-	for (int row = 0; row < t.height; row++){
-	    for (int col = 0; col < t.width; col++){
-	        s += t.tiles[row][col].isBlocked() + " ";
-	    }
-	    s += "\n";
+	for (Monster m: t.monsters){
+	    System.out.println(m.getImage());
 	}
-	System.out.println(s);
-	*/
-
 
     }
 

@@ -112,7 +112,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	currentFloor.setY(0);
 
 	tilemap = currentFloor.getCurrent();
-	tilemap.makeMonsters(level);
 
         p = new Player(tilemap);
 
@@ -220,7 +219,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	    currentFloor.setY(fy);
 
 	    tilemap = currentFloor.getCurrent();
-	    tilemap.makeMonsters(level);
 	    monsters = tilemap.getMonsters();
 	    for (Monster m: monsters){
 		m.resetP(p);
@@ -277,15 +275,18 @@ public class GamePanel extends JPanel implements ActionListener{
     /*------------------------------------------ Update Monsters ----------------------------------------------*/
 
     public void updateMonsters(){
+
 	int i = 0;
 	while (i < monsters.size()){
 	    Monster m = monsters.get(i);
 
-	    if (m.getHP() <= 0)
+	    if (m.getHP() <= 0){
 		monsters.remove(i);
+	    }
 	    else if (m.getX() < 0 || m.getX() + m.getWidth() >= width ||
-		     m.getY() < 0 || m.getY() + m.getHeight() >= height)
+		     m.getY() < 0 || m.getY() + m.getHeight() >= height){
 		monsters.remove(i);
+	    }
 	    else {
 
 		//if in range of monster, attack
@@ -298,6 +299,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		m.update();
 	    }
 	}
+	tilemap.setMonsters(monsters);
     }
   
     /*------------------------------------------ Check Collisions ----------------------------------------------*/
@@ -333,6 +335,14 @@ public class GamePanel extends JPanel implements ActionListener{
 		    i++;
 		}
 	    }	  
+	}
+    }
+
+    public static void main(String[] args){
+	GamePanel g = new GamePanel();
+	for (Monster m: g.monsters){
+	    System.out.println(g.monsters);
+	    //System.out.println(m.getPath());
 	}
     }
 

@@ -64,7 +64,9 @@ public class MapObject{
 		image = ImageIO.read(new File(s));
 	    }
 
-	    catch (Exception e){}
+	    catch (IOException e){
+		System.out.println("Error");
+	    }
 	}
     }
 
