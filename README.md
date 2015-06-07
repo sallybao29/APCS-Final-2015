@@ -26,4 +26,6 @@ Project Log
 
 6/2/15 - Previous issue resolved. Updated Floor class. Player can now move around entire floor. - Sally
 
+6/7/15 - Added HP and PP bars. - Sally
+
 

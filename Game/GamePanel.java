@@ -28,6 +28,12 @@ public class GamePanel extends JPanel implements ActionListener{
     private Floor[] floors;
     private Floor currentFloor;
 
+    private Rectangle hp;
+    private Rectangle pp;
+
+    BufferedImage hpbar;
+    BufferedImage ppbar;
+
     private int level = 10;
 
     private LinkedList<Monster> monsters;
@@ -100,13 +106,11 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	inGame = true;
 
-
 	floors = new Floor[11];
 
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-
 	currentFloor = floors[level];
 	currentFloor.setX(2);
 	currentFloor.setY(0);
@@ -120,6 +124,18 @@ public class GamePanel extends JPanel implements ActionListener{
 	    m.resetP(p);
 	}
 
+	hp = new Rectangle(30, 24, 96, 4);
+	pp = new Rectangle(30, 44, 96, 4);
+
+	hpbar = null;
+        ppbar = null;
+
+	try {
+	    hpbar = ImageIO.read(new File("../Sprites/HPbar.png"));
+	    ppbar = ImageIO.read(new File("../Sprites/PPbar.png"));
+	}
+	catch (Exception e){}
+
 	timer = new Timer(DELAY, this);
 	timer.start();
     }
@@ -131,12 +147,13 @@ public class GamePanel extends JPanel implements ActionListener{
     public void paint(Graphics g){
 	super.paint(g);
 
+	g.setColor(Color.CYAN);
+
 	BufferedImage f = currentFloor.getFloor();
 
 	if (tilemap.getID().contains("Hall")){
 	    g.drawImage(f, 0, 0, this);
 	}
-
 
 	Graphics2D im = (Graphics2D)g;
 	tilemap.draw(im);
@@ -151,12 +168,27 @@ public class GamePanel extends JPanel implements ActionListener{
 	    monster.draw(im);
 	}
 
+	//g.drawString("HP: " + p.getHP(), 128, 100);
+	//g.drawString("PP: " + p.getPower(), 128, 128);
 
-	g.drawString("HP: " + p.getHP(), 128, 100);
-	g.drawString("PP: " + p.getPower(), 128, 128);
+	drawStats(g);
 		    
 	Toolkit.getDefaultToolkit().sync();
 	g.dispose();
+    }
+
+    //draw hp and pp bars
+    //change rectangle based on each and draw
+    public void drawStats(Graphics g){
+	int width = (int)(((double)p.getPower())/p.getMaxP() * 96);
+
+	pp.setSize(width,(int)pp.getHeight());
+
+	g.fillRect((int)hp.getX(), (int)hp.getY(), (int)hp.getWidth(), (int)hp.getHeight());
+	g.fillRect((int)pp.getX(), (int)pp.getY(), (int)pp.getWidth(), (int)pp.getHeight());
+
+	g.drawImage(hpbar, 0, 20, this);
+	g.drawImage(ppbar, 0, 40, this);
     }
 
     /*------------------------------------------ Updating ----------------------------------------------*/
@@ -221,6 +253,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    tilemap = currentFloor.getCurrent();
 	    monsters = tilemap.getMonsters();
 	    p.setMap(tilemap);
+	    books = new LinkedList<Projectile>();
 	}
     }
 
@@ -337,15 +370,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    }	  
 	}
     }
-    /*
-    public static void main(String[] args){
-	GamePanel g = new GamePanel();
-	for (Monster m: g.monsters){
-	    System.out.println(g.monsters);
-	    //System.out.println(m.getPath());
-	}
-    }
-    */
+
 
 
 }

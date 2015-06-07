@@ -57,6 +57,7 @@ public abstract class Character extends MapObject{
 	animation.setFrames(walkingUp);
 	animation.setDelay(-1);
 	setImage(walkingUp[0]);
+
     }
 
 

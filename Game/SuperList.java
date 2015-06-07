@@ -31,7 +31,7 @@ public class SuperList{
 	    add(new MapObject("Locker_1", 64, 72));
 	    break;
 	case "Hall_2":
-	    add(new MapObject("Escalator", 224, 416));
+	    add(new MapObject("Escalator", 384, 256));
 	    break;
 	case "Hall_5":
 	    add(new MapObject("Locker_1", 96, 72));
