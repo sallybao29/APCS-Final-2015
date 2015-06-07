@@ -19,6 +19,7 @@ public class Player extends Character{
     public Player(TileMap t){
 	super("PlayerF_" , t);
 	setHP(200);
+	setMaxHP(200);
 	setX(256);
 	setY(256);
 	setSpeed(2);

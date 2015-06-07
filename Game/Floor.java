@@ -25,13 +25,15 @@ public class Floor{
 	reset = false;
 
 	TileMap hall1, hall2, hall3, hall4, hall5, 
-	    classroom1, classroom2, classroom3;
+	    classroom1;
 
-	hall1 = new TileMap("Hall_1");
-	hall2 = new TileMap("Hall_2");
-	hall3 = new TileMap("Hall_3");
-	hall4 = new TileMap("Hall_4");
-	hall5 = new TileMap("Hall_5");
+	hall1 = new TileMap("Hall_1", level);
+	hall2 = new TileMap("Hall_2", level);
+	hall3 = new TileMap("Hall_3", level);
+	hall4 = new TileMap("Hall_4", level);
+	hall5 = new TileMap("Hall_5", level);
+
+	classroom1 = new TileMap("Class", level);
 
 	switch(level){
 	case 10:
@@ -112,6 +114,5 @@ public class Floor{
 	this.y = y;
     }
 
-  
 }
 

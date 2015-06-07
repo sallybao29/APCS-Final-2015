@@ -10,6 +10,8 @@ import java.io.File;
 public abstract class Character extends MapObject{
 
     private int hp;
+    public int maxHP;
+
     private int dx;
     private int dy;
     private int speed;
@@ -55,6 +57,7 @@ public abstract class Character extends MapObject{
 	animation.setFrames(walkingUp);
 	animation.setDelay(-1);
 	setImage(walkingUp[0]);
+
     }
 
 
@@ -68,7 +71,7 @@ public abstract class Character extends MapObject{
 	    }
 	}
 	catch (Exception e){
-	    e.printStackTrace();
+	    // e.printStackTrace();
 	}
     }
 
@@ -76,6 +79,10 @@ public abstract class Character extends MapObject{
 
     public int getHP(){
 	return hp;
+    }
+
+    public int getMaxHP(){
+	return maxHP;
     }
 
     public int getSpeed(){
@@ -120,6 +127,10 @@ public abstract class Character extends MapObject{
 
     public void setDX(int dx){
 	this.dx = dx;
+    }
+
+    public void setMaxHP(int i){
+	maxHP = i;
     }
 
     public void setSpeed(int s){

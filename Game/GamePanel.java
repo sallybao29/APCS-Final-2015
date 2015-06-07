@@ -28,6 +28,12 @@ public class GamePanel extends JPanel implements ActionListener{
     private Floor[] floors;
     private Floor currentFloor;
 
+    private Rectangle hp;
+    private Rectangle pp;
+
+    BufferedImage hpbar;
+    BufferedImage ppbar;
+
     private int level = 10;
 
     private LinkedList<Monster> monsters;
@@ -100,19 +106,16 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	inGame = true;
 
-
 	floors = new Floor[11];
 
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-
 	currentFloor = floors[level];
 	currentFloor.setX(2);
 	currentFloor.setY(0);
 
 	tilemap = currentFloor.getCurrent();
-	tilemap.makeMonsters(level);
 
         p = new Player(tilemap);
 
@@ -120,6 +123,18 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (Monster m: monsters){
 	    m.resetP(p);
 	}
+
+	hp = new Rectangle(30, 24, 96, 4);
+	pp = new Rectangle(30, 44, 96, 4);
+
+	hpbar = null;
+        ppbar = null;
+
+	try {
+	    hpbar = ImageIO.read(new File("../Sprites/HPbar.png"));
+	    ppbar = ImageIO.read(new File("../Sprites/PPbar.png"));
+	}
+	catch (Exception e){}
 
 	timer = new Timer(DELAY, this);
 	timer.start();
@@ -132,12 +147,13 @@ public class GamePanel extends JPanel implements ActionListener{
     public void paint(Graphics g){
 	super.paint(g);
 
+	g.setColor(Color.CYAN);
+
 	BufferedImage f = currentFloor.getFloor();
 
 	if (tilemap.getID().contains("Hall")){
 	    g.drawImage(f, 0, 0, this);
 	}
-
 
 	Graphics2D im = (Graphics2D)g;
 	tilemap.draw(im);
@@ -152,12 +168,27 @@ public class GamePanel extends JPanel implements ActionListener{
 	    monster.draw(im);
 	}
 
+	//g.drawString("HP: " + p.getHP(), 128, 100);
+	//g.drawString("PP: " + p.getPower(), 128, 128);
 
-	g.drawString("HP: " + p.getHP(), 128, 100);
-	g.drawString("PP: " + p.getPower(), 128, 128);
+	drawStats(g);
 		    
 	Toolkit.getDefaultToolkit().sync();
 	g.dispose();
+    }
+
+    //draw hp and pp bars
+    //change rectangle based on each and draw
+    public void drawStats(Graphics g){
+	int width = (int)(((double)p.getPower())/p.getMaxP() * 96);
+
+	pp.setSize(width,(int)pp.getHeight());
+
+	g.fillRect((int)hp.getX(), (int)hp.getY(), (int)hp.getWidth(), (int)hp.getHeight());
+	g.fillRect((int)pp.getX(), (int)pp.getY(), (int)pp.getWidth(), (int)pp.getHeight());
+
+	g.drawImage(hpbar, 0, 20, this);
+	g.drawImage(ppbar, 0, 40, this);
     }
 
     /*------------------------------------------ Updating ----------------------------------------------*/
@@ -220,12 +251,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	    currentFloor.setY(fy);
 
 	    tilemap = currentFloor.getCurrent();
-	    tilemap.makeMonsters(level);
 	    monsters = tilemap.getMonsters();
-	    for (Monster m: monsters){
-		m.resetP(p);
-	    }
 	    p.setMap(tilemap);
+	    books = new LinkedList<Projectile>();
 	}
     }
 
@@ -277,20 +305,26 @@ public class GamePanel extends JPanel implements ActionListener{
     /*------------------------------------------ Update Monsters ----------------------------------------------*/
 
     public void updateMonsters(){
+
 	int i = 0;
 	while (i < monsters.size()){
 	    Monster m = monsters.get(i);
+	    m.resetP(p);
 
-	    if (m.getHP() <= 0)
+	    if (m.getHP() <= 0){
 		monsters.remove(i);
+	    }
 	    else if (m.getX() < 0 || m.getX() + m.getWidth() >= width ||
-		     m.getY() < 0 || m.getY() + m.getHeight() >= height)
+		     m.getY() < 0 || m.getY() + m.getHeight() >= height){
 		monsters.remove(i);
+	    }
 	    else {
 
 		//if in range of monster, attack
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
 			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
+		    m.setIdle(false);
+		else if (m.getHP() < m.getMaxHP())
 		    m.setIdle(false);
 		else 
 		    m.setIdle(true);
@@ -298,6 +332,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		m.update();
 	    }
 	}
+	tilemap.setMonsters(monsters);
     }
   
     /*------------------------------------------ Check Collisions ----------------------------------------------*/
@@ -316,7 +351,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    if ( (Math.abs(p.getX()/32 - m.getX()/32)) < 0.5 &&
 		 (Math.abs(p.getY()/32 - m.getY()/32)) < 0.5){
 		System.out.println("You've been caught!");
-		m.repel(p,p.getDirection());
+		m.repel();
 	    }
 	    //collision between projectile and monster
 	    //if projectile collides, it disappears
@@ -335,6 +370,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    }	  
 	}
     }
+
 
 
 }

@@ -16,21 +16,24 @@ public class TileMap{
     private String id;
 
     private LinkedList<Monster> monsters;
+    private SuperList props; 
 
 
     /*----------------------------------------- Constructor ----------------------------------------*/
  
-    public TileMap(String type){
+    public TileMap(String type, int level){
 
 	id = type;
+
+	props = new SuperList(id);
 
 	map = new char[height][width];
         tiles = new Tile[height][width];
 
-	if (type.contains("Classroom"))
-	    file = "../Maps/Classroom.txt";
-
-	file = "../Maps/" + type + ".txt";
+	if (type.contains("Class"))
+	    file = "../Maps/Class.txt";
+	else 
+	    file = "../Maps/" + type + ".txt";
 
 	Scanner sc = null;
 
@@ -60,8 +63,8 @@ public class TileMap{
 	finally {
 	    sc.close();
 	}
-
 	loadTiles();
+	makeMonsters(level);
     }
 
    
@@ -96,7 +99,6 @@ public class TileMap{
 		    id = "None";
 		    blocked = false;
 		}
-
 		id += curr;
 		t = new Tile(id, blocked);
 
@@ -184,11 +186,18 @@ public class TileMap{
 	return file;
     }
 
+    public void setMonsters(LinkedList<Monster> m){
+	monsters = m;
+    }
+
     public void draw(Graphics2D g){
 	for (int row = 0; row < height; row++){
 	    for (int col = 0; col < width; col++){
 		tiles[row][col].draw(g);
 	    }
+	}
+	for (int i = 0; i < props.size(); i++){
+	    props.get(i).draw(g);
 	}
     }
     
@@ -207,21 +216,14 @@ public class TileMap{
  
     public static void main(String[] args){
 	String type = "Hall_1";
-	TileMap t = new TileMap(type);
+	TileMap t = new TileMap(type, 10);
 
 	System.out.println(t);
 	String s = "";
 
-	/*
-	for (int row = 0; row < t.height; row++){
-	    for (int col = 0; col < t.width; col++){
-	        s += t.tiles[row][col].isBlocked() + " ";
-	    }
-	    s += "\n";
+	for (Monster m: t.monsters){
+	    System.out.println(m.getImage());
 	}
-	System.out.println(s);
-	*/
-
 
     }
 

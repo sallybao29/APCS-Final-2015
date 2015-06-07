@@ -7,27 +7,17 @@ public class Monster extends Character{
     private int cycle;
     private int radius;
     private boolean idle;
-    Player p;
+    Player p = null;
 
     /*------------------------------------------ Constructor ----------------------------------------------*/
-
-    public Monster(TileMap t){
-	super("Frog_", t);
-	setHP(100);
-	setX(300);
-	setY(300);
-	damage = 12;
-	radius = 5;
-
-	setDirection('U');
-    }
-
+ 
 
     public Monster(String s, int level, TileMap t){
 	super(s, t);
-	int tmp = (10-level)*10 + 100;
+	int tmp = (10-level) * 10 + 100;
 	setHP(tmp);
-	radius = 128;
+	setMaxHP(tmp);
+	radius = 96;
 	damage = 5;
 	idle = true;
     }
@@ -68,19 +58,10 @@ public class Monster extends Character{
 
 	    int r = (int) Math.random() * 20;
 
-	    if (r % 2 == 0){
+	    if (r % 5 == 0){
 		
 		if (delx == 0)
 		    dely = (int) (Math.random() * 3) - 1;
-
-		if (delx == -1)
-		    setDirection(dir[2]);
-		if (delx == 1)
-		    setDirection(dir[3]);
-		if (dely == -1)
-		    setDirection(dir[0]);
-		if (dely == 1)
-		    setDirection(dir[1]);
 	    }
 	    //otherwise change direction
 	    else {
@@ -126,6 +107,15 @@ public class Monster extends Character{
 
 	setX(getX() + getDX());
 	setY(getY() + getDY());
+
+	if (getDX() == -1)
+	    setDirection('L');
+	if (getDX() == 1)
+	    setDirection('R');
+	if (getDY() == -1)
+	    setDirection('U');
+	if (getDY() == 1)
+	    setDirection('D');
     }
   
     /*
@@ -145,10 +135,10 @@ public class Monster extends Character{
     public void attack(){
     }
 
-    public void repel(Player pl, char dir){
-	p = pl;
+    public void repel(){
 	p.setDX(getDX());
 	p.setDY(getDY());
+	p.getAnimation().setDelay(-1);
 	p.checkBounds();
     }
 
