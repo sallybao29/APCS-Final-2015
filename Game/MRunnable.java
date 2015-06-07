@@ -8,9 +8,10 @@ public class MRunnable implements Runnable{
 	mon = m;
 	pl = p;
     }
-    /*
+
     public void run(){
-	mon.move(file, pl);
+	AStar a = new AStar(file, mon);
+	a.move(pl);
+	a.nextStep();
     }
-    */
 }

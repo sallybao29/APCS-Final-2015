@@ -98,18 +98,22 @@ public class Monster extends Character{
 	if (getX() < x){
 	    setDX(1);
 	    setDY(0);
+	    setDirection('R');
 	}
 	else if (getX() > x){
 	    setDX(-1);
 	    setDY(0);
+	    setDirection('L');
 	}
 	else if (getY() < y){
 	    setDY(1);
 	    setDX(0);
+	    setDirection('D');
 	}
 	else if (getY() > y){
 	    setDY(-1);
 	    setDX(0);
+	    setDirection('U');
 	}
     }
    
@@ -125,7 +129,7 @@ public class Monster extends Character{
     }
   
     /*
-    public void move(String file, Player p){
+    public void move(String file){
 	AStar a = new AStar(file, this);
 	a.move(p);
 	if (cycle == 10){
@@ -137,14 +141,12 @@ public class Monster extends Character{
 	cycle++;
     }
     */
-
    
     public void attack(){
     }
 
     public void repel(Player pl, char dir){
 	p = pl;
-	//to be continued: Check for walls
 	p.setDX(getDX());
 	p.setDY(getDY());
 	p.checkBounds();
