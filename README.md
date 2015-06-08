@@ -4,7 +4,11 @@
 Project Information
 ----------
 
+Project Name: 
+
 Group Members: Sally Bao and Xiuzhen (Tiffany) Lei
+
+How to run: Compile and run Game.java in Game folder.
 
 Project Log
 
