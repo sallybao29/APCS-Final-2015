@@ -18,6 +18,8 @@ public class Floor{
     private int dx;
     private int dy;
 
+    private int level;
+
     private TileMap[][] areas;
 
     private boolean visited;
@@ -28,12 +30,14 @@ public class Floor{
 
 
     /*----------------------------- Constructor ------------------------------*/
-    public Floor(int level){
+    public Floor(int l){
 
 	visited = false;
 	reset = false;
 
-	makeFloor(level);
+	level = l;
+
+	makeFloor();
 
 	String path = "../Tileset/Tiles/" + id + ".png";
 
@@ -46,7 +50,7 @@ public class Floor{
 
     /*------------------------------- Initialization -----------------------*/
 
-    public void makeFloor(int level){
+    public void makeFloor(){
 	TileMap hall1, hall2, hall3, hall4, hall5, hall6,
 	    library1, library2, chem;
 
@@ -65,7 +69,6 @@ public class Floor{
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
-	    setLevel(areas, level);
 	    ax = 0;
 	    ay = 2;
 	    break;
@@ -75,20 +78,17 @@ public class Floor{
 				    {hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
-	    setLevel(areas, level);
 	    break;
 	case 8:
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
-	    setLevel(areas, level);
 	    id = "Physics";
 	    break;
 	case 7:
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
-	    setLevel(areas, level);
 	    id = "Biology";
 	    break;
 	case 6:
@@ -96,7 +96,6 @@ public class Floor{
 	    areas = new TileMap[][]{{null, hall3, hall4, hall5},
 				    {library1, hall2, null, null},
 				    {library2, hall1, null, null}};
-	    setLevel(areas, level);
 	    ax = 1;
 	    ay = 2;
 	    break;
@@ -104,33 +103,30 @@ public class Floor{
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
-	    setLevel(areas, level);
 	    id = "Language";
 	    break;
 	case 4:
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
-	    setLevel(areas, level);
 	    id = "Math";
 	    break;
 	case 3:
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
-	    setLevel(areas, level);
 	    id = "History";
 	    break;
 	case 2:
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
-	    setLevel(areas, level);
 	    break;
 	}
+	setLevel(areas);
     }
 
-    public void setLevel(TileMap[][] t, int level){
+    public void setLevel(TileMap[][] t){
 	for (TileMap[] a: t){
 	    for (TileMap b: a){
 		b.setLevel(level);
