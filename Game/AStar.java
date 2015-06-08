@@ -8,7 +8,7 @@ public class AStar{
     private Node e, start;
     private int maxX, maxY;
     private char plpos = 'P';
-    private char floor = 'z';
+    private char floor = ' ';
     private char wall = 'w';
     private char monpos = 'M';
     private Node rec;
@@ -85,8 +85,8 @@ public class AStar{
 	    addToFront(cx-1,cy,current);
 	    addToFront(cx,cy+1,current);
 	    addToFront(cx,cy-1,current);
-
-	    //delay(50);
+	    delay(50);
+	    //System.out.println(this);
 	}
 
 	// path recovery
@@ -108,9 +108,9 @@ public class AStar{
 		m.setDirection('D');
 	    else
 		m.setDirection('U');
-	    m.setX(rec.getX()*32);
-	    System.out.println(rec.getX());
-	    m.setY(rec.getY()*32);
+	    m.setDX(rec.getX()*32-m.getX());
+	    //System.out.println(rec.getX());
+	    m.setDY(rec.getY()*32-m.getY());
 	    rec = rec.getNext();
 	}
 	
