@@ -17,6 +17,9 @@ public class MapObject{
     private int width; 
     private int height;
 
+    //purpose varies by item
+    private int change;
+
     private BufferedImage image;
     private Rectangle bounds;
 
@@ -47,7 +50,7 @@ public class MapObject{
 	this(s, ' ');
 	this.x = x;
 	this.y = y;
-	bounds = new Rectangle(x, y, width, height);
+        calculateBounds();
 
         
     }
@@ -71,11 +74,46 @@ public class MapObject{
 	}
     }
 
+    public void calculateBounds(){
+	int rx = x;
+	int ry = y;
+	int rh = height;
+	int rw = width;
+
+	switch (id){
+	case "Stairs_D":
+	    rx = 32;
+	    rw = 62;
+	    rh = 71;
+	    break;
+	case "Stairs_U":
+	    rw = 63;
+	    rh = 103;
+	    break;
+	case "Seat_1": case "Seat_2": case "Seat_3":
+	    rw = 0;
+	    rh = 0;
+	    break;
+	case "Door_open":
+	    rx = 10;
+	    ry = 12;
+	    rw = 28;
+	    rh = 49;
+	    break;
+	}
+
+	bounds = new Rectangle(rx, ry, rw, rh);
+    }
+
 
  /*-------------------------------------- Getters and Setters -----------------------------------------*/
 	    
     public BufferedImage getImage(){
 	return image;
+    }
+
+    public int getChange(){
+	return change;
     }
 
     public String getID(){
@@ -108,6 +146,10 @@ public class MapObject{
 
     public void setImage(BufferedImage i){
 	image = i;
+    }
+
+    public void setChange(int i){
+	change = i;
     }
 
     public void setDirection(char d){

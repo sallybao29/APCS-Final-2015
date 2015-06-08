@@ -11,6 +11,14 @@ public class Floor{
     private int x;
     private int y;
 
+    //ascent
+    private int ax;
+    private int ay;
+
+    //descent
+    private int dx;
+    private int dy;
+
     private TileMap[][] areas;
 
     private boolean visited;
@@ -24,19 +32,14 @@ public class Floor{
 	visited = false;
 	reset = false;
 
-	TileMap hall1, hall2, hall3, hall4, hall5, 
-	    classroom1;
-
-	hall1 = new TileMap("Hall_1", level);
-	hall2 = new TileMap("Hall_2", level);
-	hall3 = new TileMap("Hall_3", level);
-	hall4 = new TileMap("Hall_4", level);
-	hall5 = new TileMap("Hall_5", level);
-
-	classroom1 = new TileMap("Class", level);
-
 	switch(level){
 	case 10:
+	    TileMap hall1 = new TileMap("Hall_1", level);
+	    TileMap hall2 = new TileMap("Hall_2", level);
+	    TileMap hall3 = new TileMap("Hall_3", level);
+	    TileMap hall4 = new TileMap("Hall_4", level);
+	    TileMap hall5 = new TileMap("Hall_5", level);
+
 	    id = "Art";
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
 				    {hall2, null, null},
@@ -53,6 +56,7 @@ public class Floor{
 	    break;
 	case 6:
 	    id = "English";
+
 	    break;
 	case 5:
 	    id = "Language";
@@ -100,6 +104,16 @@ public class Floor{
 
     public int getY(){
 	return y;
+    }
+
+    public void ascend(){
+	x = ax;
+	y = ay;
+    }
+
+    public void descend(){
+	x = dx;
+	y = dy;
     }
 
     public String getID(){

@@ -1,6 +1,6 @@
 import java.io.*;
-import java.util.Scanner;
-import java.util.LinkedList;
+import java.util.*;
+import java.awt.Rectangle;
 import java.awt.image.*;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
@@ -65,6 +65,8 @@ public class TileMap{
 	}
 	loadTiles();
 	makeMonsters(level);
+	//don't know what to call it
+	foo();
     }
 
    
@@ -118,29 +120,33 @@ public class TileMap{
 
 	//different monsters based on level
 	for (int i = 0; i < num; i++){
-	    String s = "";
+	    String[] names = null;
 	    switch (level){
 	    case 10:
-		s = "Rabbit_";
+	        names = new String[]{"Rabbit_"};
 		break;
 	    case 9:
 		break;
 	    case 8:
 		break;
 	    case 7:
+	        names = new String[]{"Frog_", "Cat_"}; 
 		break;
 	    case 6:
+		names = new String[]{"UnknownA_"};
 		break;
 	    case 5:
 		break;
 	    case 4:
 		break;
 	    case 3:
+		names = new String[]{"Ghost_"};
 		break;
 	    case 2:
 		break;
 	    }
 
+	    String s = names[(int)(Math.random() * names.length)];
 	    Monster mon = new Monster(s, level, this);
 
 	    //limit spawning to 320 * 320 area centered within panel
@@ -166,6 +172,32 @@ public class TileMap{
 	}
     }
 
+    public void foo(){
+	for (int i = 0; i < props.size(); i++){
+	    MapObject ob = props.get(i);
+	    Rectangle r = ob.getBounds();
+	    int rx = (int)r.getX();
+	    int ry = (int)r.getY();
+	    int rw = (int)r.getWidth();
+	    int rh = (int)r.getHeight();
+
+	    for (int row = ry / 32; row < (ry + rh)/ 32; row++){
+		for (int col = rx / 32; col < (rx + rw) / 32; col++){
+		    if (ob.getID().contains("Stairs") || 
+			ob.getID().equals("Door_open") ||
+			ob.getID().equals("Escalator")){
+
+			tiles[row][col].setBlocked(false);
+			tiles[row][col].setTransferPoint(ob.getID());
+		    }
+		    else 
+		        tiles[row][col].setBlocked(true);
+		}
+	    }
+	}
+
+    }
+
 
     /*----------------------------------------- Getters and Setters ----------------------------------------*/
  
@@ -179,6 +211,10 @@ public class TileMap{
  
     public Tile getTile(int x, int y){
 	return tiles[y][x];
+    }
+
+    public SuperList getProps(){
+	return props;
     }
 
 
@@ -196,9 +232,7 @@ public class TileMap{
 		tiles[row][col].draw(g);
 	    }
 	}
-	for (int i = 0; i < props.size(); i++){
-	    props.get(i).draw(g);
-	}
+	props.draw(g);
     }
     
     public String toString(){

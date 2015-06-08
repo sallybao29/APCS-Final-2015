@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.awt.Graphics2D;
 
 public class SuperList{
     private LinkedList<MapObject> things;
@@ -31,7 +32,7 @@ public class SuperList{
 	    add(new MapObject("Locker_1", 64, 72));
 	    break;
 	case "Hall_2":
-	    add(new MapObject("Escalator", 384, 256));
+	    add(new MapObject("Escalator", 416, 256));
 	    break;
 	case "Hall_5":
 	    add(new MapObject("Locker_1", 96, 72));
@@ -42,7 +43,7 @@ public class SuperList{
 
 	    add(new MapObject("Stairs_U", 96, 366));
 	    break;
-	case "Classroom_CS":
+	case "CS_Class":
 	    add(new MapObject("White_board", 96, 32));
 	    add(new MapObject("White_board", 192, 32));
 	    add(new MapObject("White_board", 288, 32));
@@ -79,8 +80,48 @@ public class SuperList{
 	    add(new MapObject("Computer_L", 448, 240));
 	    add(new MapObject("Computer_L", 448, 304));
 	    add(new MapObject("Computer_L", 448, 368));
-
 	    break;
+	case "Chem_Class":
+	    add(new MapObject("Window_2", 32, 32));
+	    add(new MapObject("Window_2", 384, 32));
+
+	    add(new MapObject("Black_Board", 160, 32));
+	    add(new MapObject("Black_Board", 256, 32));
+
+	    add(new MapObject("Desk_5", 128, 114));
+	    add(new MapObject("Desk_4", 256, 108));
+
+	    add(new MapObject("Desk_4", 32, 186));
+	    add(new MapObject("Desk_3", 32, 288));
+	    add(new MapObject("Desk_3", 32, 384));
+	    add(new MapObject("Desk_5", 352, 192));
+	    add(new MapObject("Desk_4", 352, 282));
+	    add(new MapObject("Desk_3", 352, 384));
+
+	    add(new MapObject("Seat_1", 32, 224));
+	    add(new MapObject("Seat_1", 64, 224));
+	    add(new MapObject("Seat_1", 128, 224));
+	    
+	    add(new MapObject("Seat_1", 64, 320));
+
+	    add(new MapObject("Seat_1", 32, 416));
+	    add(new MapObject("Seat_1", 96, 416));
+
+	    add(new MapObject("Seat_1", 352, 224));
+	    add(new MapObject("Seat_1", 384, 224));
+	    add(new MapObject("Seat_1", 448, 224));
+
+	    add(new MapObject("Seat_1", 384, 320));
+	    add(new MapObject("Seat_1", 448, 320));
+
+	    add(new MapObject("Seat_1", 384, 416));
+	    add(new MapObject("Seat_1", 416, 416));
+	}
+    }
+
+    public void draw(Graphics2D g){
+        for (MapObject ob: things){
+	    ob.draw(g);
 	}
     }
 }
