@@ -15,13 +15,15 @@ public class TileMap{
     private String file;
     private String id;
 
+    private int level;
+
     private LinkedList<Monster> monsters;
     private SuperList props; 
 
 
     /*----------------------------------------- Constructor ----------------------------------------*/
  
-    public TileMap(String type, int level){
+    public TileMap(String type){
 
 	id = type;
 
@@ -64,7 +66,7 @@ public class TileMap{
 	    sc.close();
 	}
 	loadTiles();
-	makeMonsters(level);
+	makeMonsters();
 	//don't know what to call it
 	foo();
     }
@@ -113,7 +115,7 @@ public class TileMap{
     }
 
     //generate monsters in random locations
-    public void makeMonsters(int level){
+    public void makeMonsters(){
 	monsters = new LinkedList<Monster>();
 
 	int num = (int)(Math.random() * (20 - level)) + 5;
@@ -126,8 +128,10 @@ public class TileMap{
 	        names = new String[]{"Rabbit_"};
 		break;
 	    case 9:
+		names = new String[]{"Rabbit_"};
 		break;
 	    case 8:
+		names = new String[]{"Rabbit_"};
 		break;
 	    case 7:
 	        names = new String[]{"Frog_", "Cat_"}; 
@@ -136,16 +140,19 @@ public class TileMap{
 		names = new String[]{"UnknownA_"};
 		break;
 	    case 5:
+		names = new String[]{"Rabbit_"};
 		break;
 	    case 4:
+		names = new String[]{"Rabbit_"};
 		break;
 	    case 3:
 		names = new String[]{"Ghost_"};
 		break;
 	    case 2:
+		names = new String[]{"Rabbit_"};
 		break;
 	    }
-
+	    System.out.println(level);
 	    String s = names[(int)(Math.random() * names.length)];
 	    Monster mon = new Monster(s, level, this);
 
@@ -226,6 +233,10 @@ public class TileMap{
 	monsters = m;
     }
 
+    public void setLevel(int l){
+	level = l;
+    }
+
     public void draw(Graphics2D g){
 	for (int row = 0; row < height; row++){
 	    for (int col = 0; col < width; col++){
@@ -250,7 +261,7 @@ public class TileMap{
  
     public static void main(String[] args){
 	String type = "Hall_1";
-	TileMap t = new TileMap(type, 10);
+	TileMap t = new TileMap(type);
 
 	System.out.println(t);
 	String s = "";

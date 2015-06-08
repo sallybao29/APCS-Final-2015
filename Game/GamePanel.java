@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements ActionListener{
     BufferedImage ppbar;
     BufferedImage textbox;
 
-    private int level = 10;
+    private int level;
 
     private LinkedList<Monster> monsters;
     private LinkedList<Projectile> books;
@@ -112,6 +112,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
+	level = 10;
+	System.out.println(level);
 	currentFloor = floors[level];
 	currentFloor.setX(2);
 	currentFloor.setY(0);
@@ -260,49 +262,13 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	    currentFloor.setX(fx);
 	    currentFloor.setY(fy);
-	}
-	else {
-	    someMethod(px, py);
-	    someMethod(px + p.getWidth(), py);
-	    someMethod(px, py + p.getHeight());
-	    someMethod(px + p.getWidth(), py + p.getHeight());
-	}
-	tilemap = currentFloor.getCurrent();
-	monsters = tilemap.getMonsters();
-	p.setMap(tilemap);
-    }
 
-    public void someMethod(int x, int y){
-	int px = p.getX();
-	int py = p.getY();
-	int fx = currentFloor.getX();
-	int fy = currentFloor.getY();
-	Tile t = tilemap.getTile(x/32, y/32);  
- 
-	if (!t.transferPoint().equals("None")){
-	    if (t.transferPoint().equals("Door_open")){
-		fx -= 1;
-		py = 448;
-		currentFloor.setX(fx);
-	    }
-	    else if (t.transferPoint().equals("Stairs_D")){
-		level--;
-		currentFloor = floors[level];
-		currentFloor.descend();
-		px = 160;
-		py = 416;
-	    }
-	    else if (t.transferPoint().equals("Stairs_U")){
-		level++;
-		currentFloor = floors[level];
-		currentFloor.ascend();
-		px = 384;
-		py = 384;
-	    }
-	    p.setX(px);
-	    p.setY(py);
+	    tilemap = currentFloor.getCurrent();
+	    monsters = tilemap.getMonsters();
+	    p.setMap(tilemap);
 	}
     }
+  
 
     /*------------------------------------------ Update Projectiles ----------------------------------------------*/
 
@@ -417,6 +383,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
     }
 
-
+    public static void main(String[] args){
+	GamePanel g = new GamePanel();
+    }
 
 }
