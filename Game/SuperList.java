@@ -85,8 +85,8 @@ public class SuperList{
 	    add(new MapObject("Window_2", 32, 32));
 	    add(new MapObject("Window_2", 384, 32));
 
-	    add(new MapObject("Black_Board", 160, 32));
-	    add(new MapObject("Black_Board", 256, 32));
+	    add(new MapObject("Black_board", 160, 32));
+	    add(new MapObject("Black_board", 256, 32));
 
 	    add(new MapObject("Desk_5", 128, 114));
 	    add(new MapObject("Desk_4", 256, 108));

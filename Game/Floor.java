@@ -54,14 +54,14 @@ public class Floor{
 	TileMap hall1, hall2, hall3, hall4, hall5, hall6,
 	    library1, library2, chem;
 
-	hall1 = new TileMap("Hall_1");
-	hall2 = new TileMap("Hall_2");
-	hall3 = new TileMap("Hall_3");
-	hall4 = new TileMap("Hall_4");
-	hall5 = new TileMap("Hall_5");
-	library1 = new TileMap("Library_1");
-	library2 = new TileMap("Library_2");
-	chem = new TileMap("Chem_Class");
+	hall1 = new TileMap("Hall_1", level);
+	hall2 = new TileMap("Hall_2", level);
+	hall3 = new TileMap("Hall_3", level);
+	hall4 = new TileMap("Hall_4", level);
+	hall5 = new TileMap("Hall_5", level);
+	library1 = new TileMap("Library_1", level);
+	library2 = new TileMap("Library_2", level);
+	chem = new TileMap("Chem_Class", level);
 
 	switch(level){
 	case 10:
@@ -121,19 +121,12 @@ public class Floor{
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
+	    id = "Yolo";
 	    break;
 	}
-	setLevel(areas);
     }
 
-    public void setLevel(TileMap[][] t){
-	for (TileMap[] a: t){
-	    for (TileMap b: a){
-		b.setLevel(level);
-	    }
-	}
-    }
-
+ 
     /*-------------------------- Getters and Setters ---------------------*/
 
     public TileMap getCurrent(){

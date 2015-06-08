@@ -82,7 +82,7 @@ public class MapObject{
 
 	switch (id){
 	case "Stairs_D":
-	    rx = 32;
+	    rx += 32;
 	    rw = 62;
 	    rh = 71;
 	    break;
@@ -95,8 +95,8 @@ public class MapObject{
 	    rh = 0;
 	    break;
 	case "Door_open":
-	    rx = 10;
-	    ry = 12;
+	    rx += 10;
+	    ry += 12;
 	    rw = 28;
 	    rh = 49;
 	    break;

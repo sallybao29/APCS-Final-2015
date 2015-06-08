@@ -41,11 +41,11 @@ public class Monster extends Character{
 	idle = b;
     }
 
-    /*------------------------------------------ Updating ----------------------------------------------*/
-
     public void resetP(Player pl){
 	p = pl;
     }
+
+    /*------------------------------------------ Updating ----------------------------------------------*/
 
     public void wander(){
 
@@ -79,22 +79,18 @@ public class Monster extends Character{
 	if (getX() < x){
 	    setDX(1);
 	    setDY(0);
-	    setDirection('R');
 	}
 	else if (getX() > x){
 	    setDX(-1);
 	    setDY(0);
-	    setDirection('L');
 	}
 	else if (getY() < y){
 	    setDY(1);
 	    setDX(0);
-	    setDirection('D');
 	}
 	else if (getY() > y){
 	    setDY(-1);
 	    setDX(0);
-	    setDirection('U');
 	}
     }
    

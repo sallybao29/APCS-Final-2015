@@ -266,6 +266,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    tilemap = currentFloor.getCurrent();
 	    monsters = tilemap.getMonsters();
 	    p.setMap(tilemap);
+	    p.setProjectiles(new LinkedList<Projectile>());
 	}
     }
   
