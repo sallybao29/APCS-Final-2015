@@ -106,7 +106,7 @@ public class Player extends Character{
 	if (x != tmpx || y != tmpy){
 	    stepcount++;
 
-      	    if (stepcount % 5 == 0 && power < maxPower)
+      	    if (stepcount % 3 == 0 && power < maxPower)
 		power++;
 	}
     }

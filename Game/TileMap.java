@@ -81,9 +81,7 @@ public class TileMap{
 
 	for (int row = 0; row < height; row++){
 	    for (int col = 0; col < width; col++){
-
 		char curr = map[row][col];
-
 		if (curr >= 'a' && curr <= 'z'){
 		    id = "Border_";
 		    blocked = true;
@@ -96,7 +94,6 @@ public class TileMap{
 		    id = "Floor_";		   
 		    blocked = false;
 		}
-
 		if (curr == ' '){
 		    id = "None";
 		    blocked = false;
@@ -123,7 +120,7 @@ public class TileMap{
 	    String[] names = null;
 	    switch (level){
 	    case 10:
-	        names = new String[]{"Rabbit_"};
+	        names = new String[]{"Ekans_", "Arbok_"};
 		break;
 	    case 9:
 		names = new String[]{"Rabbit_"};
@@ -135,7 +132,7 @@ public class TileMap{
 	        names = new String[]{"Frog_", "Cat_"}; 
 		break;
 	    case 6:
-		names = new String[]{"UnknownA_"};
+		names = new String[]{"A_"};
 		break;
 	    case 5:
 		names = new String[]{"Rabbit_"};
@@ -163,13 +160,11 @@ public class TileMap{
 	    //if monster generated in invalid position
 	    //recalculate x and y cor
 	    while (mon.topLeft() || mon.topRight() || mon.bottomLeft() || mon.bottomRight()){
-
 		x = (int)(Math.random() * 321) + 96;
 		y = (int)(Math.random() * 321) + 96;
 
 		mon.findCorners(x, y);
-	    }
-	  
+	    }	  
 	    mon.setX(x);
 	    mon.setY(y);
 
@@ -186,21 +181,33 @@ public class TileMap{
 	    int rw = (int)r.getWidth();
 	    int rh = (int)r.getHeight();
 
-	    for (int row = ry / 32; row < (ry + rh)/ 32; row++){
-		for (int col = rx / 32; col < (rx + rw) / 32; col++){
-		    if (ob.getID().contains("Stairs") || 
-			ob.getID().equals("Door_open") ||
-			ob.getID().equals("Escalator")){
+	    if (rh != 0 && rw != 0){
+		for (int row = ry / 32; row < (ry + rh)/ 32; row++)
+		    for (int col = rx / 32; col < (rx + rw) / 32; col++)
+			tiles[row][col].setBlocked(true);
+	    }
+        
+	    if (ob.getID().contains("Stairs") || 
+		ob.getID().equals("Door_open") ||
+		ob.getID().equals("Escalator") ||
+		ob.getID().contains("Exit")){
 
+		Rectangle v = ob.getValid();
+		int vx = (int)v.getX();
+		int vy = (int)v.getY();
+		int vw = (int)v.getWidth();
+		int vh = (int)v.getHeight();
+
+		for (int row = vy / 32; row <= (vy + vh)/ 32; row++){
+		    for (int col = vx / 32; col <= (vx + vw) / 32; col++){
 			tiles[row][col].setBlocked(false);
 			tiles[row][col].setTransferPoint(ob.getID());
 		    }
-		    else 
-		        tiles[row][col].setBlocked(true);
 		}
 	    }
 	}
     }
+	  
 
 
     /*----------------------------------------- Getters and Setters ----------------------------------------*/

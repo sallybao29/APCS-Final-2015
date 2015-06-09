@@ -208,19 +208,12 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
 	inGame();
-
 	updateBoard();
-
 	p.update();
-
 	updateMonsters();
-
 	updateProjectiles();
-
 	checkCollisions();
-
 	repaint();
-
     }
 
     public void inGame(){
@@ -237,6 +230,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	int fx = currentFloor.getX();
 	int fy = currentFloor.getY();
 
+	//if player moves off current map
 	if (px < 0 || px + p.getWidth() >= width ||
 	    py < 0 || py + p.getHeight() >= height){
 
@@ -256,7 +250,6 @@ public class GamePanel extends JPanel implements ActionListener{
 		py = 0;
 		fy += 1;
 	    }
-
 	    p.setX(px);
 	    p.setY(py);
 
@@ -268,7 +261,52 @@ public class GamePanel extends JPanel implements ActionListener{
 	    p.setMap(tilemap);
 	    p.setProjectiles(new LinkedList<Projectile>());
 	}
+	//if player takes stairs/escalator/enters door/exits room
+	else {
+	    someMethod(px, py);
+	    someMethod(px + p.getWidth(), py);
+	    someMethod(px, py + p.getHeight());
+	    someMethod(px + p.getWidth(), py + p.getHeight());
+	}
     }
+
+   public void someMethod(int x, int y){
+	int fx = currentFloor.getX();
+	int fy = currentFloor.getY();
+	Tile t = tilemap.getTile(x/32, y/32);  
+
+	if (!t.transferPoint().equals("None")){
+
+	    switch(t.transferPoint()){
+	    case "Door_open": case "Door_2":
+		currentFloor.setY(fy - 1);
+		p.setY(448);
+		break;
+	    case "Stairs_D":
+		level--;
+		currentFloor = floors[level];
+		currentFloor.descend();
+		p.setX(160);
+		p.setY(416);
+		break;
+	    case "Stairs_U": 
+		level++;
+		currentFloor = floors[level];
+		currentFloor.ascend();
+		p.setX(384);
+		p.setY(384);
+		break;
+	    case "Exit_H":
+		currentFloor.setY(fy + 1);
+		p.setY(97);
+		break;
+	    }
+	    tilemap = currentFloor.getCurrent();
+	    monsters = tilemap.getMonsters();
+	    p.setMap(tilemap);
+	    p.setProjectiles(new LinkedList<Projectile>());
+	}
+   }
   
 
     /*------------------------------------------ Update Projectiles ----------------------------------------------*/
@@ -333,7 +371,6 @@ public class GamePanel extends JPanel implements ActionListener{
 		monsters.remove(i);
 	    }
 	    else {
-
 		//if in range of monster, attack
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
 			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())

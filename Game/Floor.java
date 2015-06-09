@@ -52,16 +52,18 @@ public class Floor{
 
     public void makeFloor(){
 	TileMap hall1, hall2, hall3, hall4, hall5, hall6,
-	    library1, library2, chem;
+	    library1, library2, chem, lunchroom;
 
 	hall1 = new TileMap("Hall_1", level);
 	hall2 = new TileMap("Hall_2", level);
 	hall3 = new TileMap("Hall_3", level);
 	hall4 = new TileMap("Hall_4", level);
 	hall5 = new TileMap("Hall_5", level);
+	hall6 = new TileMap("Hall_6", level);
 	library1 = new TileMap("Library_1", level);
 	library2 = new TileMap("Library_2", level);
 	chem = new TileMap("Chem_Class", level);
+	lunchroom = new TileMap("Cafeteria", level);
 
 	switch(level){
 	case 10:
@@ -78,6 +80,8 @@ public class Floor{
 				    {hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
+	    dx = 2;
+	    dy = 1;
 	    break;
 	case 8:
 	    areas = new TileMap[][]{{hall3, hall4, hall5},
@@ -100,7 +104,8 @@ public class Floor{
 	    ay = 2;
 	    break;
 	case 5:
-	    areas = new TileMap[][]{{hall3, hall4, hall5},
+	    areas = new TileMap[][]{{lunchroom, null, null},
+				    {hall6, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
 	    id = "Language";
