@@ -251,7 +251,8 @@ public class SuperList{
 	    add(new MapObject("Plate", 256, 320));
 	    add(new MapObject("Plate", 338, 386));
 	    break;
-
+	case "inventory":
+	    break;
 	}
     }
 

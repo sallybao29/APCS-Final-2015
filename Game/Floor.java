@@ -10,11 +10,11 @@ public class Floor{
     private int x;
     private int y;
 
-    //ascent
+    //coming from floor below
     private int ax;
     private int ay;
 
-    //descent
+    //coming from floor above
     private int dx;
     private int dy;
 
@@ -31,7 +31,6 @@ public class Floor{
 
     /*----------------------------- Constructor ------------------------------*/
     public Floor(int l){
-
 	visited = false;
 	reset = false;
 
@@ -102,6 +101,8 @@ public class Floor{
 				    {library2, hall1, null, null}};
 	    ax = 1;
 	    ay = 2;
+	    dx = 3;
+	    dy = 0;
 	    break;
 	case 5:
 	    areas = new TileMap[][]{{lunchroom, null, null},
@@ -109,6 +110,10 @@ public class Floor{
 				    {hall2, null, null},
 				    {hall1, null, null}};
 	    id = "Language";
+	    ax = 0;
+	    ay = 3;
+	    dx = 2;
+	    dy = 1;
 	    break;
 	case 4:
 	    areas = new TileMap[][]{{hall3, hall4, hall5},

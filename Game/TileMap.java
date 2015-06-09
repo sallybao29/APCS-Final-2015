@@ -135,7 +135,7 @@ public class TileMap{
 		names = new String[]{"A_"};
 		break;
 	    case 5:
-		names = new String[]{"Rabbit_"};
+		names = new String[]{"A_"};
 		break;
 	    case 4:
 		names = new String[]{"Rabbit_"};
@@ -189,6 +189,7 @@ public class TileMap{
         
 	    if (ob.getID().contains("Stairs") || 
 		ob.getID().equals("Door_open") ||
+		ob.getID().equals("Door_2") ||
 		ob.getID().equals("Escalator") ||
 		ob.getID().contains("Exit")){
 

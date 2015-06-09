@@ -39,6 +39,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     private LinkedList<Monster> monsters;
     private LinkedList<Projectile> books;
+    private LinkedList<MapObject> itemDrop;
     private Timer timer;
 
     /*------------------------------------------ Key Class ----------------------------------------------*/
@@ -112,11 +113,11 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-	level = 10;
+	level = 5;
 	System.out.println(level);
 	currentFloor = floors[level];
 	currentFloor.setX(2);
-	currentFloor.setY(0);
+	currentFloor.setY(1);
 
 	tilemap = currentFloor.getCurrent();
 
@@ -257,6 +258,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    currentFloor.setY(fy);
 
 	    tilemap = currentFloor.getCurrent();
+	    //itemDrop = new LinkedList<MapObject>();
 	    monsters = tilemap.getMonsters();
 	    p.setMap(tilemap);
 	    p.setProjectiles(new LinkedList<Projectile>());
@@ -364,6 +366,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    m.resetP(p);
 
 	    if (m.getHP() <= 0){
+		//add(new MapObject("name", x, y));
 		monsters.remove(i);
 	    }
 	    else if (m.getX() < 0 || m.getX() + m.getWidth() >= width ||
