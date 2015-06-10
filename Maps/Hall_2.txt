@@ -1,12 +1,12 @@
 aae         caaa
 aae         caaa
-fbk         caaa
-eAA         caaa
-eBB         caaa
-e           sbbg
-e           oAAc
-e           oBBc
-idj         o  c
+bbk         caaa
+AAA         caaa
+BBB         caaa
+            sbbg
+            oAAc
+            oBBc
+ddj         o  c
 aae         o  c
 aae         r  c
 aae         A  c

@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 
 public class Player extends Character{
     private LinkedList<Projectile> projectiles;
+    private Inventory inventory;
     private boolean attacking;
     private int power;
     private int maxPower;
@@ -30,6 +31,7 @@ public class Player extends Character{
         
 	setDirection('U');
 	projectiles = new LinkedList<Projectile>();
+	inventory = new Inventory();
     }
 
     public void loadImage(){
@@ -46,6 +48,10 @@ public class Player extends Character{
 
     public void setProjectiles(LinkedList<Projectile> pro){
 	projectiles = pro;
+    }
+
+    public Inventory getInventory(){
+	return inventory;
     }
 
     public void attacking(boolean b){
@@ -74,12 +80,17 @@ public class Player extends Character{
     public void die(){
 	//dying animation
     }
-
+    //create a new projectile and add to list
     public void attack(){
 	if (attacking){
-	    char direction = getDirection();
-	    Projectile p = new Projectile("English_", direction);
 
+	    char direction = getDirection();
+	    String s = inventory.getCurrent();
+	    Projectile p = new Projectile(s, direction);
+
+	    //if player has enough power
+	    //set projectile's x and y
+	    //and add to list
 	    if (power > p.getCost()){
 		power -= p.getCost();
 
@@ -90,7 +101,6 @@ public class Player extends Character{
 	    }
 	}
     }
-
   
     public void update(){
 	int tmpx = getX();

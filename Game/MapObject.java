@@ -17,8 +17,7 @@ public class MapObject{
     private int width; 
     private int height;
 
-    //purpose varies by item
-    private int change;
+    private int quantity;
 
     private BufferedImage image;
     private Rectangle bounds;
@@ -32,6 +31,7 @@ public class MapObject{
     public MapObject(String s, char d){
 	id = s;
 	direction = d;
+	quantity = 1;
 	image = null;
 	loadImage();
 
@@ -97,16 +97,19 @@ public class MapObject{
 	    bw = 62;
 	    break;
 	case "Seat_1": case "Seat_2": case "Seat_3":
+	case "Chair_R": case "Chair_L":
 	    bw = 0;
 	    bh = 0;
 	    break;
-	case "Door_open":
+	case "Door_open": 
 	    vx += 8;
 	    vy += 30;
 	    break;
 	case "Door_2":
-	    vy += 16;
+	    vx += 8;
+	    vy += 30;
 	    vw = 63;
+	    break;
 	case "Escalator":
 	    vy += 64;
 	    vw = 63;
@@ -118,6 +121,7 @@ public class MapObject{
 	    vy += 32;
 	    vw = 47;
 	    vh = 15;
+	    break;
 	}
  
 	bounds = new Rectangle(bx, by, bw, bh);
@@ -131,8 +135,8 @@ public class MapObject{
 	return image;
     }
 
-    public int getChange(){
-	return change;
+    public int getQuantity(){
+	return quantity;
     }
 
     public String getID(){
@@ -163,12 +167,14 @@ public class MapObject{
 	return width;
     }
 
-    public void setImage(BufferedImage i){
-	image = i;
+    public void changeQuantity(int i){
+	quantity += i;
+	if (quantity < 0)
+	    quantity = 0;
     }
 
-    public void setChange(int i){
-	change = i;
+    public void setImage(BufferedImage i){
+	image = i;
     }
 
     public void setDirection(char d){

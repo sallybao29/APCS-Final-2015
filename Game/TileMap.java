@@ -66,7 +66,9 @@ public class TileMap{
 	loadTiles();
 	makeMonsters(level);
 	//don't know what to call it
-	foo();
+	for (int i = 0; i < props.size(); i++){
+	    foo(props.get(i));
+	}
     }
 
    
@@ -91,13 +93,14 @@ public class TileMap{
 		    blocked = true;
 		}
 		if (curr >= '0' && curr <= '9'){
-		    id = "Floor_";		   
+		    id = "Floor_";
 		    blocked = false;
 		}
 		if (curr == ' '){
 		    id = "None";
 		    blocked = false;
 		}
+		
 		id += curr;
 		t = new Tile(id, blocked);
 
@@ -172,42 +175,41 @@ public class TileMap{
 	}
     }
 
-    public void foo(){
-	for (int i = 0; i < props.size(); i++){
-	    MapObject ob = props.get(i);
-	    Rectangle r = ob.getBounds();
-	    int rx = (int)r.getX();
-	    int ry = (int)r.getY();
-	    int rw = (int)r.getWidth();
-	    int rh = (int)r.getHeight();
+    public void foo(MapObject ob){
+	Rectangle r = ob.getBounds();
+	int rx = (int)r.getX();
+	int ry = (int)r.getY();
+	int rw = (int)r.getWidth();
+	int rh = (int)r.getHeight();
 
-	    if (rh != 0 && rw != 0){
-		for (int row = ry / 32; row < (ry + rh)/ 32; row++)
-		    for (int col = rx / 32; col < (rx + rw) / 32; col++)
-			tiles[row][col].setBlocked(true);
-	    }
+	if (rh != 0 && rw != 0){
+	    for (int row = ry / 32; row < (ry + rh)/ 32; row++)
+		for (int col = rx / 32; col < (rx + rw) / 32; col++)
+		    tiles[row][col].setBlocked(true);
+	}
         
-	    if (ob.getID().contains("Stairs") || 
-		ob.getID().equals("Door_open") ||
-		ob.getID().equals("Door_2") ||
-		ob.getID().equals("Escalator") ||
-		ob.getID().contains("Exit")){
+	if (ob.getID().contains("Stairs") || 
+	    ob.getID().equals("Door_open") ||
+	    ob.getID().equals("Door_2") ||
+	    ob.getID().equals("Escalator") ||
+	    ob.getID().contains("Exit")){
 
-		Rectangle v = ob.getValid();
-		int vx = (int)v.getX();
-		int vy = (int)v.getY();
-		int vw = (int)v.getWidth();
-		int vh = (int)v.getHeight();
+	    Rectangle v = ob.getValid();
+	    int vx = (int)v.getX();
+	    int vy = (int)v.getY();
+	    int vw = (int)v.getWidth();
+	    int vh = (int)v.getHeight();
 
-		for (int row = vy / 32; row <= (vy + vh)/ 32; row++){
-		    for (int col = vx / 32; col <= (vx + vw) / 32; col++){
-			tiles[row][col].setBlocked(false);
-			tiles[row][col].setTransferPoint(ob.getID());
-		    }
+	    for (int row = vy / 32; row <= (vy + vh)/ 32; row++){
+		for (int col = vx / 32; col <= (vx + vw) / 32; col++){
+		    tiles[row][col].setBlocked(false);
+		    tiles[row][col].setTransferPoint(ob.getID());
 		}
 	    }
 	}
     }
+   
+  
 	  
 
 

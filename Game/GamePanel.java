@@ -34,7 +34,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
     BufferedImage hpbar;
     BufferedImage ppbar;
-    BufferedImage textbox;
 
     private int level;
 
@@ -47,11 +46,15 @@ public class GamePanel extends JPanel implements ActionListener{
   
     private class Key implements KeyListener {
 
+	//move player or attack
 	public void keyPressed(KeyEvent e) {
 	    int c = e.getKeyCode();
 	    switch (c){
 	    case KeyEvent.VK_SPACE:
 		p.attacking(true);
+		break;
+	    case KeyEvent.VK_SHIFT:
+		p.getInventory().next();
 		break;
 	    case KeyEvent.VK_RIGHT:
 		p.setDirection('R');
@@ -102,23 +105,24 @@ public class GamePanel extends JPanel implements ActionListener{
     public GamePanel(){
 	super();
 	addKeyListener(new Key());
-	setPreferredSize(new Dimension(width+256, height+128));
+	setPreferredSize(new Dimension(width+255, height));
 	setFocusable(true);
 	setDoubleBuffered(true);
 	setVisible(true);
 
 	inGame = true;
 
+	//setup floors 
 	floors = new Floor[11];
 
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-	level = 5;
+	level = 10;
 	System.out.println(level);
 	currentFloor = floors[level];
 	currentFloor.setX(2);
-	currentFloor.setY(1);
+	currentFloor.setY(0);
 
 	tilemap = currentFloor.getCurrent();
 
@@ -134,12 +138,10 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	hpbar = null;
         ppbar = null;
-	textbox = null;
 
 	try {
 	    hpbar = ImageIO.read(new File("../Sprites/Display/HPbar.png"));
 	    ppbar = ImageIO.read(new File("../Sprites/Display/PPbar.png"));
-	    textbox = ImageIO.read(new File("../Sprites/Display/TextBox.png"));
 	}
 	catch (Exception e){}
 
@@ -156,8 +158,8 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	g.setColor(Color.CYAN);
 
+	//draw floor
 	BufferedImage f = currentFloor.getFloor();
-
 	if (tilemap.getID().contains("Hall")){
 	    g.drawImage(f, 0, 0, this);
 	}
@@ -166,8 +168,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	tilemap.draw(im);
 	p.draw(im);
 
-        books = p.getProjectiles();
 
+        books = p.getProjectiles();
 	for (Projectile p: books)
 	    p.draw(im);
       
@@ -179,8 +181,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    item.draw(im);
 	}
 
-	//g.drawString("HP: " + p.getHP(), 128, 100);
-	//g.drawString("PP: " + p.getPower(), 128, 128);
+	p.getInventory().draw(im);
 
 	drawStats(g);
 	drawDisplay(g);
@@ -192,9 +193,11 @@ public class GamePanel extends JPanel implements ActionListener{
     //draw hp and pp bars
     //change rectangle based on each and draw
     public void drawStats(Graphics g){
-	int width = (int)(((double)p.getPower())/p.getMaxP() * 96);
+	int hwidth = (int)(((double)p.getHP())/p.getMaxHP() * 96);
+	int pwidth = (int)(((double)p.getPower())/p.getMaxP() * 96);
 
-	pp.setSize(width,(int)pp.getHeight());
+	hp.setSize(hwidth, (int)hp.getHeight());
+	pp.setSize(pwidth,(int)pp.getHeight());
 
 	g.fillRect((int)hp.getX(), (int)hp.getY(), (int)hp.getWidth(), (int)hp.getHeight());
 	g.fillRect((int)pp.getX(), (int)pp.getY(), (int)pp.getWidth(), (int)pp.getHeight());
@@ -205,8 +208,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
 
     public void drawDisplay(Graphics g){
-	//g.drawRect(0, 513, 512, 128);
-	g.drawImage(textbox, 0, 513, this);
 	g.drawRect(513, 0, 256, 640);
     }
 
@@ -230,6 +231,8 @@ public class GamePanel extends JPanel implements ActionListener{
     /*------------------------------------------ Update Board -----------------------------------------------*/
 
     //change tilemap as player moves to next area
+    //check for moving out of bounds
+    //or stepping on transfer point
     public void updateBoard(){
 	int px = p.getX();
 	int py = p.getY();
@@ -271,10 +274,11 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	//if player takes stairs/escalator/enters door/exits room
 	else {
-	    someMethod(px, py);
-	    someMethod(px + p.getWidth(), py);
-	    someMethod(px, py + p.getHeight());
-	    someMethod(px + p.getWidth(), py + p.getHeight());
+
+	    transfer(px, py);
+	    transfer(px + p.getWidth(), py);
+	    transfer(px, py + p.getHeight());
+	    transfer(px + p.getWidth(), py + p.getHeight());
 
 	    if (temp != currentFloor.getLevel()){
 		itemDrop = new LinkedList<MapObject>();
@@ -282,7 +286,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
     }
 
-   public void someMethod(int x, int y){
+    //if player steps on transfer point
+    //move to next tilemap/floor
+   public void transfer(int x, int y){
 	int fx = currentFloor.getX();
 	int fy = currentFloor.getY();
 	Tile t = tilemap.getTile(x/32, y/32);  
@@ -375,6 +381,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    Monster m = monsters.get(i);
 	    m.resetP(p);
 
+	    //if monster has no more hp, remove
 	    if (m.getHP() <= 0){
 		Random rn = new Random();
 		int randitem = rn.nextInt(2);
@@ -390,6 +397,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		}
 		monsters.remove(i);
 	    }
+	    //if monster moves off tilemaps, remove
 	    else if (m.getX() < 0 || m.getX() + m.getWidth() >= width ||
 		     m.getY() < 0 || m.getY() + m.getHeight() >= height){
 		monsters.remove(i);
@@ -399,6 +407,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
 			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
 		    m.setIdle(false);
+		//if monster was attacked by player
 		else if (m.getHP() < m.getMaxHP())
 		    m.setIdle(false);
 		else 
@@ -427,6 +436,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		 (Math.abs(p.getY()/32 - m.getY()/32)) < 0.5){
 		System.out.println("You've been caught!");
 		m.repel();
+		p.setHP(p.getHP() - m.getDamage());
 	    }
 	    //collision between projectile and monster
 	    //if projectile collides, it disappears
