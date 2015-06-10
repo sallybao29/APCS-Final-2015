@@ -201,5 +201,9 @@ public class Floor{
 	this.y = y;
     }
 
+    public int getLevel(){
+	return level;
+    }
+
 }
 
