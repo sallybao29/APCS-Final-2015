@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     private LinkedList<Monster> monsters;
     private LinkedList<Projectile> books;
-    private LinkedList<MapObject> itemDrop = new LinkedList<MapObject>();
+    private LinkedList<MapObject> itemDrop; //new LinkedList<MapObject>();
     private Timer timer;
 
     /*------------------------------------------ Key Class ----------------------------------------------*/
@@ -57,8 +57,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		//change of projectiles
 	    case KeyEvent.VK_SHIFT:
 		p.getInventory().next();
-		break;
-		
+		break;		
 	    case KeyEvent.VK_A:
 		break;
 	    case KeyEvent.VK_RIGHT:
@@ -117,6 +116,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	inGame = true;
 
+	itemDrop = new LinkedList<MapObject>();
 	//setup floors 
 	floors = new Floor[11];
 

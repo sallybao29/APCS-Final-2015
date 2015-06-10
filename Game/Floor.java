@@ -65,7 +65,9 @@ public class Floor{
 	cs = new TileMap("CS_Class", level);
 	lunchroom = new TileMap("Cafeteria", level);
 
-	if (level != 5){
+	//blocks off hall2 on all floors
+	//except 6, because library is there
+	if (level != 6){
 	    MapObject plant1 = new MapObject("Plant_4", 0, 128);
 	    MapObject plant2 = new MapObject("Plant_4", 0, 160);
 	    MapObject plant3 =  new MapObject("Plant_4", 0, 192);
@@ -144,7 +146,8 @@ public class Floor{
 	    id = "History";
 	    break;
 	case 2:
-	    areas = new TileMap[][]{{hall3, hall4, hall5},
+	    areas = new TileMap[][]{{null, history, null},
+				    {hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
 	    id = "Yolo";
