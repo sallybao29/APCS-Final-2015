@@ -37,8 +37,8 @@ public class SuperList{
 	    add(new MapObject("Locker_1", 32, 72));
 	    add(new MapObject("Locker_1", 64, 72));
 
-	    add(new MapObject("Display", 320, 96));
-	    add(new MapObject("Display", 416, 96));
+	    add(new MapObject("Display", 320, 64));
+	    add(new MapObject("Display", 416, 64));
 
 	    add(new MapObject("Bench_R", 32, 320));
 	    add(new MapObject("Bench_R", 32, 384));

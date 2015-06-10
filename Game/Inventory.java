@@ -30,6 +30,17 @@ public class Inventory extends SuperList{
 	    pointer = 0;
     }
 
+    //takes String, MapObject with same id
+    //and return entire object
+    public MapObject find(String s){
+	for (int i = 4; i < size(); i++){
+	    if (get(i).getID().equals(s)){
+		return get(i);
+	    }
+	}
+	return null;
+    }
+
     public String getCurrent(){
 	return get(pointer).getID();
     }
@@ -37,10 +48,16 @@ public class Inventory extends SuperList{
     public void draw(Graphics2D g){
 	//draw items in inventory
 	for (int i = 4; i < size(); i++){
-	    get(i).draw(g);
+	    MapObject ob = get(i);
+	    ob.draw(g);
+	    String s = "" + ob.getQuantity();
+	    g.drawString(s, ob.getX(), ob.getY() + 32);
 	}
 	//draw current projectile
         get(pointer).draw(g);
+	String s = get(pointer).getID();
+
+	g.drawString(s.substring(0, s.length() - 1), 20, 10);
     }
 
 }

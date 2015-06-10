@@ -50,11 +50,16 @@ public class GamePanel extends JPanel implements ActionListener{
 	public void keyPressed(KeyEvent e) {
 	    int c = e.getKeyCode();
 	    switch (c){
+		//attack event
 	    case KeyEvent.VK_SPACE:
 		p.attacking(true);
 		break;
+		//change of projectiles
 	    case KeyEvent.VK_SHIFT:
 		p.getInventory().next();
+		break;
+		
+	    case KeyEvent.VK_A:
 		break;
 	    case KeyEvent.VK_RIGHT:
 		p.setDirection('R');
@@ -216,7 +221,7 @@ public class GamePanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e){
 	inGame();
 	updateBoard();
-	p.update();
+	updatePlayer();
 	updateMonsters();
 	updateProjectiles();
 	checkCollisions();
@@ -274,7 +279,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	//if player takes stairs/escalator/enters door/exits room
 	else {
-
 	    transfer(px, py);
 	    transfer(px + p.getWidth(), py);
 	    transfer(px, py + p.getHeight());
@@ -323,6 +327,26 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
    }
   
+    /*-------------------------------------- Update Player -----------------------------------------*/
+
+    public void updatePlayer(){
+	p.update();
+	
+	int i = 0; 
+	while (i < itemDrop.size()){
+	    MapObject ob = itemDrop.get(i);
+
+	    //if player steps on dropped item
+	    if (p.getBounds().intersects(ob.getBounds())){
+		//increase quantity of item in inventory
+		p.getInventory().find(ob.getID()).changeQuantity(1);
+		itemDrop.remove(i);				 
+	    }
+	    else{
+		i++;
+	    }
+	}
+    }
 
     /*------------------------------------------ Update Projectiles ----------------------------------------------*/
 
