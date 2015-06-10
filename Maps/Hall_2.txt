@@ -2,7 +2,7 @@ aae         caaa
 aae         caaa
 bbk         caaa
 AAA         caaa
-ABB         caaa
+BBB         caaa
             sbbg
             oAAc
             oBBc

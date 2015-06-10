@@ -428,6 +428,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public static void main(String[] args){
 	GamePanel g = new GamePanel();
+	System.out.println("Running");
     }
 
 }

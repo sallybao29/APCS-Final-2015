@@ -121,6 +121,7 @@ public class MapObject{
 	    vy += 32;
 	    vw = 47;
 	    vh = 15;
+	    break;
 	}
  
 	bounds = new Rectangle(bx, by, bw, bh);
