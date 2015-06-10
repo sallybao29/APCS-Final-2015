@@ -17,22 +17,22 @@ public class Projectile extends MapObject{
 
 	switch (id){
 	case "English_":
-	    speed = 3;
+	    speed = 4;
 	    cost = 2;
 	    damage = 20;
 	    break;
 	case "History_":
-	    speed = 1;
+	    speed = 2;
 	    cost = 6;
 	    damage = 50;
 	    break;
 	case "Physics_":
-	    speed = 2;
+	    speed = 3;
 	    cost = 4;
 	    damage = 30;
 	    break;
 	case "Precalc_":
-	    speed = 2;
+	    speed = 3;
 	    cost = 3;
 	    damage = 25;
 	    break;
@@ -53,10 +53,6 @@ public class Projectile extends MapObject{
 	    break;
 	}
 
-    }
-
-    public Projectile(String s, int x, int y){
-	super(s, x, y);
     }
 
     public void loadImage(){

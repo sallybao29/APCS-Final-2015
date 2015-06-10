@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.awt.image.*;
 
-
 public class Floor{
     private int x;
     private int y;
@@ -30,6 +29,7 @@ public class Floor{
 
 
     /*----------------------------- Constructor ------------------------------*/
+
     public Floor(int l){
 	visited = false;
 	reset = false;
@@ -51,7 +51,7 @@ public class Floor{
 
     public void makeFloor(){
 	TileMap hall1, hall2, hall3, hall4, hall5, hall6,
-	    library1, library2, chem, lunchroom;
+	    library1, library2, chem, lunchroom, cs;
 
 	hall1 = new TileMap("Hall_1", level);
 	hall2 = new TileMap("Hall_2", level);
@@ -62,7 +62,22 @@ public class Floor{
 	library1 = new TileMap("Library_1", level);
 	library2 = new TileMap("Library_2", level);
 	chem = new TileMap("Chem_Class", level);
+	cs = new TileMap("CS_Class", level);
 	lunchroom = new TileMap("Cafeteria", level);
+
+	if (level != 5){
+	    MapObject plant1 = new MapObject("Plant_4", 0, 128);
+	    MapObject plant2 = new MapObject("Plant_4", 0, 160);
+	    MapObject plant3 =  new MapObject("Plant_4", 0, 192);
+
+	    hall2.foo(plant1);
+	    hall2.foo(plant2);
+	    hall2.foo(plant3);
+
+	    hall2.getProps().add(plant1);
+	    hall2.getProps().add(plant2);
+	    hall2.getProps().add(plant3);
+	}
 
 	switch(level){
 	case 10:
@@ -122,7 +137,8 @@ public class Floor{
 	    id = "Math";
 	    break;
 	case 3:
-	    areas = new TileMap[][]{{hall3, hall4, hall5},
+	    areas = new TileMap[][]{{cs, null, null},
+				    {hall3, hall4, hall5},
 				    {hall2, null, null},
 				    {hall1, null, null}};
 	    id = "History";

@@ -1,6 +1,6 @@
 aaafbbbbbgaaafbb
-bbbkACCAAlbbbkAA
-AAAABCCBBAAAAABB
+bbbkCCAAAlbbbkAA
+AAAACCBBBAAAAABB
 BBBB     BBBBB 
                
                

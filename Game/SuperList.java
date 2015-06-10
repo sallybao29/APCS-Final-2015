@@ -31,14 +31,44 @@ public class SuperList{
 
     public void makeObjects(){
 	switch(id){
+	    /*------------------------ Hall 1 -----------------------------*/
 	case "Hall_1":
 	    add(new MapObject("Stairs_D", 386, 368));
 	    add(new MapObject("Locker_1", 32, 72));
 	    add(new MapObject("Locker_1", 64, 72));
+
+	    add(new MapObject("Display", 320, 96));
+	    add(new MapObject("Display", 416, 96));
+
+	    add(new MapObject("Bench_R", 32, 320));
+	    add(new MapObject("Bench_R", 32, 384));
 	    break;
+	    /*------------------------ Hall 2 -----------------------------*/
 	case "Hall_2":
 	    add(new MapObject("Escalator", 416, 256));
 	    break;
+	    /*------------------------ Hall 3 -----------------------------*/
+	case "Hall_3":
+	    add(new MapObject("Vending_machine", 224, 64));
+	    add(new MapObject("Vending_machine", 256, 64));
+
+	    add(new MapObject("Locker_1", 480, 72));
+	    add(new MapObject("Door_close", 342, 34));
+	    break;
+	    /*------------------------ Hall 4 -----------------------------*/
+	case "Hall_4":
+	    add(new MapObject("Locker_1", 0, 72));
+	    add(new MapObject("Locker_1", 32, 72));
+	    add(new MapObject("Locker_1", 64, 72));
+	    add(new MapObject("Locker_1", 96, 72));
+
+	    add(new MapObject("Locker_1", 288, 72));
+	    add(new MapObject("Locker_1", 320, 72));
+	    add(new MapObject("Locker_1", 352, 72));
+	    add(new MapObject("Locker_1", 384, 72));
+	    add(new MapObject("Locker_1", 416, 72));
+	    break;
+	    /*------------------------ Hall 5 -----------------------------*/
 	case "Hall_5":
 	    add(new MapObject("Locker_1", 96, 72));
 	    add(new MapObject("Locker_1", 128, 72));
@@ -48,9 +78,17 @@ public class SuperList{
 
 	    add(new MapObject("Stairs_U", 96, 366));
 	    break;
+	    /*------------------------ Hall 6 -----------------------------*/
 	case "Hall_6":
 	    add(new MapObject("Door_2", 216, 34));
+	    add(new MapObject("Display", 32, 64));
+	    add(new MapObject("Display", 128, 64));
+	    add(new MapObject("Display", 320, 64));
+	    add(new MapObject("Display", 416, 64));
+
+	    add(new MapObject("Fountain", 192, 224));
 	    break;
+	    /*------------------------ CS Class -----------------------------*/
 	case "CS_Class":
 	    add(new MapObject("White_board", 96, 32));
 	    add(new MapObject("White_board", 192, 32));
@@ -88,7 +126,9 @@ public class SuperList{
 	    add(new MapObject("Computer_L", 448, 240));
 	    add(new MapObject("Computer_L", 448, 304));
 	    add(new MapObject("Computer_L", 448, 368));
+
 	    break;
+	    /*------------------------ Chem Class ----------------------------*/
 	case "Chem_Class":
 	    add(new MapObject("Window_2", 32, 32));
 	    add(new MapObject("Window_2", 384, 32));
@@ -125,6 +165,7 @@ public class SuperList{
 	    add(new MapObject("Seat_1", 384, 416));
 	    add(new MapObject("Seat_1", 416, 416));
 	    break;
+	    /*------------------------ Library 1 -----------------------------*/
 	case "Library_1":
 	    add(new MapObject("Bookshelf", 32, 64));
 	    add(new MapObject("Bookshelf", 96, 64));
@@ -156,6 +197,7 @@ public class SuperList{
 	    add(new MapObject("Book", 128, 256));
 	    add(new MapObject("Book", 320, 384));
 	    break;
+	    /*------------------------ Library 2 -----------------------------*/
 	case "Library_2":
 	    add(new MapObject("Bookshelf", 288, 160));
 	    add(new MapObject("Bookshelf", 352, 160));
@@ -175,11 +217,11 @@ public class SuperList{
 	    add(new MapObject("Computer_R", 32, 288));
 	    add(new MapObject("Computer_R", 32, 352));
 
-	    add(new MapObject("Seat_3", 104, 128));
-	    add(new MapObject("Seat_3", 104, 192));
-	    add(new MapObject("Seat_3", 104, 256));
-	    add(new MapObject("Seat_3", 104, 320));
-	    add(new MapObject("Seat_3", 104, 384));
+	    add(new MapObject("Seat_3", 72, 128));
+	    add(new MapObject("Seat_3", 72, 192));
+	    add(new MapObject("Seat_3", 72, 256));
+	    add(new MapObject("Seat_3", 72, 320));
+	    add(new MapObject("Seat_3", 72, 384));
 
 	    add(new MapObject("Plant_4", 32, 416));
 	    add(new MapObject("Plant_4", 448, 416));
@@ -187,6 +229,7 @@ public class SuperList{
 	    add(new MapObject("Books", 128, 160));
 	    add(new MapObject("Books", 288, 96));
 	    break;
+	    /*------------------------ Cafeteria -----------------------------*/
 	case "Cafeteria":
 	    add(new MapObject("Exit_H", 232, 464));
 

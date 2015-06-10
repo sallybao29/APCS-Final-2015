@@ -101,7 +101,6 @@ public class Player extends Character{
 	    }
 	}
     }
-
   
     public void update(){
 	int tmpx = getX();
