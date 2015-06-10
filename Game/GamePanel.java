@@ -279,10 +279,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	    transfer(px + p.getWidth(), py);
 	    transfer(px, py + p.getHeight());
 	    transfer(px + p.getWidth(), py + p.getHeight());
-
-	    if (temp != currentFloor.getLevel()){
-		itemDrop = new LinkedList<MapObject>();
-	    }
 	}
     }
 
@@ -320,6 +316,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		break;
 	    }
 	    tilemap = currentFloor.getCurrent();
+	    itemDrop = new LinkedList<MapObject>();
 	    monsters = tilemap.getMonsters();
 	    p.setMap(tilemap);
 	    p.setProjectiles(new LinkedList<Projectile>());
