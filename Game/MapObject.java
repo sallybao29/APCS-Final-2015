@@ -17,8 +17,14 @@ public class MapObject{
     private int width; 
     private int height;
 
+    //purpose varies by item
+    private int change;
+
     private BufferedImage image;
     private Rectangle bounds;
+    //part of stairs/doors/escalators that allows
+    //transfer to next point
+    private Rectangle validArea;
 
 
     /*-------------------------------------- Constructor -----------------------------------------*/
@@ -26,7 +32,6 @@ public class MapObject{
     public MapObject(String s, char d){
 	id = s;
 	direction = d;
-
 	image = null;
 	loadImage();
 
@@ -38,26 +43,23 @@ public class MapObject{
 	    width = image.getWidth();
 	    height = image.getHeight();
 	}
-
-	bounds = new Rectangle(x, y, width, height);
-        
+	bounds = new Rectangle(x, y, width, height);      
     }
 
     public MapObject(String s, int x, int y){
 	this(s, ' ');
 	this.x = x;
 	this.y = y;
-	bounds = new Rectangle(x, y, width, height);
-
-        
+        calculateBounds();       
     }
+
+    /*----------------------------------- Initialization --------------------------------------*/
 
     public void loadImage(){
 	if (!id.contains("None")){
 	    String s = path + id;
-	    if (direction != ' '){
+	    if (direction != ' ')
 		s += direction;
-	    }
 	    s +=  ".png";
 
 	    try{
@@ -71,11 +73,66 @@ public class MapObject{
 	}
     }
 
+    public void calculateBounds(){
+	int bx = x;
+	int by = y;
+	int bh = height;
+	int bw = width;
+
+	int vx = bx;
+	int vy = by;
+	int vh = 31;
+	int vw = 31;
+
+	switch (id){
+	case "Stairs_D":
+	    bx += 32;
+	    bw = 62;
+	    vx = bx;
+	    vy += 16;
+	    break;
+	case "Stairs_U":
+	    vx += 32;
+	    vy += 51;
+	    bw = 62;
+	    break;
+	case "Seat_1": case "Seat_2": case "Seat_3":
+	    bw = 0;
+	    bh = 0;
+	    break;
+	case "Door_open":
+	    vx += 8;
+	    vy += 30;
+	    break;
+	case "Door_2":
+	    vy += 16;
+	    vw = 63;
+	case "Escalator":
+	    vy += 64;
+	    vw = 63;
+	    vh = 63;
+	    break;
+	case "Exit_H":
+	    bw = 0;
+	    bh = 0;
+	    vy += 32;
+	    vw = 47;
+	    vh = 15;
+	}
+ 
+	bounds = new Rectangle(bx, by, bw, bh);
+	validArea = new Rectangle(vx, vy, vw, vh);
+    }
+
 
  /*-------------------------------------- Getters and Setters -----------------------------------------*/
 	    
     public BufferedImage getImage(){
 	return image;
+    }
+
+    public int getChange(){
+	return change;
     }
 
     public String getID(){
@@ -110,6 +167,10 @@ public class MapObject{
 	image = i;
     }
 
+    public void setChange(int i){
+	change = i;
+    }
+
     public void setDirection(char d){
 	direction = d;
     }
@@ -128,6 +189,10 @@ public class MapObject{
 
     public Rectangle getBounds(){
 	return bounds;
+    }
+
+    public Rectangle getValid(){
+	return validArea;
     }
 
     public void adjustRect(){

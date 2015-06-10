@@ -44,6 +44,10 @@ public class Player extends Character{
 	return projectiles;
     }
 
+    public void setProjectiles(LinkedList<Projectile> pro){
+	projectiles = pro;
+    }
+
     public void attacking(boolean b){
 	attacking = b;
     }
@@ -102,7 +106,7 @@ public class Player extends Character{
 	if (x != tmpx || y != tmpy){
 	    stepcount++;
 
-      	    if (stepcount % 5 == 0 && power < maxPower)
+      	    if (stepcount % 3 == 0 && power < maxPower)
 		power++;
 	}
     }

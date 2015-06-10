@@ -7,9 +7,18 @@ import java.awt.image.*;
 
 
 public class Floor{
-
     private int x;
     private int y;
+
+    //coming from floor below
+    private int ax;
+    private int ay;
+
+    //coming from floor above
+    private int dx;
+    private int dy;
+
+    private int level;
 
     private TileMap[][] areas;
 
@@ -19,53 +28,15 @@ public class Floor{
 
     private BufferedImage floor;
 
-    public Floor(int level){
 
+    /*----------------------------- Constructor ------------------------------*/
+    public Floor(int l){
 	visited = false;
 	reset = false;
 
-	TileMap hall1, hall2, hall3, hall4, hall5, 
-	    classroom1;
+	level = l;
 
-	hall1 = new TileMap("Hall_1", level);
-	hall2 = new TileMap("Hall_2", level);
-	hall3 = new TileMap("Hall_3", level);
-	hall4 = new TileMap("Hall_4", level);
-	hall5 = new TileMap("Hall_5", level);
-
-	classroom1 = new TileMap("Class", level);
-
-	switch(level){
-	case 10:
-	    id = "Art";
-	    areas = new TileMap[][]{{hall3, hall4, hall5},
-				    {hall2, null, null},
-				    {hall1, null, null}};
-	    break;
-	case 9:
-	    id = "Chemistry";
-	    break;
-	case 8:
-	    id = "Physics";
-	    break;
-	case 7:
-	    id = "Biology";
-	    break;
-	case 6:
-	    id = "English";
-	    break;
-	case 5:
-	    id = "Language";
-	    break;
-	case 4:
-	    id = "Math";
-	    break;
-	case 3:
-	    id = "History";
-	    break;
-	case 2:
-	    break;
-	}
+	makeFloor();
 
 	String path = "../Tileset/Tiles/" + id + ".png";
 
@@ -76,7 +47,97 @@ public class Floor{
 	catch (Exception e){}
     }
 
+    /*------------------------------- Initialization -----------------------*/
 
+    public void makeFloor(){
+	TileMap hall1, hall2, hall3, hall4, hall5, hall6,
+	    library1, library2, chem, lunchroom;
+
+	hall1 = new TileMap("Hall_1", level);
+	hall2 = new TileMap("Hall_2", level);
+	hall3 = new TileMap("Hall_3", level);
+	hall4 = new TileMap("Hall_4", level);
+	hall5 = new TileMap("Hall_5", level);
+	hall6 = new TileMap("Hall_6", level);
+	library1 = new TileMap("Library_1", level);
+	library2 = new TileMap("Library_2", level);
+	chem = new TileMap("Chem_Class", level);
+	lunchroom = new TileMap("Cafeteria", level);
+
+	switch(level){
+	case 10:
+	    id = "Art";
+	    areas = new TileMap[][]{{hall3, hall4, hall5},
+				    {hall2, null, null},
+				    {hall1, null, null}};
+	    ax = 0;
+	    ay = 2;
+	    break;
+	case 9:
+	    id = "Chemistry";
+	    areas = new TileMap[][]{{chem, null, null},
+				    {hall3, hall4, hall5},
+				    {hall2, null, null},
+				    {hall1, null, null}};
+	    dx = 2;
+	    dy = 1;
+	    break;
+	case 8:
+	    areas = new TileMap[][]{{hall3, hall4, hall5},
+				    {hall2, null, null},
+				    {hall1, null, null}};
+	    id = "Physics";
+	    break;
+	case 7:
+	    areas = new TileMap[][]{{hall3, hall4, hall5},
+				    {hall2, null, null},
+				    {hall1, null, null}};
+	    id = "Biology";
+	    break;
+	case 6:
+	    id = "English";
+	    areas = new TileMap[][]{{null, hall3, hall4, hall5},
+				    {library1, hall2, null, null},
+				    {library2, hall1, null, null}};
+	    ax = 1;
+	    ay = 2;
+	    dx = 3;
+	    dy = 0;
+	    break;
+	case 5:
+	    areas = new TileMap[][]{{lunchroom, null, null},
+				    {hall6, hall4, hall5},
+				    {hall2, null, null},
+				    {hall1, null, null}};
+	    id = "Language";
+	    ax = 0;
+	    ay = 3;
+	    dx = 2;
+	    dy = 1;
+	    break;
+	case 4:
+	    areas = new TileMap[][]{{hall3, hall4, hall5},
+				    {hall2, null, null},
+				    {hall1, null, null}};
+	    id = "Math";
+	    break;
+	case 3:
+	    areas = new TileMap[][]{{hall3, hall4, hall5},
+				    {hall2, null, null},
+				    {hall1, null, null}};
+	    id = "History";
+	    break;
+	case 2:
+	    areas = new TileMap[][]{{hall3, hall4, hall5},
+				    {hall2, null, null},
+				    {hall1, null, null}};
+	    id = "Yolo";
+	    break;
+	}
+    }
+
+ 
+    /*-------------------------- Getters and Setters ---------------------*/
 
     public TileMap getCurrent(){
 	return areas[y][x];
@@ -100,6 +161,16 @@ public class Floor{
 
     public int getY(){
 	return y;
+    }
+
+    public void ascend(){
+	x = ax;
+	y = ay;
+    }
+
+    public void descend(){
+	x = dx;
+	y = dy;
     }
 
     public String getID(){
