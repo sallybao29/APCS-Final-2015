@@ -32,4 +32,5 @@ Project Log
 
 6/7/15 - Added HP and PP bars. - Sally
 
+6/10/15 - Added item dropping (monsters now leave items).
 
