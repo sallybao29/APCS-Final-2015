@@ -52,6 +52,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	    case KeyEvent.VK_SPACE:
 		p.attacking(true);
 		break;
+	    case KeyEvent.VK_SHIFT:
+		p.getInventory().next();
+		break;
 	    case KeyEvent.VK_RIGHT:
 		p.setDirection('R');
 		p.setDX(1);
@@ -101,7 +104,7 @@ public class GamePanel extends JPanel implements ActionListener{
     public GamePanel(){
 	super();
 	addKeyListener(new Key());
-	setPreferredSize(new Dimension(width+256, height+128));
+	setPreferredSize(new Dimension(width+255, height+128));
 	setFocusable(true);
 	setDoubleBuffered(true);
 	setVisible(true);
@@ -174,8 +177,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    monster.draw(im);
 	}
 
-	//g.drawString("HP: " + p.getHP(), 128, 100);
-	//g.drawString("PP: " + p.getPower(), 128, 128);
+	p.getInventory().draw(im);
 
 	drawStats(g);
 	drawDisplay(g);
@@ -265,14 +267,14 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	//if player takes stairs/escalator/enters door/exits room
 	else {
-	    someMethod(px, py);
-	    someMethod(px + p.getWidth(), py);
-	    someMethod(px, py + p.getHeight());
-	    someMethod(px + p.getWidth(), py + p.getHeight());
+	    transfer(px, py);
+	    transfer(px + p.getWidth(), py);
+	    transfer(px, py + p.getHeight());
+	    transfer(px + p.getWidth(), py + p.getHeight());
 	}
     }
 
-   public void someMethod(int x, int y){
+   public void transfer(int x, int y){
 	int fx = currentFloor.getX();
 	int fy = currentFloor.getY();
 	Tile t = tilemap.getTile(x/32, y/32);  

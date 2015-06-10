@@ -3,7 +3,11 @@ import java.awt.Graphics2D;
 
 public class SuperList{
     private LinkedList<MapObject> things;
-    String id;
+    private String id;
+
+    public SuperList(){
+	things = new LinkedList<MapObject>();
+    }
 
     public SuperList(String s){
 	id = s;
@@ -23,6 +27,7 @@ public class SuperList{
 	return things.size();
     }
 
+    /*---------------------------- Initialization --------------------------*/
 
     public void makeObjects(){
 	switch(id){
@@ -44,7 +49,7 @@ public class SuperList{
 	    add(new MapObject("Stairs_U", 96, 366));
 	    break;
 	case "Hall_6":
-	    add(new MapObject("Door_2", 224, 50));
+	    add(new MapObject("Door_2", 216, 34));
 	    break;
 	case "CS_Class":
 	    add(new MapObject("White_board", 96, 32));
@@ -184,9 +189,9 @@ public class SuperList{
 	    break;
 	case "Cafeteria":
 	    add(new MapObject("Exit_H", 232, 464));
-	    add(new MapObject("ATM", 32, 64));
 
 	    add(new MapObject("Window_1", 32, 32));
+	    add(new MapObject("Window_1", 64, 32));
 	    add(new MapObject("Window_1", 96, 32));
 	    add(new MapObject("Window_1", 128, 32));
 	    add(new MapObject("Window_1", 160, 32));
@@ -198,6 +203,8 @@ public class SuperList{
 	    add(new MapObject("Window_1", 352, 32));
 	    add(new MapObject("Window_1", 384, 32));
 
+	    add(new MapObject("ATM", 32, 64));
+
 	    add(new MapObject("Vending_machine", 96, 64));
 	    add(new MapObject("Vending_machine", 128, 64));
 	    add(new MapObject("Vending_machine", 160, 64));
@@ -207,7 +214,7 @@ public class SuperList{
 	    add(new MapObject("Trashcan", 240, 96));
 	    add(new MapObject("Trashcan", 256, 96));
 
-	    add(new MapObject("Counter_1", 386, 81));
+	    add(new MapObject("Counter_1", 386, 64));
 
 	    add(new MapObject("Table_7", 64, 192));
 	    add(new MapObject("Table_7", 224, 192));
@@ -251,8 +258,6 @@ public class SuperList{
 	    add(new MapObject("Plate", 256, 320));
 	    add(new MapObject("Plate", 338, 386));
 	    break;
-	case "inventory":
-	    break;
 	}
     }
 
@@ -261,4 +266,6 @@ public class SuperList{
 	    ob.draw(g);
 	}
     }
+
+
 }

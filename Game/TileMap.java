@@ -90,14 +90,12 @@ public class TileMap{
 		    id = "Wall_";
 		    blocked = true;
 		}
-		if (curr >= '0' && curr <= '9'){
-		    id = "Floor_";		   
-		    blocked = false;
-		}
-		if (curr == ' '){
+		if (curr >= '0' && curr <= '9')
+		    id = "Floor_";
+		   
+		if (curr == ' ')
 		    id = "None";
-		    blocked = false;
-		}
+		
 		id += curr;
 		t = new Tile(id, blocked);
 
@@ -208,6 +206,7 @@ public class TileMap{
 	    }
 	}
     }
+  
 	  
 
 
