@@ -27,6 +27,9 @@ public class Floor{
 
     private BufferedImage floor;
 
+    TileMap hall1, hall2, hall3, hall4, hall5, hall6,
+	library1, library2, chem, lunchroom, cs;
+
 
     /*----------------------------- Constructor ------------------------------*/
 
@@ -50,8 +53,6 @@ public class Floor{
     /*------------------------------- Initialization -----------------------*/
 
     public void makeFloor(){
-	TileMap hall1, hall2, hall3, hall4, hall5, hall6,
-	    library1, library2, chem, lunchroom, cs;
 
 	hall1 = new TileMap("Hall_1", level);
 	hall2 = new TileMap("Hall_2", level);
@@ -59,11 +60,11 @@ public class Floor{
 	hall4 = new TileMap("Hall_4", level);
 	hall5 = new TileMap("Hall_5", level);
 	hall6 = new TileMap("Hall_6", level);
+	lunchroom = new TileMap("Cafeteria", level);
 	library1 = new TileMap("Library_1", level);
 	library2 = new TileMap("Library_2", level);
 	chem = new TileMap("Chem_Class", level);
 	cs = new TileMap("CS_Class", level);
-	lunchroom = new TileMap("Cafeteria", level);
 
 	//blocks off hall2 on all floors
 	//except 6, because library is there
@@ -83,80 +84,117 @@ public class Floor{
 
 	switch(level){
 	case 10:
-	    id = "Art";
-	    areas = new TileMap[][]{{hall3, hall4, hall5},
-				    {hall2, null, null},
-				    {hall1, null, null}};
-	    ax = 0;
-	    ay = 2;
+	    makeArt();
 	    break;
 	case 9:
-	    id = "Chemistry";
-	    areas = new TileMap[][]{{chem, null, null},
-				    {hall3, hall4, hall5},
-				    {hall2, null, null},
-				    {hall1, null, null}};
-	    dx = 2;
-	    dy = 1;
+	    makeChem();
 	    break;
 	case 8:
-	    areas = new TileMap[][]{{hall3, hall4, hall5},
-				    {hall2, null, null},
-				    {hall1, null, null}};
-	    id = "Physics";
+	    makePhys();
 	    break;
 	case 7:
-	    areas = new TileMap[][]{{hall3, hall4, hall5},
-				    {hall2, null, null},
-				    {hall1, null, null}};
-	    id = "Biology";
+	    makeBio();
 	    break;
 	case 6:
-	    id = "English";
-	    areas = new TileMap[][]{{null, hall3, hall4, hall5},
-				    {library1, hall2, null, null},
-				    {library2, hall1, null, null}};
-	    ax = 1;
-	    ay = 2;
-	    dx = 3;
-	    dy = 0;
+	    makeEng();
 	    break;
 	case 5:
-	    areas = new TileMap[][]{{lunchroom, null, null},
-				    {hall6, hall4, hall5},
-				    {hall2, null, null},
-				    {hall1, null, null}};
-	    id = "Language";
-	    ax = 0;
-	    ay = 3;
-	    dx = 2;
-	    dy = 1;
+	    makeLang();
 	    break;
 	case 4:
-	    areas = new TileMap[][]{{hall3, hall4, hall5},
-				    {hall2, null, null},
-				    {hall1, null, null}};
-	    id = "Math";
+	    makeMath();
 	    break;
 	case 3:
-	    areas = new TileMap[][]{{cs, null, null},
-				    {hall3, hall4, hall5},
-				    {hall2, null, null},
-				    {hall1, null, null}};
-	    id = "History";
+	    makeHist();
 	    break;
 	case 2:
-	    areas = new TileMap[][]{{null, history, null},
-				    {hall3, hall4, hall5},
-				    {hall2, null, null},
-				    {hall1, null, null}};
-	    id = "Yolo";
+	    makeFinal();
 	    break;
 	}
     }
 
  
-    /*-------------------------- Getters and Setters ---------------------*/
+    public void makeArt(){
+	id = "Art";
+	ax = 0;
+	ay = 2;
+	areas = new TileMap[][]{{hall3, hall4, hall5},
+				{hall2, null, null},
+				{hall1, null, null}};
+    }
+
+    public void makeChem(){
+	id = "Chemistry";
+	dx = 2;
+	dy = 1;
+	areas = new TileMap[][]{{chem, null, null},
+				{hall3, hall4, hall5},
+				{hall2, null, null},
+				{hall1, null, null}};
+    }
+
+    public void makePhys(){
+	id = "Physics";
+	areas = new TileMap[][]{{hall3, hall4, hall5},
+				{hall2, null, null},
+				{hall1, null, null}};
+    }
+
+    public void makeBio(){
+	id = "Biology";
+	areas = new TileMap[][]{{hall3, hall4, hall5},
+				{hall2, null, null},
+				{hall1, null, null}};
+    }
+
+    public void makeEng(){
+	id = "English";
+	ax = 1;
+	ay = 2;
+	dx = 3;
+	dy = 0;
+	areas = new TileMap[][]{{null, hall3, hall4, hall5},
+				{library1, hall2, null, null},
+				{library2, hall1, null, null}};
+    }
+
+    public void makeLang(){
+	id = "Language";
+	ax = 0;
+	ay = 3;
+	dx = 2;
+	dy = 1;
+	areas = new TileMap[][]{{lunchroom, null, null},
+				{hall6, hall4, hall5},
+				{hall2, null, null},
+				{hall1, null, null}};
+    }
+
+    public void makeMath(){
+	id = "Math";
+	areas = new TileMap[][]{{hall3, hall4, hall5},
+				{hall2, null, null},
+				{hall1, null, null}};
+    }
+
+    public void makeHist(){
+	id = "History";
+	areas = new TileMap[][]{{cs, null, null},
+				{hall3, hall4, hall5},
+				{hall2, null, null},
+				{hall1, null, null}};
+    }
+
+
+    public void makeFinal(){
+	id = "";
+	areas = new TileMap[][]{{hall3, hall4, hall5},
+				{hall2, null, null},
+				{hall1, null, null}};
+    }
+
+
+    /*--------------------------------- Getters and Setters -------------------------------*/
 
     public TileMap getCurrent(){
 	return areas[y][x];

@@ -73,61 +73,6 @@ public class MapObject{
 	}
     }
 
-    public void calculateBounds(){
-	int bx = x;
-	int by = y;
-	int bh = height;
-	int bw = width;
-
-	int vx = bx;
-	int vy = by;
-	int vh = 31;
-	int vw = 31;
-
-	switch (id){
-	case "Stairs_D":
-	    bx += 32;
-	    bw = 62;
-	    vx = bx;
-	    vy += 16;
-	    break;
-	case "Stairs_U":
-	    vx += 32;
-	    vy += 51;
-	    bw = 62;
-	    break;
-	case "Seat_1": case "Seat_2": case "Seat_3":
-	case "Chair_R": case "Chair_L":
-	    bw = 0;
-	    bh = 0;
-	    break;
-	case "Door_open": 
-	    vx += 8;
-	    vy += 30;
-	    break;
-	case "Door_2":
-	    vx += 8;
-	    vy += 30;
-	    vw = 63;
-	    break;
-	case "Escalator":
-	    vy += 64;
-	    vw = 63;
-	    vh = 63;
-	    break;
-	case "Exit_H":
-	    bw = 0;
-	    bh = 0;
-	    vy += 32;
-	    vw = 47;
-	    vh = 15;
-	    break;
-	}
- 
-	bounds = new Rectangle(bx, by, bw, bh);
-	validArea = new Rectangle(vx, vy, vw, vh);
-    }
-
 
  /*-------------------------------------- Getters and Setters -----------------------------------------*/
 	    
@@ -211,5 +156,61 @@ public class MapObject{
     }
 	    
  
+    /*--------------------------------------- Calculate Bounds -----------------------------------------------*/
 
+
+    public void calculateBounds(){
+	int bx = x;
+	int by = y;
+	int bh = height;
+	int bw = width;
+
+	int vx = bx;
+	int vy = by;
+	int vh = 31;
+	int vw = 31;
+
+	switch (id){
+	case "Stairs_D":
+	    bx += 32;
+	    bw = 62;
+	    vx = bx;
+	    vy += 16;
+	    break;
+	case "Stairs_U":
+	    vx += 32;
+	    vy += 51;
+	    bw = 62;
+	    break;
+	case "Seat_1": case "Seat_2": case "Seat_3":
+	case "Chair_R": case "Chair_L":
+	    bw = 0;
+	    bh = 0;
+	    break;
+	case "Door_open": 
+	    vx += 8;
+	    vy += 30;
+	    break;
+	case "Door_2":
+	    vx += 8;
+	    vy += 30;
+	    vw = 63;
+	    break;
+	case "Escalator":
+	    vy += 64;
+	    vw = 63;
+	    vh = 63;
+	    break;
+	case "Exit_H":
+	    bw = 0;
+	    bh = 0;
+	    vy += 32;
+	    vw = 47;
+	    vh = 15;
+	    break;
+	}
+ 
+	bounds = new Rectangle(bx, by, bw, bh);
+	validArea = new Rectangle(vx, vy, vw, vh);
+    }
 }

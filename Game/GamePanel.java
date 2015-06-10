@@ -58,7 +58,11 @@ public class GamePanel extends JPanel implements ActionListener{
 	    case KeyEvent.VK_SHIFT:
 		p.getInventory().next();
 		break;		
-	    case KeyEvent.VK_A:
+	    case KeyEvent.VK_C:
+		p.use("Coffee");
+		break;
+	    case KeyEvent.VK_B:
+		p.use("Bagel");
 		break;
 	    case KeyEvent.VK_RIGHT:
 		p.setDirection('R');
@@ -124,7 +128,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    floors[i] = new Floor(i);
 	}
 	level = 10;
-	System.out.println(level);
+
 	currentFloor = floors[level];
 	currentFloor.setX(2);
 	currentFloor.setY(0);

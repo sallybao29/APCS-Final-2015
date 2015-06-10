@@ -64,10 +64,33 @@ public class Player extends Character{
 
     public void setPower(int p){
 	power = p;
+	if (power > maxPower)
+	    power = maxPower;
+	if (power < 0)
+	    power = 0;
     }
+
 
     public int getMaxP(){
 	return maxPower;
+    }
+
+    public void use(String s){
+	int start, end;
+
+	MapObject ob = inventory.find(s);
+	start = ob.getQuantity();
+	ob.changeQuantity(-1);
+	end = ob.getQuantity();
+	if (start != end){
+	    if (s.equals("Bagel"))
+		setHP(getHP() + 10);
+	    if(s.equals("Coffee")){
+		setHP(getHP() + 5);
+		setPower(power + 10);
+	    }
+	}
+	    
     }
 
 

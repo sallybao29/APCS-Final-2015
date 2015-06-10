@@ -119,6 +119,11 @@ public abstract class Character extends MapObject{
 
     public void setHP(int hp){
 	this.hp = hp;
+
+	if (hp > maxHP)
+	    hp = maxHP;
+	if (hp < 0)
+	    hp = 0;
     }
 
     public void setDY(int dy){
