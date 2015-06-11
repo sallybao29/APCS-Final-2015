@@ -254,7 +254,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    py < 0 || py + p.getHeight() >= height){
 
 	    if (px < 0){
-		px = (15 - px / 32) * 32;
+		px = 480;
 		fx -= 1;
 	    }
 	    else if (px + p.getWidth() >= width){
@@ -262,7 +262,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		fx += 1;
 	    }
 	    else if (py < 0){
-		py = (15 - py / 32) * 32;
+		py = 480;
 		fy -= 1;
 	    }
 	    else if (py + p.getHeight() >= height){
