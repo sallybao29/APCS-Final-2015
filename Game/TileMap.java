@@ -18,7 +18,8 @@ public class TileMap{
     private String id;
 
     private LinkedList<Monster> monsters;
-    private SuperList props; 
+    private SuperList props;
+    private Rectangle safeSpot;
 
 
     /*----------------------------------------- Constructor ----------------------------------------*/
@@ -29,6 +30,7 @@ public class TileMap{
 	level = 1;
 
 	props = new SuperList(id);
+	safeSpot = new Rectangle(96,416,384,64);
 
 	map = new char[height][width];
         tiles = new Tile[height][width];

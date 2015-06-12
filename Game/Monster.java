@@ -22,7 +22,7 @@ public class Monster extends Character{
 	setHP(tmp);
 	setMaxHP(tmp);
 	radius = ((12 - level) / 2) * 32;
-	damage = ((14 - level) / 2) * 32;
+	damage = (14 - level) / 2;
 	idle = true;
 
 	createItem();
