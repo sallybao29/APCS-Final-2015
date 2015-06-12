@@ -224,7 +224,7 @@ public abstract class Character extends MapObject{
 	int tmpx = x / 32;
 	int tmpy = y / 32;
 
-	if (x % 32 != 0 && map.getTile(tmpx, tmpy).isBlocked())
+	if (map.getTile(tmpx, tmpy).isBlocked())
 	    topLeft = true;
 
 	tmpx = (x + getWidth()) / 32;

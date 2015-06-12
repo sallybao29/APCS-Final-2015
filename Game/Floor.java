@@ -9,10 +9,12 @@ public class Floor{
     private int x;
     private int y;
 
+    //coordinates of next TileMap if
     //coming from floor below
     private int ax;
     private int ay;
 
+    //coordinates of next TileMap if
     //coming from floor above
     private int dx;
     private int dy;
@@ -23,6 +25,8 @@ public class Floor{
 
     private boolean visited;
     private boolean reset;
+    private boolean locked;
+
     private String id;
 
     private BufferedImage floor;
@@ -34,8 +38,9 @@ public class Floor{
     /*----------------------------- Constructor ------------------------------*/
 
     public Floor(int l){
-	visited = false;
-	reset = false;
+	//visited = false;
+	//reset = false;
+	locked = true;
 
 	level = l;
 
@@ -52,6 +57,8 @@ public class Floor{
 
     /*------------------------------- Initialization -----------------------*/
 
+    //initialize all TileMaps
+    //make the layout of each floor
     public void makeFloor(){
 
 	hall1 = new TileMap("Hall_1", level);
@@ -69,13 +76,13 @@ public class Floor{
 	//blocks off hall2 on all floors
 	//except 6, because library is there
 	if (level != 6){
-	    MapObject plant1 = new MapObject("Plant_4", 0, 128);
-	    MapObject plant2 = new MapObject("Plant_4", 0, 160);
-	    MapObject plant3 =  new MapObject("Plant_4", 0, 192);
+	    MapObject plant1 = new MapObject("Plant_4", 0, 136);
+	    MapObject plant2 = new MapObject("Plant_4", 0, 168);
+	    MapObject plant3 =  new MapObject("Plant_4", 0, 200);
 
-	    hall2.foo(plant1);
-	    hall2.foo(plant2);
-	    hall2.foo(plant3);
+	    hall2.addToBounds(plant1);
+	    hall2.addToBounds(plant2);
+	    hall2.addToBounds(plant3);
 
 	    hall2.getProps().add(plant1);
 	    hall2.getProps().add(plant2);
@@ -200,10 +207,32 @@ public class Floor{
 	return areas[y][x];
     }
 
+    //
+    public void genKey(){
+	int randx = (int)(Math.random() * areas[0].length);
+	int randy = (int)(Math.random() * areas.length);
+
+	TileMap t = areas[randy][randx];
+
+	while (t == null || t.getID().contains("Hall")){
+	    randx = (int)(Math.random() * areas[0].length);
+	    randy = (int)(Math.random() * areas.length);
+
+	    t = areas[randy][randx];
+	}
+	t.addKey();
+    }
+
     public BufferedImage getFloor(){
 	return floor;
     }
 
+
+    public String getID(){
+	return id;
+    }
+
+    /*
     public void setVisited(boolean b){
 	visited = b;
     }
@@ -211,6 +240,7 @@ public class Floor{
     public boolean wasVisited(){
 	return visited;
     }
+    */
 
     public int getX(){
 	return x;
@@ -230,8 +260,8 @@ public class Floor{
 	y = dy;
     }
 
-    public String getID(){
-	return id;
+    public void unlock(){
+	locked = false;
     }
 
     public void setX(int x){
@@ -242,9 +272,11 @@ public class Floor{
 	this.y = y;
     }
 
+    /*
     public int getLevel(){
 	return level;
     }
+    */
 
 }
 

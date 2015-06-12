@@ -14,11 +14,14 @@ public class Inventory extends SuperList{
 	    
 	MapObject bagel = new MapObject("Bagel", 513, 0);
 	MapObject coffee =  new MapObject("Coffee", 598, 0);
+	MapObject key = new MapObject("Key", 683, 0);
 	bagel.changeQuantity(-1);
 	coffee.changeQuantity(-1);
+	key.changeQuantity(-1);
 
 	add(bagel);
 	add(coffee);
+	add(key);
     }
 
     public void next(){

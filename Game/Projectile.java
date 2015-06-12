@@ -17,9 +17,9 @@ public class Projectile extends MapObject{
 
 	switch (id){
 	case "English_":
-	    speed = 4;
-	    cost = 2;
-	    damage = 20;
+	    speed = 5;
+	    cost = 1;
+	    damage = 5;
 	    break;
 	case "History_":
 	    speed = 2;
@@ -27,13 +27,13 @@ public class Projectile extends MapObject{
 	    damage = 50;
 	    break;
 	case "Physics_":
-	    speed = 3;
-	    cost = 4;
+	    speed = 4;
+	    cost = 3;
 	    damage = 30;
 	    break;
 	case "Precalc_":
 	    speed = 3;
-	    cost = 3;
+	    cost = 4;
 	    damage = 25;
 	    break;
 	}

@@ -1,12 +1,16 @@
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.util.Random;
 
 public class Monster extends Character{
     private int damage;
     private int cycle;
     private int radius;
     private boolean idle;
+
+    private String item;
+
     Player p = null;
 
     /*------------------------------------------ Constructor ----------------------------------------------*/
@@ -17,20 +21,45 @@ public class Monster extends Character{
 	int tmp = (10-level) * 10 + 100;
 	setHP(tmp);
 	setMaxHP(tmp);
-	radius = 96;
-	damage = 5;
+	radius = ((12 - level) / 2) * 32;
+	damage = ((14 - level) / 2) * 32;
 	idle = true;
+
+	createItem();
     }
+
+
+    /*---------------------------------------- Initialization --------------------------------------------*/
 
     public void loadImage(){
 	setPath("../Sprites/Monster/");
 	super.loadImage();
     }
 
+    public void createItem(){	
+	Random rn = new Random();
+	int randitem = rn.nextInt(2);
+	int randchance = rn.nextInt(10);
+
+	if (randchance % 2 == 0){
+	    if (randitem == 0)
+		item = "Bagel";
+
+	    else if (randitem == 1)
+		item = "Coffee";
+	}
+	else 
+	    item = "None";
+    }
+
     /*--------------------------------------- Getters and Setters ---------------------------------------*/
 
     public int getDamage(){
 	return damage;
+    }
+
+    public String getItem(){
+	return item;
     }
 
     public int getRadius(){
@@ -41,14 +70,22 @@ public class Monster extends Character{
 	idle = b;
     }
 
+    public void setItem(String s){
+	item = s;
+    }
+
     public void resetP(Player pl){
 	p = pl;
     }
 
     /*------------------------------------------ Updating ----------------------------------------------*/
 
+    //if the monster is idle: it has full hp
+    //and the player is not it its range
+    //it will wander around
     public void wander(){
 
+	//to slow down the movement and animation
 	if (cycle % 20 == 0){
 
 	    char[] dir = {'U', 'D', 'L', 'R'};
@@ -58,8 +95,9 @@ public class Monster extends Character{
 
 	    int r = (int) Math.random() * 20;
 
-	    if (r % 5 == 0){
-		
+	    //if r is a multiple of five
+	    //move the monster one step in random direction
+	    if (r % 5 == 0){	
 		if (delx == 0)
 		    dely = (int) (Math.random() * 3) - 1;
 	    }
@@ -75,6 +113,8 @@ public class Monster extends Character{
 	cycle++;
     }
 
+    //if monster is not idle
+    //it will chase after the player
     public void pursue(int x, int y){
 	if (getX() < x){
 	    setDX(1);

@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     private LinkedList<Monster> monsters;
     private LinkedList<Projectile> books;
-    private LinkedList<MapObject> itemDrop; //new LinkedList<MapObject>();
+    private LinkedList<MapObject> itemDrop; 
     private Timer timer;
 
     /*------------------------------------------ Key Class ----------------------------------------------*/
@@ -229,6 +229,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	updateMonsters();
 	updateProjectiles();
 	checkCollisions();
+
 	repaint();
     }
 
@@ -247,7 +248,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	int py = p.getY();
 	int fx = currentFloor.getX();
 	int fy = currentFloor.getY();
-	int temp = currentFloor.getLevel();
+	TileMap tmp = tilemap;
 
 	//if player moves off current map
 	if (px < 0 || px + p.getWidth() >= width ||
@@ -276,60 +277,84 @@ public class GamePanel extends JPanel implements ActionListener{
 	    currentFloor.setY(fy);
 
 	    tilemap = currentFloor.getCurrent();
-	    itemDrop = new LinkedList<MapObject>();
-	    monsters = tilemap.getMonsters();
-	    p.setMap(tilemap);
-	    p.setProjectiles(new LinkedList<Projectile>());
 	}
 	//if player takes stairs/escalator/enters door/exits room
 	else {
-	    transfer(px, py);
-	    transfer(px + p.getWidth(), py);
-	    transfer(px, py + p.getHeight());
-	    transfer(px + p.getWidth(), py + p.getHeight());
+	    transfer();
 	}
+	if (!tmp.equals(tilemap)){
+	    clearItems();
+	    monsters = tilemap.getMonsters();
+	    p.setMap(tilemap);
+	    p.getProjectiles().clear();
+	}
+	 
     }
 
     //if player steps on transfer point
     //move to next tilemap/floor
-   public void transfer(int x, int y){
+    public void transfer(){
 	int fx = currentFloor.getX();
 	int fy = currentFloor.getY();
-	Tile t = tilemap.getTile(x/32, y/32);  
 
-	if (!t.transferPoint().equals("None")){
+	int px = p.getX();
+	int py = p.getY();
+	int dx = p.getDX();
+	int dy = p.getDY();
+	int pw = p.getWidth();
+	int ph = p.getHeight();
 
-	    switch(t.transferPoint()){
-	    case "Door_open": case "Door_2":
-		currentFloor.setY(fy - 1);
-		p.setY(448);
-		break;
-	    case "Stairs_D":
+	Tile topRight = tilemap.getTile((px + pw)/32 , py/32);
+	Tile topLeft = tilemap.getTile(px/32, py/32);
+	Tile bottomRight = tilemap.getTile((px + pw)/32, (py + ph)/32);
+	Tile bottomLeft = tilemap.getTile(px/32, (py + ph)/32);
+
+	if (dy == -1 && topLeft.has("Door") && topRight.has("Door")){
+	    currentFloor.setY(fy - 1);
+	    p.setY(448);
+	}
+	if (dx == 1){
+	    if (topRight.has("Stairs_D")){
 		level--;
 		currentFloor = floors[level];
 		currentFloor.descend();
 		p.setX(160);
 		p.setY(416);
-		break;
-	    case "Stairs_U": 
+	    }
+	    if (topRight.has("Exit_V") && bottomRight.has("Exit_V")){
+
+	    }
+	}
+	if (dx == -1){
+	    if (topLeft.has("Stairs_U")){
 		level++;
 		currentFloor = floors[level];
 		currentFloor.ascend();
 		p.setX(384);
 		p.setY(384);
-		break;
-	    case "Exit_H":
-		currentFloor.setY(fy + 1);
-		p.setY(97);
-		break;
 	    }
-	    tilemap = currentFloor.getCurrent();
-	    itemDrop = new LinkedList<MapObject>();
-	    monsters = tilemap.getMonsters();
-	    p.setMap(tilemap);
-	    p.setProjectiles(new LinkedList<Projectile>());
+	   if (topLeft.has("Exit_V") && bottomLeft.has("Exit_V")){
+
+	   }
 	}
-   }
+	if (dy == 1 && bottomLeft.has("Exit_H") && bottomRight.has("Exit_H")){
+	    currentFloor.setY(fy + 1);
+	    p.setY(97);
+	}
+	tilemap = currentFloor.getCurrent();
+    }
+
+
+    public void clearItems(){
+	MapObject key = null;
+	for (MapObject ob: itemDrop){
+	    if (ob.getID().equals("Key"))
+		key = ob;
+	}
+	itemDrop.clear();
+	if (key != null)
+	    itemDrop.add(key);
+    }
   
     /*-------------------------------------- Update Player -----------------------------------------*/
 
@@ -406,20 +431,13 @@ public class GamePanel extends JPanel implements ActionListener{
 	    Monster m = monsters.get(i);
 	    m.resetP(p);
 
-	    //if monster has no more hp, remove
+	    //if monster has no more hp
+	    //drop item and remove from list
 	    if (m.getHP() <= 0){
-		Random rn = new Random();
-		int randitem = rn.nextInt(2);
-		int randchance = rn.nextInt(10);
-		System.out.println(randitem);
-		if (randchance%2 == 0){
-		    if (randitem == 0){
-			itemDrop.add(new MapObject("Bagel", m.getX(), m.getY()));
-		    }
-		    else if (randitem == 1){
-			itemDrop.add(new MapObject("Coffee", m.getX(), m.getY()));
-		    }
-		}
+
+		if (!m.getItem().equals("None"))
+		    itemDrop.add(new MapObject(m.getItem(), m.getX(), m.getY()));
+
 		monsters.remove(i);
 	    }
 	    //if monster moves off tilemaps, remove

@@ -24,6 +24,10 @@ public class Tile extends MapObject{
 	return transferPoint;
     }
 
+    public boolean has(String s){
+	return transferPoint.contains(s);
+    }
+
     public void setTransferPoint(String s){
 	transferPoint = s;
     }

@@ -10,6 +10,8 @@ public class TileMap{
     private final int width = 16;
     private final int height = 16;
 
+    private int level;
+
     private char[][] map;
     private Tile[][] tiles;
     private String file;
@@ -21,9 +23,10 @@ public class TileMap{
 
     /*----------------------------------------- Constructor ----------------------------------------*/
  
-    public TileMap(String type, int level){
+    public TileMap(String type, int l){
 
 	id = type;
+	level = 1;
 
 	props = new SuperList(id);
 
@@ -64,10 +67,10 @@ public class TileMap{
 	    sc.close();
 	}
 	loadTiles();
-	makeMonsters(level);
-	//don't know what to call it
+	makeMonsters(l);
+
 	for (int i = 0; i < props.size(); i++){
-	    foo(props.get(i));
+	    addToBounds(props.get(i));
 	}
     }
 
@@ -126,7 +129,7 @@ public class TileMap{
 	        names = new String[]{"Ekans_", "Arbok_"};
 		break;
 	    case 9:
-		names = new String[]{"Rabbit_"};
+		names = new String[]{"Bird_", "BirdFly_"};
 		break;
 	    case 8:
 		names = new String[]{"Rabbit_"};
@@ -175,7 +178,7 @@ public class TileMap{
 	}
     }
 
-    public void foo(MapObject ob){
+    public void addToBounds(MapObject ob){
 	Rectangle r = ob.getBounds();
 	int rx = (int)r.getX();
 	int ry = (int)r.getY();
@@ -209,9 +212,6 @@ public class TileMap{
 	}
     }
    
-  
-	  
-
 
     /*----------------------------------------- Getters and Setters ----------------------------------------*/
  
@@ -240,24 +240,40 @@ public class TileMap{
 	monsters = m;
     }
 
-    public void draw(Graphics2D g){
-	for (int row = 0; row < height; row++){
-	    for (int col = 0; col < width; col++){
-		tiles[row][col].draw(g);
-	    }
-	}
-	props.draw(g);
-    }
-    
+    /*----------------------------------------- Misc ----------------------------------------*/
+
     public String toString(){
 	String s = "";
 	for (int row = 0; row < height; row++){
 	    for (int col = 0; col < width; col++){
 		s += map[row][col];
 	    }
-	s += "\n";
+	    s += "\n";
 	}
 	return s;
+    }
+
+    public void draw(Graphics2D g){
+	//draw tiles
+	for (int row = 0; row < height; row++)
+	    for (int col = 0; col < width; col++)
+		tiles[row][col].draw(g);
+
+	//draw props
+	props.draw(g);
+    }
+    
+
+    public boolean equals(TileMap other){
+        boolean sameLevel = this.level == other.level;
+	boolean sameProps = this.props.equals(other.props);
+	return sameLevel && sameProps;
+    }
+
+    //give one of the monsters the key
+    public void addKey(){
+        int rand = (int)(Math.random() * monsters.size());
+	monsters.get(rand).setItem("Key");
     }
 
    /*----------------------------------------- Testing ----------------------------------------*/

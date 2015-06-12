@@ -34,3 +34,5 @@ Project Log
 
 6/10/15 - Added item dropping (monsters now leave items). - Tiffany
 
+6/11/15 - Started key generation for each floor. A monster from a random room is chosen to hold the key. - Sally
+

@@ -27,6 +27,10 @@ public class SuperList{
 	return things.size();
     }
 
+    public boolean equals(SuperList other){
+	return this.things.equals(other.things);
+    }
+
     /*---------------------------- Initialization --------------------------*/
 
     public void makeObjects(){
@@ -303,6 +307,7 @@ public class SuperList{
 	    break;
 	}
     }
+
 
     public void draw(Graphics2D g){
         for (MapObject ob: things){
