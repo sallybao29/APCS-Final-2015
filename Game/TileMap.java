@@ -21,6 +21,8 @@ public class TileMap{
     private SuperList props;
     private Rectangle safeSpot;
 
+    private String[][] names;
+
 
     /*----------------------------------------- Constructor ----------------------------------------*/
  
@@ -69,20 +71,39 @@ public class TileMap{
 	    sc.close();
 	}
 
+	initNames();
 	loadTiles();
-	for (int i = 0; i < props.size(); i++){
-	    addToBounds(props.get(i));
-	}
+	addProps();
 	makeMonsters(l);
 
     }
 
    
     /*--------------------------------------- Initialization --------------------------------------*/
- 
+
+
+    public void addProps(){
+	for (int i = 0; i < props.size(); i++){
+	    addToBounds(props.get(i));
+	}
+    }
+
+    public void initNames(){
+	names = new String[][]{{"Klefki_",},
+			       {"Muk_"},
+			       {"Ghost_", "Arbok_", "Ekans_"},
+			       {"Rabbit_"},
+			       {"A_", "Vanillite_"},
+			       {"A_"},
+			       {"Frog_", "Cat_"},
+			       {"Bird_", "BirdFly_"},
+			       {"Rabbit_"},
+			       {"Smeargle_"}};
+    }
+
+
     //created 2d array of tile objects based on map
     public void loadTiles(){
-
 	Tile t = null;
 	String id = "";
 	boolean blocked = false;
@@ -118,54 +139,23 @@ public class TileMap{
 	}
     }
 
+
     //generate monsters in random locations
-    public void makeMonsters(int level){
+    public void makeMonsters(int l){
 	monsters = new LinkedList<Monster>();
 
 	int num;
-	if (level == 1)
+	if (l == 1)
 	    num = 1;
 	else
-	    num = (int)(Math.random() * (20 - level)) + 5;
+	    num = (int)(Math.random() * (20 - l)) + 5;
 
 	//different monsters based on level
 	for (int i = 0; i < num; i++){
-	    String[] names = null;
-	    switch (level){
-	    case 10:
-	        names = new String[]{"Ekans_", "Arbok_"};
-		break;
-	    case 9:
-		names = new String[]{"Bird_", "BirdFly_"};
-		break;
-	    case 8:
-		names = new String[]{"Rabbit_"};
-		break;
-	    case 7:
-	        names = new String[]{"Frog_", "Cat_"}; 
-		break;
-	    case 6:
-		names = new String[]{"A_"};
-		break;
-	    case 5:
-		names = new String[]{"A_"};
-		break;
-	    case 4:
-		names = new String[]{"Rabbit_"};
-		break;
-	    case 3:
-		names = new String[]{"Ghost_"};
-		break;
-	    case 2:
-		names = new String[]{"Rabbit_", "Muk_"};
-		break;
-	    case 1: //keyHolder
-		names = new String[]{"Ghost_"};
-		break;
-	    }
-	   
-	    String s = names[(int)(Math.random() * names.length)];
-	    Monster mon = new Monster(s, level, this);
+	    int row = l - 1;
+	    int col = (int)(Math.random() * names[row].length);
+
+	    Monster mon = new Monster(names[row][col], l, this);
 
 	    //limit spawning to 320 * 320 area centered within panel
 	    int x = (int)(Math.random() * 321) + 96;
@@ -236,6 +226,10 @@ public class TileMap{
     public String getID(){
 	return id;
     }
+
+    public boolean empty(){
+	return monsters.size() == 0;
+    }
  
     public Tile getTile(int x, int y){
 	return tiles[y][x];
@@ -290,8 +284,8 @@ public class TileMap{
 
     //give one of the monsters the key
     public void addKey(){
-        int rand = (int)(Math.random() * monsters.size());
-	monsters.get(rand).setItem("Key");
+        makeMonsters(1);
+	monsters.get(0).setItem("Key");
     }
 
    /*----------------------------------------- Testing ----------------------------------------*/

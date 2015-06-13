@@ -36,7 +36,6 @@ public class GamePanel extends JPanel implements ActionListener{
     BufferedImage ppbar;
 
     private int level;
-    private int hallsCleared;
 
     private LinkedList<Monster> monsters;
     private LinkedList<Projectile> books;
@@ -126,9 +125,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	floors = new Floor[11];
 
 	for (int i = 2; i < 11; i++){
-	    Floor f = new Floor(i);
-	    f.genKey();
-	    floors[i] = f;
+	    floors[i] = new Floor(i);
 	}
 	level = 10;
 
@@ -227,6 +224,13 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
 	inGame();
+
+	System.out.println(currentFloor.cleared());
+	if (currentFloor.cleared() && currentFloor.locked() && !currentFloor.keyMade()){
+	    currentFloor.genKey();
+	    currentFloor.setKeyMade(true);
+	}
+
 	updateBoard();
 	updatePlayer();
 	updateMonsters();
@@ -287,11 +291,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	if (!tmp.equals(tilemap)){
 	    clearItems();
-	    monsters = tilemap.getMonsters();
 	    p.setMap(tilemap);
 	    p.getProjectiles().clear();
-	}
-	 
+	}	 
     }
 
     //if player steps on transfer point
@@ -299,11 +301,8 @@ public class GamePanel extends JPanel implements ActionListener{
     public void transfer(){
 	int fx = currentFloor.getX();
 	int fy = currentFloor.getY();
-
 	int px = p.getX();
 	int py = p.getY();
-	int dx = p.getDX();
-	int dy = p.getDY();
 	int pw = p.getWidth();
 	int ph = p.getHeight();
 
@@ -313,7 +312,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	Tile bottomLeft = tilemap.getTile(px/32, (py + ph)/32);
 
 
-	if (dy == -1){
+	if (p.getDY() == -1){
 	    if (topLeft.has("Escalator") && topRight.has("Escalator")){
 		checkLock();
 		if (!currentFloor.locked()){
@@ -324,16 +323,15 @@ public class GamePanel extends JPanel implements ActionListener{
 		    p.setY(416);
 		}
 	    }
-	    try {
-		topLeft = tilemap.getTile(px/32, py/32 - 1);
-	    }
+	    try {topLeft = tilemap.getTile(px/32, py/32 - 1);}
 	    catch (IndexOutOfBoundsException e){}
+
 	    if (topLeft.has("Door_open")){
 		currentFloor.setY(fy - 1);
 		p.setY(448);
 	    }
 	}
-	if (dx == 1){
+	if (p.getDX() == 1){
 	    if (topRight.has("Stairs_D") || bottomRight.has("Stairs_D")){
 		checkLock();
 		if (!currentFloor.locked()){
@@ -349,7 +347,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		p.setX(32);
 	    }
 	}
-	if (dx == -1){
+	if (p.getDX() == -1){
 	    if (topLeft.has("Stairs_U") || bottomLeft.has("Stairs_U")){
 		level++;
 		currentFloor = floors[level];
@@ -362,7 +360,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		p.setX(480);
 	    }
 	}
-	if (dy == 1 && bottomLeft.has("Exit_H")){
+	if (p.getDY() == 1 && bottomLeft.has("Exit_H")){
 	    currentFloor.setY(fy + 1);
 	    p.setY(97);
 	}
@@ -458,7 +456,7 @@ public class GamePanel extends JPanel implements ActionListener{
     /*------------------------------------------ Update Monsters ----------------------------------------------*/
 
     public void updateMonsters(){
-
+	monsters = tilemap.getMonsters();
 	int i = 0;
 	while (i < monsters.size()){
 	    Monster m = monsters.get(i);
@@ -467,7 +465,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	    //if monster has no more hp
 	    //drop item and remove from list
 	    if (m.getHP() <= 0){
-
 		if (!m.getItem().equals("None"))
 		    itemDrop.add(new MapObject(m.getItem(), m.getX(), m.getY()));
 
@@ -492,15 +489,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		m.update();
 	    }
 	}
-	if (monsters.size() == 0){
-	    if (hallsCleared < 4){
-		hallsCleared += 1;
-	    }
-	    else{
-		tilemap.makeMonsters(1);
-	    }
-	}
-	tilemap.setMonsters(monsters);
+	tilemap.setMonsters(monsters);    
     }
   
     /*------------------------------------------ Check Collisions ----------------------------------------------*/

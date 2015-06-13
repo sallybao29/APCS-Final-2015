@@ -197,15 +197,17 @@ public class MapObject{
 	    vw = 63;
 	    break;
 	case "Escalator":
-	    vy += 64;
+	    bh += 32;
+	    vy += 32;
 	    vw = 63;
-	    vh = 63;
 	    break;
 	case "Exit_H":
 	    bw = 0;
 	    bh = 0;
 	    vx += 8; 
 	    break;
+	case "Desk_4":
+	    by += 7;
 	}
  
 	bounds = new Rectangle(bx, by, bw, bh);

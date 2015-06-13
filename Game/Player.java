@@ -89,7 +89,7 @@ public class Player extends Character{
 	if (start != end){
 	    if (s.equals("Bagel"))
 		setHP(getHP() + 10);
-	    if(s.equals("Coffee")){
+	    if (s.equals("Coffee")){
 		setHP(getHP() + 5);
 		setPower(power + 10);
 	    }

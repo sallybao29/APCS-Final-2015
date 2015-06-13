@@ -23,24 +23,23 @@ public class Floor{
 
     private TileMap[][] areas;
 
-    private boolean visited;
-    private boolean reset;
     private boolean locked;
+    private boolean keyMade;
 
     private String id;
 
     private BufferedImage floor;
 
     TileMap hall1, hall2, hall3, hall4, hall5, hall6,
-	library1, library2, chem, lunchroom, cs, art;
+	library1, library2, chem, lunchroom, cs, art,
+	english, lockerroom;
 
 
     /*----------------------------- Constructor ------------------------------*/
 
     public Floor(int l){
-	//visited = false;
-	//reset = false;
 	locked = true;
+	keyMade = false;
 
 	level = l;
 
@@ -73,21 +72,15 @@ public class Floor{
 	chem = new TileMap("Chem_Class", level);
 	cs = new TileMap("CS_Class", level);
 	art = new TileMap("Art_Class", level);
+	english = new TileMap("English_Class", level);
+	lockerroom = new TileMap("Lockerroom", level);
 
 	//blocks off hall2 on all floors
 	//except 6, because library is there
 	if (level != 6){
-	    MapObject plant1 = new MapObject("Plant_4", 0, 136);
-	    MapObject plant2 = new MapObject("Plant_4", 0, 168);
-	    MapObject plant3 =  new MapObject("Plant_4", 0, 200);
-
-	    hall2.addToBounds(plant1);
-	    hall2.addToBounds(plant2);
-	    hall2.addToBounds(plant3);
-
-	    hall2.getProps().add(plant1);
-	    hall2.getProps().add(plant2);
-	    hall2.getProps().add(plant3);
+	    hall2.add(new MapObject("Plant_4", 0, 136));
+	    hall2.add(new MapObject("Plant_4", 0, 168));
+	    hall2.add(new MapObject("Plant_4", 0, 200));
 	}
 
 	switch(level){
@@ -137,6 +130,7 @@ public class Floor{
 	id = "Chemistry";
 	dx = 2;
 	dy = 1;
+	hall3.add(new MapObject("Door_open", 56, 34));
 	areas = new TileMap[][]{{chem, null, null},
 				{hall3, hall4, hall5},
 				{hall2, null, null},
@@ -160,10 +154,12 @@ public class Floor{
     public void makeEng(){
 	id = "English";
 	ax = 1;
-	ay = 2;
+	ay = 3;
 	dx = 3;
-	dy = 0;
-	areas = new TileMap[][]{{null, hall3, hall4, hall5},
+	dy = 1;
+	hall3.add(new MapObject("Door_open", 56, 34));
+	areas = new TileMap[][]{{null, english, null, null},
+				{null, hall3, hall4, hall5},
 				{library1, hall2, null, null},
 				{library2, hall1, null, null}};
     }
@@ -174,7 +170,8 @@ public class Floor{
 	ay = 3;
 	dx = 2;
 	dy = 1;
-	areas = new TileMap[][]{{lunchroom, null, null},
+	hall5.add(new MapObject("Door_open", 312, 34));
+	areas = new TileMap[][]{{lunchroom, null, lockerroom},
 				{hall6, hall4, hall5},
 				{hall2, null, null},
 				{hall1, null, null}};
@@ -189,10 +186,10 @@ public class Floor{
 
     public void makeHist(){
 	id = "History";
-	areas = new TileMap[][]{{cs, null, null},
+	areas = new TileMap[][]{{null, null, null},
 				{hall3, hall4, hall5},
 				{hall2, null, null},
-				{hall1, null, null}};
+				{hall1, cs, null}};
     }
 
 
@@ -210,7 +207,18 @@ public class Floor{
 	return areas[y][x];
     }
 
-    //
+    public boolean cleared(){
+	for (int row = 0; row < areas.length; row ++){
+	    for (int col = 0; col < areas[row].length; col++){
+		TileMap t = areas[row][col];
+		if (t != null && !t.empty()){
+		    return false;
+		}		
+	    }
+	}
+	return true;
+    }
+
     public void genKey(){
 	int randx = (int)(Math.random() * areas[0].length);
 	int randy = (int)(Math.random() * areas.length);
@@ -234,23 +242,20 @@ public class Floor{
 	return locked;
     }
 
+    public boolean keyMade(){
+	return keyMade;
+    }
 
     public String getID(){
 	return id;
     }
 
-    /*
-    public void setVisited(boolean b){
-	visited = b;
-    }
-
-    public boolean wasVisited(){
-	return visited;
-    }
-    */
-
     public int getX(){
 	return x;
+    }
+
+    public void setKeyMade(boolean b){
+	keyMade = b;
     }
 
     public int getY(){
@@ -278,12 +283,6 @@ public class Floor{
     public void setY(int y){
 	this.y = y;
     }
-
-    /*
-    public int getLevel(){
-	return level;
-    }
-    */
 
 }
 

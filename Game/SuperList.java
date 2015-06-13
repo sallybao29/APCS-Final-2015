@@ -136,6 +136,8 @@ public class SuperList{
 	    break;
 	    /*------------------------ Chem Class ----------------------------*/
 	case "Chem_Class":
+	    add(new MapObject("Exit_H", 56, 480));
+
 	    add(new MapObject("Window_2", 32, 32));
 	    add(new MapObject("Window_2", 384, 32));
 
@@ -355,6 +357,121 @@ public class SuperList{
 	    add(new MapObject("Paper", 108, 332));
 	    add(new MapObject("Paper", 172, 204));
 	    add(new MapObject("Paper", 288, 204));
+	    break;
+	    /*------------------------------ English -----------------------------*/
+	case "English_Class":
+	    add(new MapObject("Exit_H", 56, 480));
+
+	    add(new MapObject("Window_2", 64, 32));
+	    add(new MapObject("Window_2", 192, 32));
+	    add(new MapObject("Window_2", 288, 32));
+
+	    add(new MapObject("Bookshelf", 32, 64));
+	    add(new MapObject("Bookshelf", 96, 64));
+	    add(new MapObject("Bookshelf", 160, 64));
+
+	    add(new MapObject("Desk_5", 224, 84));
+	    add(new MapObject("Desk_5", 352, 84));
+	    add(new MapObject("Plant_1", 224, 52));
+	    add(new MapObject("Plant_1", 416, 52));
+
+	    add(new MapObject("Table_5", 64, 207));
+
+	    add(new MapObject("Table_5", 192, 128));
+	    add(new MapObject("Table_5", 192, 224));
+	    add(new MapObject("Table_5", 192, 320));
+
+	    add(new MapObject("Table_5", 288, 128));
+	    add(new MapObject("Table_5", 288, 224));
+	    add(new MapObject("Table_5", 288, 320));
+
+	    add(new MapObject("Table_5", 384, 128));
+	    add(new MapObject("Table_5", 384, 224));
+	    add(new MapObject("Table_5", 384, 320));
+
+	    add(new MapObject("Seat_3", 224, 128));
+	    add(new MapObject("Seat_3", 224, 160));
+	    add(new MapObject("Seat_3", 224, 224));
+	    add(new MapObject("Seat_3", 224, 256));
+	    add(new MapObject("Seat_3", 224, 288));
+	    add(new MapObject("Seat_3", 224, 352));
+	    add(new MapObject("Seat_3", 224, 384));
+
+	    add(new MapObject("Seat_3", 320, 160));
+	    add(new MapObject("Seat_3", 320, 192));
+	    add(new MapObject("Seat_3", 320, 256));
+	    add(new MapObject("Seat_3", 320, 288));
+	    add(new MapObject("Seat_3", 320, 320));
+
+	    add(new MapObject("Seat_3", 416, 128));
+	    add(new MapObject("Seat_3", 416, 192));
+	    add(new MapObject("Seat_3", 416, 224));
+	    add(new MapObject("Seat_3", 416, 256));
+	    add(new MapObject("Seat_3", 416, 320));
+	    add(new MapObject("Seat_3", 416, 352));
+
+	    add(new MapObject("Books", 64, 224));
+	    add(new MapObject("Books", 320, 64));
+	    add(new MapObject("Book", 288, 160));
+	    add(new MapObject("Book", 392, 324));
+	    add(new MapObject("Paper", 64, 268));
+	    add(new MapObject("Paper", 76, 256));
+
+	    break;
+	    /*------------------------------ Lockerroom -----------------------------*/
+	case "Lockerroom":
+	    add(new MapObject("Exit_H", 312, 480));
+
+	    add(new MapObject("Stall", 256, 64));
+	    add(new MapObject("Stall", 304, 64));
+	    add(new MapObject("Stall", 352, 64));
+
+	    add(new MapObject("Mirror", 416, 32));
+	    add(new MapObject("Mirror", 448, 32));
+
+	    add(new MapObject("Sink", 422, 64));
+	    add(new MapObject("Sink", 454, 64));
+
+	    add(new MapObject("Locker_2", 32, 70));
+	    add(new MapObject("Locker_2", 64, 70));
+	    add(new MapObject("Locker_2", 96, 70));
+	    add(new MapObject("Locker_2", 128, 70));
+
+	    add(new MapObject("Locker_2", 32, 32));
+	    add(new MapObject("Locker_2", 64, 32));
+	    add(new MapObject("Locker_2", 96, 32));
+	    add(new MapObject("Locker_2", 128, 32));
+
+	    add(new MapObject("Locker_2", 32, 198));
+	    add(new MapObject("Locker_2", 64, 198));
+	    add(new MapObject("Locker_2", 96, 198));
+	    add(new MapObject("Locker_2", 128, 198));
+
+	    add(new MapObject("Locker_2", 32, 160));
+	    add(new MapObject("Locker_2", 64, 160));
+	    add(new MapObject("Locker_2", 96, 160));
+	    add(new MapObject("Locker_2", 128, 160));
+
+	    add(new MapObject("Locker_2", 32, 326));
+	    add(new MapObject("Locker_2", 64, 326));
+	    add(new MapObject("Locker_2", 96, 326));
+	    add(new MapObject("Locker_2", 128, 326));
+
+	    add(new MapObject("Locker_2", 32, 288));
+	    add(new MapObject("Locker_2", 64, 288));
+	    add(new MapObject("Locker_2", 96, 288));
+	    add(new MapObject("Locker_2", 128, 288));
+
+	    add(new MapObject("Locker_2", 352, 358));
+	    add(new MapObject("Locker_2", 384, 358));
+	    add(new MapObject("Locker_2", 416, 358));
+	    add(new MapObject("Locker_2", 448, 358));
+
+	    add(new MapObject("Locker_2", 352, 320));
+	    add(new MapObject("Locker_2", 384, 320));
+	    add(new MapObject("Locker_2", 416, 320));
+	    add(new MapObject("Locker_2", 448, 320));
+
 	    break;
 	}
     }
