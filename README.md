@@ -4,7 +4,7 @@
 Project Information
 ----------
 
-Project Name: 
+Project Name: Snakes and Escalators! :)
 
 Group Members: Sally Bao and Xiuzhen (Tiffany) Lei
 
