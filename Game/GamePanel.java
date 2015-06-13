@@ -492,12 +492,17 @@ public class GamePanel extends JPanel implements ActionListener{
 		m.update();
 	    }
 	}
+
+	//check if floor is cleared of monsters before generating keyHolder
 	if (monsters.size() == 0){
 	    if (hallsCleared < 4){
 		hallsCleared += 1;
 	    }
 	    else{
-		tilemap.makeMonsters(1);
+		if (level == 2)
+		    tilemap.makeMonsters(0);
+		else if (level > 2)
+		    tilemap.makeMonsters(1);
 	    }
 	}
 	tilemap.setMonsters(monsters);

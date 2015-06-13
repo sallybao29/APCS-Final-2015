@@ -21,7 +21,11 @@ public class Monster extends Character{
 
     public Monster(String s, int level, TileMap t){
 	super(s, t);
-	int tmp = (10-level) * 10 + 100;
+	int tmp;
+	if (level == -1) // if monsters are miniMuks
+	    tmp = 50;
+	else
+	    tmp = (10-level) * 10 + 100;
 	setHP(tmp);
 	setMaxHP(tmp);
 	radius = ((12 - level) / 2) * 32;
@@ -144,7 +148,8 @@ public class Monster extends Character{
 	    setDX(0);
 	}
     }
-   
+
+    //checks if monster is outside of safespot
     public boolean outOfSafe(){
 	Rectangle m = this.getBounds();
         return !m.intersects(tile.getSafeSpot());
@@ -222,7 +227,7 @@ public class Monster extends Character{
     //~~~~~~~MUK~~~~~~~~~
     public void replicate(){
 	if (getHP()>140 && getHP()<150){
-	    tile.makeMonsters(0);
+	    tile.makeMonsters(-1); // create miniMuks
 	}
     }
   

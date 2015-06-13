@@ -191,10 +191,13 @@ public class TileMap{
 	    if (level == 1){
 		mon.setItem("Key");
 	    }
+
+	    //replicate Muk as miniMuks
 	    if (level == -1){
 		mon.setX(muk.getX());
 		mon.setY(muk.getY());	 
 	    }
+
 	    else{
 		mon.setX(x);
 		mon.setY(y);
