@@ -2,12 +2,15 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.util.Random;
+import java.awt.Rectangle;
 
 public class Monster extends Character{
     private int damage;
     private int cycle;
     private int radius;
     private boolean idle;
+    private boolean superMon;
+    private TileMap tile;
 
     private String item;
 
@@ -23,11 +26,16 @@ public class Monster extends Character{
 	setMaxHP(tmp);
 	radius = ((12 - level) / 2) * 32;
 	damage = (14 - level) / 2;
+	tile = t;
 	idle = true;
 
 	createItem();
     }
-
+   
+    public Monster(String s, int level, TileMap t, boolean superMon){
+	this(s,level,t);
+	superMon = true;
+    }
 
     /*---------------------------------------- Initialization --------------------------------------------*/
 
@@ -134,8 +142,16 @@ public class Monster extends Character{
 	}
     }
    
+    public boolean outOfSafe(){
+	Rectangle m = this.getBounds();
+        return !m.intersects(tile.getSafeSpot());
+    }
 
     public void move(){
+	if (!outOfSafe()){
+	    setDY(-1);
+	    setDirection('U');
+	}
 	if (idle)
 	    wander();
 	else 

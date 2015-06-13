@@ -38,3 +38,5 @@ Project Log
 
 6/13/15 - Locked floors so player cannot proceed without key. Added an art room. - Sally
 
+6/12/15 - Safe spot added. Monsters cannot enter unless provoked by player (either by moving into their range or attacking them) - Tiffany
+
