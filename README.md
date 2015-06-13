@@ -10,6 +10,8 @@ Group Members: Sally Bao and Xiuzhen (Tiffany) Lei
 
 How to run: Compile and run Game.java in Game folder.
 
+Gameplay: You are walking along the 10th floor in Stuy when you suddenly notice that your phone has gone missing. A strange monster has taken your phone and disappeared off to the 2nd floor! Your goal is to fight the monsters on every floor in Stuy on your way to reach the second floor (and your phone...). You must eliminate all monsters on a floor before receiving a key to move down to the floor below (through the escalators or stairs).
+
 Project Log
 
 5/21/15 - Fixed Animation class. Player can move in 4 directions and animates properly. Have yet to set boundaries. - Sally 
