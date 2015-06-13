@@ -1,8 +1,8 @@
 List of things to do:
 - Set safe spot
 - Super monster for 2nd floor - Muk --> Spawns smaller versions
-- Lock floors
-- Add classrooms, entrances / exits for rooms
-- Escalators
+- Lock floors --> resolved
+- Add classrooms, entrances / exits for rooms, then set ax/y and dx/y
+- Escalators 
 - End game if dead
 - Delay monster after attack

@@ -155,7 +155,7 @@ public class TileMap{
 		names = new String[]{"Rabbit_"};
 		break;
 	    }
-	 
+	   
 	    String s = names[(int)(Math.random() * names.length)];
 	    Monster mon = new Monster(s, level, this);
 
@@ -191,8 +191,7 @@ public class TileMap{
 	    for (int row = ry / 32; row < (ry + rh)/ 32; row++)
 		for (int col = rx / 32; col < (rx + rw) / 32; col++)
 		    tiles[row][col].setBlocked(true);
-	}
-        
+	}   
 	if (ob.getID().contains("Stairs") || 
 	    ob.getID().equals("Door_open") ||
 	    ob.getID().equals("Door_2") ||
@@ -212,6 +211,11 @@ public class TileMap{
 		}
 	    }
 	}
+    }
+
+    public void add(MapObject ob){
+	addToBounds(ob);
+	props.add(ob);
     }
    
 

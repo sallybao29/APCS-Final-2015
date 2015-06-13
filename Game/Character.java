@@ -223,26 +223,29 @@ public abstract class Character extends MapObject{
 
 	int tmpx = x / 32;
 	int tmpy = y / 32;
+	try {
 
-	if (map.getTile(tmpx, tmpy).isBlocked())
-	    topLeft = true;
+	    if (map.getTile(tmpx, tmpy).isBlocked())
+		topLeft = true;
 
-	tmpx = (x + getWidth()) / 32;
+	    tmpx = (x + getWidth()) / 32;
 
-	if (x % 32 != 0 && map.getTile(tmpx, tmpy).isBlocked())
-	    topRight = true;
+	    if (x % 32 != 0 && map.getTile(tmpx, tmpy).isBlocked())
+		topRight = true;
 
-	tmpx = x / 32;
-	tmpy = (y + getHeight()) / 32;
+	    tmpx = x / 32;
+	    tmpy = (y + getHeight()) / 32;
 
-	if (y % 32 != 0 && map.getTile(tmpx, tmpy).isBlocked())
-	    bottomLeft = true;
+	    if (y % 32 != 0 && map.getTile(tmpx, tmpy).isBlocked())
+		bottomLeft = true;
 
-	tmpx = (x + getWidth()) / 32;
+	    tmpx = (x + getWidth()) / 32;
 
-	if ( x % 32 != 0 && y % 32 != 0 && 
-	     map.getTile(tmpx, tmpy).isBlocked())
-	    bottomRight = true;
+	    if ( x % 32 != 0 && y % 32 != 0 && 
+		 map.getTile(tmpx, tmpy).isBlocked())
+		bottomRight = true;
+	}
+	catch (IndexOutOfBoundsException e){}
     }
   
 

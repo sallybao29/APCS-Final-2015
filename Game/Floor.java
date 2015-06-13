@@ -32,7 +32,7 @@ public class Floor{
     private BufferedImage floor;
 
     TileMap hall1, hall2, hall3, hall4, hall5, hall6,
-	library1, library2, chem, lunchroom, cs;
+	library1, library2, chem, lunchroom, cs, art;
 
 
     /*----------------------------- Constructor ------------------------------*/
@@ -72,6 +72,7 @@ public class Floor{
 	library2 = new TileMap("Library_2", level);
 	chem = new TileMap("Chem_Class", level);
 	cs = new TileMap("CS_Class", level);
+	art = new TileMap("Art_Class", level);
 
 	//blocks off hall2 on all floors
 	//except 6, because library is there
@@ -124,8 +125,10 @@ public class Floor{
     public void makeArt(){
 	id = "Art";
 	ax = 0;
-	ay = 2;
-	areas = new TileMap[][]{{hall3, hall4, hall5},
+	ay = 3;
+	hall4.add(new MapObject("Door_open", 216, 34));
+	areas = new TileMap[][]{{null, art, null},
+				{hall3, hall4, hall5},
 				{hall2, null, null},
 				{hall1, null, null}};
     }
@@ -214,7 +217,7 @@ public class Floor{
 
 	TileMap t = areas[randy][randx];
 
-	while (t == null || t.getID().contains("Hall")){
+	while (t == null){
 	    randx = (int)(Math.random() * areas[0].length);
 	    randy = (int)(Math.random() * areas.length);
 
@@ -225,6 +228,10 @@ public class Floor{
 
     public BufferedImage getFloor(){
 	return floor;
+    }
+
+    public boolean locked(){
+	return locked;
     }
 
 

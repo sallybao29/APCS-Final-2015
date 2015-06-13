@@ -61,6 +61,8 @@ public class SuperList{
 	    break;
 	    /*------------------------ Hall 4 -----------------------------*/
 	case "Hall_4":
+	    add(new MapObject("Door_close", 448, 34));
+
 	    add(new MapObject("Locker_1", 0, 72));
 	    add(new MapObject("Locker_1", 32, 72));
 	    add(new MapObject("Locker_1", 64, 72));
@@ -304,6 +306,55 @@ public class SuperList{
 	    add(new MapObject("Plate", 224, 320));
 	    add(new MapObject("Plate", 256, 320));
 	    add(new MapObject("Plate", 338, 386));
+	    break;
+	    /*-------------------------------- Art ------------------------------*/
+	case "Art_Class":
+	    add(new MapObject("Exit_H", 216, 480));
+
+	    add(new MapObject("Window_2", 32, 32));
+	    add(new MapObject("Black_board", 208, 32));
+	    add(new MapObject("Picture", 320, 32));
+	    add(new MapObject("Notice", 384, 48));
+	    add(new MapObject("Shelf", 416, 64));
+
+	    add(new MapObject("Table_4", 32, 112));
+	    add(new MapObject("Table_4", 128, 112));
+
+	    add(new MapObject("Table_3", 96, 192));
+	    add(new MapObject("Table_3", 160, 192));
+
+	    add(new MapObject("Table_3", 288, 192));
+	    add(new MapObject("Table_3", 352, 192));
+
+	    add(new MapObject("Table_3", 96, 320));
+	    add(new MapObject("Table_3", 160, 320));
+
+	    add(new MapObject("Table_3", 288, 320));
+	    add(new MapObject("Table_3", 352, 320));
+
+	    add(new MapObject("Seat_1", 70, 194));
+	    add(new MapObject("Seat_1", 70, 226));
+	    add(new MapObject("Seat_1", 70, 322));
+	    add(new MapObject("Seat_1", 70, 354));
+
+	    add(new MapObject("Seat_1", 230, 194));
+	    add(new MapObject("Seat_1", 230, 226));
+	    add(new MapObject("Seat_1", 230, 322));
+	    add(new MapObject("Seat_1", 230, 354));
+
+	    add(new MapObject("Seat_1", 252, 194));
+	    add(new MapObject("Seat_1", 252, 226));
+	    add(new MapObject("Seat_1", 252, 322));
+	    add(new MapObject("Seat_1", 252, 354));
+
+	    add(new MapObject("Seat_1", 422, 194));
+	    add(new MapObject("Seat_1", 422, 226));
+	    add(new MapObject("Seat_1", 422, 322));
+	    add(new MapObject("Seat_1", 422, 354));
+
+	    add(new MapObject("Paper", 108, 332));
+	    add(new MapObject("Paper", 172, 204));
+	    add(new MapObject("Paper", 288, 204));
 	    break;
 	}
     }

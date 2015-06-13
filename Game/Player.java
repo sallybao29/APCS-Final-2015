@@ -62,6 +62,10 @@ public class Player extends Character{
 	return power;
     }
 
+    public boolean hasKey(){
+	return inventory.find("Key").getQuantity() > 0;
+    }
+
     public void setPower(int p){
 	power = p;
 	if (power > maxPower)

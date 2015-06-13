@@ -73,7 +73,6 @@ public class MapObject{
 	}
     }
 
-
  /*-------------------------------------- Getters and Setters -----------------------------------------*/
 	    
     public BufferedImage getImage(){
@@ -188,8 +187,9 @@ public class MapObject{
 	    bh = 0;
 	    break;
 	case "Door_open": 
+	    bw = 0;
+	    bh = 0;
 	    vx += 8;
-	    vy += 30;
 	    break;
 	case "Door_2":
 	    vx += 8;
@@ -204,9 +204,7 @@ public class MapObject{
 	case "Exit_H":
 	    bw = 0;
 	    bh = 0;
-	    vy += 32;
-	    vw = 47;
-	    vh = 15;
+	    vx += 8; 
 	    break;
 	}
  

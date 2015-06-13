@@ -125,13 +125,15 @@ public class GamePanel extends JPanel implements ActionListener{
 	floors = new Floor[11];
 
 	for (int i = 2; i < 11; i++){
-	    floors[i] = new Floor(i);
+	    Floor f = new Floor(i);
+	    f.genKey();
+	    floors[i] = f;
 	}
 	level = 10;
 
 	currentFloor = floors[level];
 	currentFloor.setX(2);
-	currentFloor.setY(0);
+	currentFloor.setY(1);
 
 	tilemap = currentFloor.getCurrent();
 
@@ -309,39 +311,69 @@ public class GamePanel extends JPanel implements ActionListener{
 	Tile bottomRight = tilemap.getTile((px + pw)/32, (py + ph)/32);
 	Tile bottomLeft = tilemap.getTile(px/32, (py + ph)/32);
 
-	if (dy == -1 && topLeft.has("Door") && topRight.has("Door")){
-	    currentFloor.setY(fy - 1);
-	    p.setY(448);
+
+	if (dy == -1){
+	    if (topLeft.has("Escalator") && topRight.has("Escalator")){
+		checkLock();
+		if (!currentFloor.locked()){
+		    level -= 2;
+		    currentFloor = floors[level];
+		    currentFloor.descend();
+		    p.setX(160);
+		    p.setY(416);
+		}
+	    }
+	    try {
+		topLeft = tilemap.getTile(px/32, py/32 - 1);
+	    }
+	    catch (IndexOutOfBoundsException e){}
+	    if (topLeft.has("Door_open")){
+		currentFloor.setY(fy - 1);
+		p.setY(448);
+	    }
 	}
 	if (dx == 1){
-	    if (topRight.has("Stairs_D")){
-		level--;
-		currentFloor = floors[level];
-		currentFloor.descend();
-		p.setX(160);
-		p.setY(416);
+	    if (topRight.has("Stairs_D") || bottomRight.has("Stairs_D")){
+		checkLock();
+		if (!currentFloor.locked()){
+		    level--;
+		    currentFloor = floors[level];
+		    currentFloor.descend();
+		    p.setX(160);
+		    p.setY(416);
+		}
 	    }
 	    if (topRight.has("Exit_V") && bottomRight.has("Exit_V")){
-
+		currentFloor.setX(fx + 1);
+		p.setX(32);
 	    }
 	}
 	if (dx == -1){
-	    if (topLeft.has("Stairs_U")){
+	    if (topLeft.has("Stairs_U") || bottomLeft.has("Stairs_U")){
 		level++;
 		currentFloor = floors[level];
 		currentFloor.ascend();
 		p.setX(384);
 		p.setY(384);
 	    }
-	   if (topLeft.has("Exit_V") && bottomLeft.has("Exit_V")){
-
-	   }
+	    if (topLeft.has("Exit_V") && bottomLeft.has("Exit_V")){
+		currentFloor.setX(fx - 1);
+		p.setX(480);
+	    }
 	}
-	if (dy == 1 && bottomLeft.has("Exit_H") && bottomRight.has("Exit_H")){
+	if (dy == 1 && bottomLeft.has("Exit_H")){
 	    currentFloor.setY(fy + 1);
 	    p.setY(97);
 	}
 	tilemap = currentFloor.getCurrent();
+    }
+
+
+    public void checkLock(){
+	if (currentFloor.locked() && p.hasKey()){
+	    p.use("Key");
+	    currentFloor.unlock();
+	}
     }
 
 
