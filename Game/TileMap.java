@@ -152,7 +152,7 @@ public class TileMap{
 		names = new String[]{"Ghost_"};
 		break;
 	    case 2:
-		names = new String[]{"Rabbit_"};
+		names = new String[]{"Rabbit_", "Muk_"};
 		break;
 	    }
 	 
@@ -167,7 +167,7 @@ public class TileMap{
 
 	    //if monster generated in invalid position
 	    //recalculate x and y cor
-	    while (mon.topLeft() || mon.topRight() || mon.bottomLeft() || mon.bottomRight()){
+	    while (mon.topLeft() || mon.topRight() || mon.bottomLeft() || mon.bottomRight()||!mon.outOfSafe()){
 		x = (int)(Math.random() * 321) + 96;
 		y = (int)(Math.random() * 321) + 96;
 
@@ -240,6 +240,10 @@ public class TileMap{
 
     public void setMonsters(LinkedList<Monster> m){
 	monsters = m;
+    }
+
+    public Rectangle getSafeSpot(){
+	return safeSpot;
     }
 
     /*----------------------------------------- Misc ----------------------------------------*/
