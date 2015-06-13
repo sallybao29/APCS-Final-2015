@@ -171,8 +171,12 @@ public class Monster extends Character{
 	    setDirection('U');
 	if (getDY() == 1)
 	    setDirection('D');
+
+	if (superMon){
+	    replicate();
+	}
     }
-  
+
     /*
     public void move(String file){
 	AStar a = new AStar(file, this);
@@ -215,4 +219,11 @@ public class Monster extends Character{
 	//to be cont.
     }
 
+    //~~~~~~~MUK~~~~~~~~~
+    public void replicate(){
+	if (getHP()>140 && getHP()<150){
+	    tile.makeMonsters(0);
+	}
+    }
+  
 }

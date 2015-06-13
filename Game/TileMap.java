@@ -20,7 +20,7 @@ public class TileMap{
     private LinkedList<Monster> monsters;
     private SuperList props;
     private Rectangle safeSpot;
-
+    private Monster muk;
 
     /*----------------------------------------- Constructor ----------------------------------------*/
  
@@ -123,7 +123,7 @@ public class TileMap{
 	monsters = new LinkedList<Monster>();
 
 	int num;
-	if (level == 1)
+	if (level == 1 || level == 0 || level == -1)
 	    num = 1;
 	else
 	    num = (int)(Math.random() * (20 - level)) + 5;
@@ -157,10 +157,16 @@ public class TileMap{
 		names = new String[]{"Ghost_"};
 		break;
 	    case 2:
-		names = new String[]{"Rabbit_", "Muk_"};
+		names = new String[]{"Rabbit_"};
 		break;
 	    case 1: //keyHolder
 		names = new String[]{"Ghost_"};
+		break;
+	    case 0://muk
+		names = new String[]{"A_"};
+		break;
+	    case -1: // mini Muks
+		names = new String[]{"MiniMuk_"};
 		break;
 	    }
 	   
@@ -180,10 +186,23 @@ public class TileMap{
 		y = (int)(Math.random() * 321) + 96;
 
 		mon.findCorners(x, y);
-	    }	  
-	    mon.setX(x);
-	    mon.setY(y);
+	    }	
+  
+	    if (level == 1){
+		mon.setItem("Key");
+	    }
+	    if (level == -1){
+		mon.setX(muk.getX());
+		mon.setY(muk.getY());	 
+	    }
+	    else{
+		mon.setX(x);
+		mon.setY(y);
+	    }
 
+	    if (level == 0){
+		muk = mon;
+	    }
 	    monsters.add(mon);
 	}
     }
