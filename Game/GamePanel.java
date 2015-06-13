@@ -36,6 +36,7 @@ public class GamePanel extends JPanel implements ActionListener{
     BufferedImage ppbar;
 
     private int level;
+    private int hallsCleared;
 
     private LinkedList<Monster> monsters;
     private LinkedList<Projectile> books;
@@ -489,6 +490,14 @@ public class GamePanel extends JPanel implements ActionListener{
 		    m.setIdle(true);
 		i++;
 		m.update();
+	    }
+	}
+	if (monsters.size() == 0){
+	    if (hallsCleared < 4){
+		hallsCleared += 1;
+	    }
+	    else{
+		tilemap.makeMonsters(1);
 	    }
 	}
 	tilemap.setMonsters(monsters);

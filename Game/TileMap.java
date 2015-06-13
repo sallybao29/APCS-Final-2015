@@ -122,7 +122,11 @@ public class TileMap{
     public void makeMonsters(int level){
 	monsters = new LinkedList<Monster>();
 
-	int num = (int)(Math.random() * (20 - level)) + 5;
+	int num;
+	if (level == 1)
+	    num = 1;
+	else
+	    num = (int)(Math.random() * (20 - level)) + 5;
 
 	//different monsters based on level
 	for (int i = 0; i < num; i++){
@@ -154,6 +158,9 @@ public class TileMap{
 		break;
 	    case 2:
 		names = new String[]{"Rabbit_", "Muk_"};
+		break;
+	    case 1: //keyHolder
+		names = new String[]{"Ghost_"};
 		break;
 	    }
 	   

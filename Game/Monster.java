@@ -32,9 +32,11 @@ public class Monster extends Character{
 	createItem();
     }
    
-    public Monster(String s, int level, TileMap t, boolean superMon){
+    public Monster(String s, int level, TileMap t, String special){
 	this(s,level,t);
-	superMon = true;
+	if (special.equals("superMon")){
+	    superMon = true;
+	}
     }
 
     /*---------------------------------------- Initialization --------------------------------------------*/
@@ -58,6 +60,7 @@ public class Monster extends Character{
 	}
 	else 
 	    item = "None";
+
     }
 
     /*--------------------------------------- Getters and Setters ---------------------------------------*/
