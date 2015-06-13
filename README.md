@@ -36,3 +36,4 @@ Project Log
 
 6/11/15 - Started key generation for each floor. A monster from a random room is chosen to hold the key. - Sally
 
+6/12/15 - Safe spot added. Monsters cannot enter unless provoked by player (either by moving into their range or attacking them) - Tiffany
