@@ -23,6 +23,7 @@ public class TileMap{
 
     private String[][] names;
 
+    private Monster muk;
 
     /*----------------------------------------- Constructor ----------------------------------------*/
  
@@ -90,7 +91,7 @@ public class TileMap{
 
     public void initNames(){
 	names = new String[][]{{"Klefki_",},
-			       {"Muk_"},
+			       {"Muk_", "MiniMuk"},
 			       {"Ghost_", "Arbok_", "Ekans_"},
 			       {"Rabbit_"},
 			       {"A_", "Vanillite_"},
@@ -145,17 +146,28 @@ public class TileMap{
 	monsters = new LinkedList<Monster>();
 
 	int num;
-	if (l == 1)
+	if (level < 3)
 	    num = 1;
 	else
 	    num = (int)(Math.random() * (20 - l)) + 5;
 
 	//different monsters based on level
 	for (int i = 0; i < num; i++){
-	    int row = l - 1;
-	    int col = (int)(Math.random() * names[row].length);
 
-	    Monster mon = new Monster(names[row][col], l, this);
+	    int row = 0;
+	    int col = 0;
+
+	    if (level == 2){
+		if (muk != null)
+		    col = 1;
+	    }
+	    else {
+		row = l - 1;
+		col = (int)(Math.random() * names[row].length);
+	    }
+
+	    String s = names[row][col];
+	    Monster mon = new Monster(s, l, this);
 
 	    //limit spawning to 320 * 320 area centered within panel
 	    int x = (int)(Math.random() * 321) + 96;
@@ -170,9 +182,18 @@ public class TileMap{
 		y = (int)(Math.random() * 321) + 96;
 
 		mon.findCorners(x, y);
-	    }	  
+	    }	
 	    mon.setX(x);
 	    mon.setY(y);
+  
+	    //replicate Muk as miniMuks
+	    if (s.equals("MiniMuk")){
+		mon.setX(muk.getX());
+		mon.setY(muk.getY());	 
+	    }
+
+	    if (s.equals("Muk_"))
+		muk = mon;
 
 	    monsters.add(mon);
 	}
