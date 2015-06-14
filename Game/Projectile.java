@@ -23,12 +23,12 @@ public class Projectile extends MapObject{
 	    break;
 	case "History_":
 	    speed = 2;
-	    cost = 6;
+	    cost = 10;
 	    damage = 50;
 	    break;
 	case "Physics_":
 	    speed = 4;
-	    cost = 3;
+	    cost = 5;
 	    damage = 30;
 	    break;
 	case "Precalc_":

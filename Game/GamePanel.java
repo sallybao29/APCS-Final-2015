@@ -127,7 +127,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-	level = 10;
+	level = 3;
 
 	currentFloor = floors[level];
 	currentFloor.setX(2);
@@ -225,7 +225,6 @@ public class GamePanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e){
 	inGame();
 
-	System.out.println(currentFloor.cleared());
 	if (currentFloor.cleared() && currentFloor.locked() && !currentFloor.keyMade()){
 	    currentFloor.genKey();
 	    currentFloor.setKeyMade(true);
@@ -262,27 +261,22 @@ public class GamePanel extends JPanel implements ActionListener{
 	    py < 0 || py + p.getHeight() >= height){
 
 	    if (px < 0){
-		px = 480;
-		fx -= 1;
+		p.setX(480);
+		currentFloor.setX(fx - 1);
 	    }
 	    else if (px + p.getWidth() >= width){
-		px = 0;
-		fx += 1;
+	        p.setX(0);
+        	currentFloor.setX(fx + 1);
 	    }
 	    else if (py < 0){
-		py = 480;
-		fy -= 1;
+	        p.setY(480);
+		currentFloor.setY(fy - 1);
 	    }
 	    else if (py + p.getHeight() >= height){
-		py = 0;
-		fy += 1;
+		p.setY(0);
+        	currentFloor.setY(fy + 1);
 	    }
-	    p.setX(px);
-	    p.setY(py);
 	    
-	    currentFloor.setX(fx);
-	    currentFloor.setY(fy);
-
 	    tilemap = currentFloor.getCurrent();
 	}
 	//if player takes stairs/escalator/enters door/exits room
@@ -326,7 +320,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    try {topLeft = tilemap.getTile(px/32, py/32 - 1);}
 	    catch (IndexOutOfBoundsException e){}
 
-	    if (topLeft.has("Door_open")){
+	    if (topLeft.has("Door")){
 		currentFloor.setY(fy - 1);
 		p.setY(448);
 	    }
@@ -342,7 +336,11 @@ public class GamePanel extends JPanel implements ActionListener{
 		    p.setY(416);
 		}
 	    }
-	    if (topRight.has("Exit_V") && bottomRight.has("Exit_V")){
+
+	    try {topRight = tilemap.getTile((px + pw)/32 + 1, py/32);}
+	    catch (IndexOutOfBoundsException e){}
+
+	    if (topRight.has("Exit_V")){
 		currentFloor.setX(fx + 1);
 		p.setX(32);
 	    }
@@ -355,7 +353,11 @@ public class GamePanel extends JPanel implements ActionListener{
 		p.setX(384);
 		p.setY(384);
 	    }
-	    if (topLeft.has("Exit_V") && bottomLeft.has("Exit_V")){
+
+	    try {topLeft = tilemap.getTile(px/32 - 1, py/32);}
+	    catch (IndexOutOfBoundsException e){}
+
+	    if (topLeft.has("Exit_V")){
 		currentFloor.setX(fx - 1);
 		p.setX(480);
 	    }
@@ -374,7 +376,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	    currentFloor.unlock();
 	}
     }
-
 
     public void clearItems(){
 	MapObject key = null;

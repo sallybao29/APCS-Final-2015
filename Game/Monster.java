@@ -64,7 +64,6 @@ public class Monster extends Character{
 	}
 	else 
 	    item = "None";
-
     }
 
     /*--------------------------------------- Getters and Setters ---------------------------------------*/
@@ -227,7 +226,7 @@ public class Monster extends Character{
     //~~~~~~~MUK~~~~~~~~~
     public void replicate(){
 	if (getHP()>140 && getHP()<150){
-	    tile.makeMonsters(-1); // create miniMuks
+	    tile.makeMonsters(2); // create miniMuks
 	}
     }
   

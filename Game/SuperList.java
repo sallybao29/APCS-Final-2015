@@ -19,6 +19,19 @@ public class SuperList{
 	return things.get(i);
     }
 
+    public MapObject find(String s){
+	for (int i = 0; i < size(); i++){
+	    if (get(i).getID().equals(s)){
+		return get(i);
+	    }
+	}
+	return null;
+    }
+
+    public void remove(MapObject o){
+	things.remove(o);
+    }
+
     public void add(MapObject o){
 	things.add(o);
     }
@@ -96,6 +109,8 @@ public class SuperList{
 	    break;
 	    /*------------------------ CS Class -----------------------------*/
 	case "CS_Class":
+	    add(new MapObject("Exit_V", 0, 120));
+
 	    add(new MapObject("White_board", 96, 32));
 	    add(new MapObject("White_board", 192, 32));
 	    add(new MapObject("White_board", 288, 32));
@@ -132,6 +147,36 @@ public class SuperList{
 	    add(new MapObject("Computer_L", 448, 240));
 	    add(new MapObject("Computer_L", 448, 304));
 	    add(new MapObject("Computer_L", 448, 368));
+
+	    add(new MapObject("Seat_1", 64, 192));
+	    add(new MapObject("Seat_1", 64, 256));
+	    add(new MapObject("Seat_1", 64, 320));
+	    add(new MapObject("Seat_1", 64, 184));
+
+	    add(new MapObject("Seat_1", 102, 192));
+	    add(new MapObject("Seat_1", 102, 256));
+	    add(new MapObject("Seat_1", 102, 320));
+	    add(new MapObject("Seat_1", 102, 184));
+
+	    add(new MapObject("Seat_1", 192, 192));
+	    add(new MapObject("Seat_1", 192, 256));
+	    add(new MapObject("Seat_1", 192, 320));
+	    add(new MapObject("Seat_1", 192, 184));
+
+	    add(new MapObject("Seat_1", 294, 192));
+	    add(new MapObject("Seat_1", 294, 256));
+	    add(new MapObject("Seat_1", 294, 320));
+	    add(new MapObject("Seat_1", 294, 184));
+
+	    add(new MapObject("Seat_1", 384, 192));
+	    add(new MapObject("Seat_1", 384, 256));
+	    add(new MapObject("Seat_1", 384, 320));
+	    add(new MapObject("Seat_1", 384, 184));
+
+	    add(new MapObject("Seat_1", 422, 192));
+	    add(new MapObject("Seat_1", 422, 256));
+	    add(new MapObject("Seat_1", 422, 320));
+	    add(new MapObject("Seat_1", 422, 184));
 
 	    break;
 	    /*------------------------ Chem Class ----------------------------*/
@@ -359,7 +404,7 @@ public class SuperList{
 	    add(new MapObject("Paper", 288, 204));
 	    break;
 	    /*------------------------------ English -----------------------------*/
-	case "English_Class":
+	case "Class_2":
 	    add(new MapObject("Exit_H", 56, 480));
 
 	    add(new MapObject("Window_2", 64, 32));
@@ -471,6 +516,71 @@ public class SuperList{
 	    add(new MapObject("Locker_2", 384, 320));
 	    add(new MapObject("Locker_2", 416, 320));
 	    add(new MapObject("Locker_2", 448, 320));
+
+	    break;
+
+	    /*----------------------------------- Class1 ------------------------------*/
+
+	case "Class_1":
+	    add(new MapObject("Trashcan", 448, 96));
+
+	    add(new MapObject("Green_board", 96, 32));
+	    add(new MapObject("Green_board", 192, 32));
+	    add(new MapObject("Green_board", 288, 32));
+
+	    add(new MapObject("Table_4", 160, 112));
+	    add(new MapObject("Table_4", 256, 112));
+
+	    add(new MapObject("Desk_7", 96, 192));
+	    add(new MapObject("Desk_7", 96, 256));
+	    add(new MapObject("Desk_7", 96, 320));
+	    add(new MapObject("Desk_6", 96, 384));
+
+	    add(new MapObject("Desk_7", 192, 192));
+	    add(new MapObject("Desk_6", 192, 256));
+	    add(new MapObject("Desk_7", 192, 320));
+	    add(new MapObject("Desk_7", 192, 384));
+
+	    add(new MapObject("Desk_7", 288, 192));
+	    add(new MapObject("Desk_7", 288, 256));
+	    add(new MapObject("Desk_7", 288, 320));
+	    add(new MapObject("Desk_7", 288, 384));
+
+	    add(new MapObject("Desk_7", 384, 192));
+	    add(new MapObject("Desk_6", 384, 256));
+	    add(new MapObject("Desk_7", 384, 320));
+	    add(new MapObject("Desk_7", 384, 384));
+
+	    add(new MapObject("Paper", 96, 192));
+	    add(new MapObject("Paper", 288, 256));
+	    add(new MapObject("Paper", 404, 320));
+	    add(new MapObject("Paper", 192, 384));
+
+	    break;
+
+	    /*----------------------------------- Gym ------------------------------*/
+	case "Gym":
+	    add(new MapObject("Exit_H", 56, 480));
+
+	    add(new MapObject("Window_1", 64, 32));
+	    add(new MapObject("Window_1", 160, 32));
+	    add(new MapObject("Window_1", 256, 32));
+	    add(new MapObject("Window_1", 352, 32));
+
+	    add(new MapObject("Basketball", 128, 32));
+
+	    add(new MapObject("Treadmill", 288, 64));
+	    add(new MapObject("Treadmill", 352, 64));
+	    add(new MapObject("Treadmill", 416, 64));
+
+	    add(new MapObject("Weight_bench", 256, 224));
+	    add(new MapObject("Weight_bench", 384, 224));
+	    add(new MapObject("Weight_bench", 320, 352));
+
+	    add(new MapObject("Weight", 192, 96));
+	    add(new MapObject("Weight", 160, 320));
+	    add(new MapObject("Weight", 128, 352));
+	    add(new MapObject("Weight", 224, 416));
 
 	    break;
 	}
