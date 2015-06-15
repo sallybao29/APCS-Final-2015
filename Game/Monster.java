@@ -40,6 +40,7 @@ public class Monster extends Character{
 	this(s,level,t);
 	if (special.equals("superMon")){
 	    superMon = true;
+	    //setItem("Phone");
 	}
     }
 
