@@ -125,11 +125,11 @@ public class TileMap{
     public void makeMonsters(int lv){
 	monsters = new LinkedList<Monster>();
 
-	int num = 1;
-	if (level > 3 || !id.equals("Hall_8"))
+	int num = 0;
+	if (level > 3)
 	    num = (int)(Math.random() * (15 - lv)) + 5;
-	if (id.equals("Office"))
-	    num = 0;
+	if (id.equals("Hall_8"))
+	    num = 1;
 
 	//different monsters based on level
 	for (int i = 0; i < num; i++){
@@ -137,15 +137,18 @@ public class TileMap{
 	    int row = lv - 1;
 	    int col = 0;
  
-	    if (level == 2 && !id.equals("Hall_8"))
-		col = 1;
-	    else if (id.equals("Hall_8"))
+	    if (id.equals("Hall_8") && muk == null)
 		col = 0;
 	    else 
 		col = (int)(Math.random() * names[row].length);
 
 	    String s = names[row][col];
-	    Monster mon = new Monster(s, lv, this);
+	    Monster mon;
+
+	    if (s.equals("Ghost_"))
+		mon = new Monster(s, lv, this, "superMon");
+	    else 
+		mon = new Monster(s, lv, this);
 
 	    //limit spawning to 320 * 320 area centered within panel
 	    int x = (int)(Math.random() * 321) + 96;
@@ -164,7 +167,7 @@ public class TileMap{
 	    mon.setX(x);
 	    mon.setY(y);
 
-	    /*
+	  
 	    if (s.equals("Ghost_"))
 		muk = mon;
 	    //replicate Muk as miniMuks
@@ -172,7 +175,6 @@ public class TileMap{
 		mon.setX(muk.getX());
 		mon.setY(muk.getY());	 
 	    }
-	    */
 	    monsters.add(mon);
 	}
     }

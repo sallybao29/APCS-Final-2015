@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.LinkedList;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -21,6 +22,7 @@ public class GamePanel extends JPanel implements ActionListener{
     private final int DELAY = 15;
 
     private boolean inGame;
+    private boolean gameStart;
 
     private Player p;
     private TileMap tilemap;
@@ -116,7 +118,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	setDoubleBuffered(true);
 	setVisible(true);
 
-	inGame = true;
+	inGame = false;
+	gameStart = true;
 
 	itemDrop = new LinkedList<MapObject>();
 	//setup floors 
@@ -125,11 +128,11 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-	level = 2;
+	level = 10;
 
 	currentFloor = floors[level];
 	currentFloor.setX(2);
-	currentFloor.setY(2);
+	currentFloor.setY(0);
 
 	tilemap = currentFloor.getCurrent();
 
@@ -163,6 +166,35 @@ public class GamePanel extends JPanel implements ActionListener{
     public void paint(Graphics g){
 	super.paint(g);
 
+	if (!gameStart){
+	    paintStartScreen(g);
+	}
+	else if (!inGame){
+	    paintGameOver(g);
+	}
+	else {
+	    paintComponents(g);
+	}
+		    
+	Toolkit.getDefaultToolkit().sync();
+	g.dispose();
+    }
+
+    public void paintStartScreen(Graphics g){
+
+    }
+
+    public void paintGameOver(Graphics g){
+	setBackground(Color.BLACK);
+	Font font = new Font("Jokerman", Font.PLAIN, 35);
+	String message = "Congratulations! You have died!";
+	//JLabel label = new JLabel(message);
+        setFont(font);
+	g.drawString(message, 128, 256);
+
+    }
+
+    public void paintComponents(Graphics g){
 	g.setColor(Color.CYAN);
 
 	//draw floor
@@ -192,9 +224,6 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	drawStats(g);
 	drawDisplay(g);
-		    
-	Toolkit.getDefaultToolkit().sync();
-	g.dispose();
     }
 
     //draw hp and pp bars
@@ -224,9 +253,11 @@ public class GamePanel extends JPanel implements ActionListener{
     /*------------------------------------------ Updating ----------------------------------------------*/
 
     public void actionPerformed(ActionEvent e){
-	inGame();
+        if (!inGame){
+	    timer.stop();
+	}
 
-	if (currentFloor.cleared() && currentFloor.locked() && !currentFloor.keyMade()){
+	if (currentFloor.cleared() && currentFloor.locked() && !currentFloor.keyMade() && level != 2){
 	    currentFloor.genKey();
 	    currentFloor.setKeyMade(true);
 	}
@@ -246,10 +277,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	repaint();
     }
 
-    public void inGame(){
-	if (!inGame)
-	    timer.stop();
-    }
 
     /*------------------------------------------ Update Board -----------------------------------------------*/
 
@@ -466,7 +493,6 @@ public class GamePanel extends JPanel implements ActionListener{
 		if (Math.sqrt(Math.pow(p.getX() - m.getX(), 2) + 
 			      Math.pow(p.getY() - m.getY(), 2)) <= m.getRadius())
 		    m.setIdle(false);
-		//if monster was attacked by player
 		else if (m.getHP() < m.getMaxHP())
 		    m.setIdle(false);
 		else 
@@ -481,8 +507,9 @@ public class GamePanel extends JPanel implements ActionListener{
     /*------------------------------------------ Check Collisions ----------------------------------------------*/
 
     public void checkCollisions(){
-
-	for (Monster m: monsters){
+	int i = 0;
+	while (i < monsters.size()){
+	    Monster m = monsters.get(i);
 	    Rectangle mon = m.getBounds();
 
 	    m.resetP(p);
@@ -491,7 +518,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	    //player loses hp
 	    if ( (Math.abs(p.getX()/32 - m.getX()/32)) < 0.5 &&
 		 (Math.abs(p.getY()/32 - m.getY()/32)) < 0.5){
-		System.out.println("You've been caught!");
 		m.repel();
 		p.setHP(p.getHP() - m.getDamage());
 	    }
@@ -499,16 +525,24 @@ public class GamePanel extends JPanel implements ActionListener{
 	    //if projectile collides, it disappears
 	    //and monster loses hp
 
-	    int i = 0;
-	    while (i < books.size()){
-		Rectangle proj = books.get(i).getBounds();
+	    int j = 0;
+	    while (j < books.size()){
+		Rectangle proj = books.get(j).getBounds();
 		if (mon.intersects(proj)){
-		    m.setHP(m.getHP() - books.get(i).getDamage());
-		    books.remove(i);
+		    m.setHP(m.getHP() - books.get(j).getDamage());
+		    books.remove(j);
+		    if (m.getID().equals("Ghost_")){
+			Monster mini = new Monster("MiniMuk_", level, tilemap);
+			mini.setX(m.getX());
+			mini.setY(m.getY());
+			tilemap.getMonsters().add(mini);
+		    }
+		    m.setIdle(false);
 		}
 		else 
-		    i++;
-	    }	  
+		    j++;
+	    }
+	    i++;	  
 	}
     }
 

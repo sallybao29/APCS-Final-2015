@@ -414,7 +414,6 @@ public class SuperList{
 	    add(new MapObject("Seat_3", 32, 304));
 
 	    add(new MapObject("Plant_4", 128, 64));
-	    add(new MapObject("Cabinet", 32, 64));
 
 	    add(new MapObject("Fridge", 224, 64));
 	    add(new MapObject("Phone", 256, 64));
