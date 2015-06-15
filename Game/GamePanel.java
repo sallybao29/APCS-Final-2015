@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements ActionListener{
     private final int DELAY = 15;
 
     private boolean inGame;
+    private boolean inStart;
 
     private Player p;
     private TileMap tilemap;
@@ -82,6 +83,11 @@ public class GamePanel extends JPanel implements ActionListener{
 		p.setDY(1);
 		p.setDX(0);
 		break;
+	    case KeyEvent.VK_S:
+		if (inStart){
+		    inStart = false;
+		}
+		break;
 	    }
 	}
 	
@@ -117,6 +123,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	setVisible(true);
 
 	inGame = true;
+	inStart = true;
 
 	itemDrop = new LinkedList<MapObject>();
 	//setup floors 
@@ -165,34 +172,44 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	g.setColor(Color.CYAN);
 
-	//draw floor
-	BufferedImage f = currentFloor.getFloor();
-	if (tilemap.getID().contains("Hall")){
-	    g.drawImage(f, 0, 0, this);
+	if (inStart){
+	    BufferedImage snake = null;
+	    try{ 
+		snake = ImageIO.read(new File("Snakes.png"));
+	    }
+	    catch (Exception e){}
+	    g.drawImage(snake, 0, 0, this);
 	}
 
-	Graphics2D im = (Graphics2D)g;
-	tilemap.draw(im);
-	p.draw(im);
+	else if (inGame){
+	    //draw floor
+	    BufferedImage f = currentFloor.getFloor();
+	    if (tilemap.getID().contains("Hall")){
+		g.drawImage(f, 0, 0, this);
+	    }
 
-
-        books = p.getProjectiles();
-	for (Projectile p: books)
+	    Graphics2D im = (Graphics2D)g;
+	    tilemap.draw(im);
 	    p.draw(im);
+
+
+	    books = p.getProjectiles();
+	    for (Projectile p: books)
+		p.draw(im);
       
-	for (Monster monster: monsters){	   
-	    monster.draw(im);
-	}
+	    for (Monster monster: monsters){	   
+		monster.draw(im);
+	    }
 	
-	for (MapObject item: itemDrop){
-	    item.draw(im);
-	}
+	    for (MapObject item: itemDrop){
+		item.draw(im);
+	    }
 
-	p.getInventory().draw(im);
+	    p.getInventory().draw(im);
 
-	drawStats(g);
-	drawDisplay(g);
-		    
+	    drawStats(g);
+	    drawDisplay(g);
+	}	    
 	Toolkit.getDefaultToolkit().sync();
 	g.dispose();
     }
@@ -482,7 +499,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	    //player loses hp
 	    if ( (Math.abs(p.getX()/32 - m.getX()/32)) < 0.5 &&
 		 (Math.abs(p.getY()/32 - m.getY()/32)) < 0.5){
-		System.out.println("You've been caught!");
 		m.repel();
 		p.setHP(p.getHP() - m.getDamage());
 	    }
