@@ -182,7 +182,7 @@ public class MapObject{
 	    bw = 62;
 	    break;
 	case "Seat_1": case "Seat_2": case "Seat_3":
-	case "Chair_R": case "Chair_L":
+	case "Chair_R": case "Chair_L": case "Rug":
 	    bw = 0;
 	    bh = 0;
 	    break;
@@ -197,7 +197,7 @@ public class MapObject{
 	    vw = 63;
 	    break;
 	case "Escalator":
-	    bh += 32;
+	    bh = 31;
 	    vy += 32;
 	    vw = 63;
 	    break;
@@ -208,6 +208,10 @@ public class MapObject{
 	    break;
 	case "Desk_4":
 	    by += 7;
+	    break;
+	case "Counter_1":
+	    bh = 189;
+	    break;
 	}
  
 	bounds = new Rectangle(bx, by, bw, bh);

@@ -59,15 +59,8 @@ public class TileMap{
 		j++;
 	    }
 	}
-	catch (IndexOutOfBoundsException e){
-	    System.out.println("Index out of bounds");
-	}
-	catch (NullPointerException e){
-	    System.out.println("Null");
-	}
-	catch(FileNotFoundException e){
-	    System.out.println("File not found");
-	}
+	catch (Exception e){}
+
 	finally {
 	    sc.close();
 	}
@@ -76,7 +69,6 @@ public class TileMap{
 	loadTiles();
 	addProps();
 	makeMonsters(l);
-
     }
 
    
@@ -91,11 +83,11 @@ public class TileMap{
 
     public void initNames(){
 	names = new String[][]{{"Klefki_",},
-			       {"Muk_", "MiniMuk"},
+			       {"Ghost_", "MiniMuk_"},
 			       {"Ghost_", "Arbok_", "Ekans_"},
 			       {"Rabbit_"},
 			       {"A_", "Vanillite_"},
-			       {"A_"},
+			       {"A_", "Cat_"},
 			       {"Frog_", "Cat_"},
 			       {"Bird_", "BirdFly_"},
 			       {"Rabbit_"},
@@ -186,6 +178,7 @@ public class TileMap{
 	    mon.setX(x);
 	    mon.setY(y);
   
+	    /*
 	    //replicate Muk as miniMuks
 	    if (s.equals("MiniMuk")){
 		mon.setX(muk.getX());
@@ -195,6 +188,7 @@ public class TileMap{
 	    if (s.equals("Muk_"))
 		muk = mon;
 
+	    */
 	    monsters.add(mon);
 	}
     }
@@ -249,7 +243,7 @@ public class TileMap{
     }
 
     public boolean empty(){
-	return monsters.size() == 0;
+	return monsters.isEmpty();
     }
  
     public Tile getTile(int x, int y){
@@ -306,6 +300,7 @@ public class TileMap{
     //give one of the monsters the key
     public void addKey(){
         makeMonsters(1);
+	monsters.get(0).setSpeed(2);
 	monsters.get(0).setItem("Key");
     }
 

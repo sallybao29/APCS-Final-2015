@@ -32,7 +32,7 @@ public class Floor{
 
     TileMap hall1, hall2, hall3, hall4, hall5, hall6,
 	library1, library2, chem, lunchroom, cs, art,
-	english, lockerroom;
+        lockerroom, class1, class2, gym;
 
 
     /*----------------------------- Constructor ------------------------------*/
@@ -59,6 +59,10 @@ public class Floor{
     //initialize all TileMaps
     //make the layout of each floor
     public void makeFloor(){
+	ax = 0;
+	ay = 3;
+	dx = 2;
+	dy = 1;
 
 	hall1 = new TileMap("Hall_1", level);
 	hall2 = new TileMap("Hall_2", level);
@@ -72,8 +76,10 @@ public class Floor{
 	chem = new TileMap("Chem_Class", level);
 	cs = new TileMap("CS_Class", level);
 	art = new TileMap("Art_Class", level);
-	english = new TileMap("English_Class", level);
 	lockerroom = new TileMap("Lockerroom", level);
+	class1 = new TileMap("Class_1", level);
+	class2 = new TileMap("Class_2", level);
+	gym = new TileMap("Gym", level);
 
 	//blocks off hall2 on all floors
 	//except 6, because library is there
@@ -117,10 +123,12 @@ public class Floor{
  
     public void makeArt(){
 	id = "Art";
-	ax = 0;
-	ay = 3;
+	MapObject ob = hall5.getProps().find("Escalator");
+	hall5.getProps().remove(ob);
+	hall3.add(new MapObject("Door_open", 56, 34));
+	class1.add(new MapObject("Exit_H", 56, 480));
 	hall4.add(new MapObject("Door_open", 216, 34));
-	areas = new TileMap[][]{{null, art, null},
+	areas = new TileMap[][]{{class1, art, null},
 				{hall3, hall4, hall5},
 				{hall2, null, null},
 				{hall1, null, null}};
@@ -128,8 +136,6 @@ public class Floor{
 
     public void makeChem(){
 	id = "Chemistry";
-	dx = 2;
-	dy = 1;
 	hall3.add(new MapObject("Door_open", 56, 34));
 	areas = new TileMap[][]{{chem, null, null},
 				{hall3, hall4, hall5},
@@ -154,11 +160,9 @@ public class Floor{
     public void makeEng(){
 	id = "English";
 	ax = 1;
-	ay = 3;
 	dx = 3;
-	dy = 1;
 	hall3.add(new MapObject("Door_open", 56, 34));
-	areas = new TileMap[][]{{null, english, null, null},
+	areas = new TileMap[][]{{null, class2, null, null},
 				{null, hall3, hall4, hall5},
 				{library1, hall2, null, null},
 				{library2, hall1, null, null}};
@@ -166,32 +170,33 @@ public class Floor{
 
     public void makeLang(){
 	id = "Language";
-	ax = 0;
-	ay = 3;
-	dx = 2;
-	dy = 1;
+	hall1.add(new MapObject("Exit_V", 480, 120));
+	class1.add(new MapObject("Exit_V", 0, 120));
 	hall5.add(new MapObject("Door_open", 312, 34));
 	areas = new TileMap[][]{{lunchroom, null, lockerroom},
 				{hall6, hall4, hall5},
 				{hall2, null, null},
-				{hall1, null, null}};
+				{hall1, class1, null}};
     }
 
     public void makeMath(){
 	id = "Math";
-	areas = new TileMap[][]{{hall3, hall4, hall5},
+	hall3.add(new MapObject("Door_open", 56, 34));
+	areas = new TileMap[][]{{class2, null, null},
+				{hall3, hall4, hall5},
 				{hall2, null, null},
 				{hall1, null, null}};
     }
 
     public void makeHist(){
 	id = "History";
-	areas = new TileMap[][]{{null, null, null},
+	hall3.add(new MapObject("Door_open", 56, 34));
+	hall1.add(new MapObject("Exit_V", 480, 120));
+	areas = new TileMap[][]{{gym, null, null},
 				{hall3, hall4, hall5},
 				{hall2, null, null},
 				{hall1, cs, null}};
     }
-
 
     public void makeFinal(){
 	id = "";
