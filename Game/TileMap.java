@@ -10,12 +10,11 @@ public class TileMap{
     private final int width = 16;
     private final int height = 16;
 
-    private int level;
-
-    private char[][] map;
     private Tile[][] tiles;
     private String file;
     private String id;
+
+    private int level;
 
     private LinkedList<Monster> monsters;
     private SuperList props;
@@ -30,12 +29,11 @@ public class TileMap{
     public TileMap(String type, int l){
 
 	id = type;
-	level = 1;
+	level = l;
 
 	props = new SuperList(id);
 	safeSpot = new Rectangle(96,416,384,64);
 
-	map = new char[height][width];
         tiles = new Tile[height][width];
 
 	if (type.contains("Class"))
@@ -43,35 +41,12 @@ public class TileMap{
 	else 
 	    file = "../Maps/" + type + ".txt";
 
-	Scanner sc = null;
-
-	try{
-	    sc = new Scanner(new File(file));
-
-	    //read map into array
-	    //map contains information on tile shape and position 
-	    int j = 0;
-	    while (sc.hasNext()){
-		String line = sc.nextLine();
-		for (int i = 0;i < line.length();i++){
-		    map[j][i] = line.charAt(i);
-		}
-		j++;
-	    }
-	}
-	catch (Exception e){}
-
-	finally {
-	    sc.close();
-	}
-
 	initNames();
 	loadTiles();
-	addProps();
 	makeMonsters(l);
+	addProps();
     }
 
-   
     /*--------------------------------------- Initialization --------------------------------------*/
 
 
@@ -97,69 +72,75 @@ public class TileMap{
 
     //created 2d array of tile objects based on map
     public void loadTiles(){
+	Scanner sc = null;
+
+	try{
+	    sc = new Scanner(new File(file));
+	}
+	catch (Exception e){}
+
+	//read map into array
+	//map contains information on tile shape and position 
 	Tile t = null;
-	String id = "";
+	String s = "";
 	boolean blocked = false;
 
-	for (int row = 0; row < height; row++){
-	    for (int col = 0; col < width; col++){
-		char curr = map[row][col];
+	int row = 0;
+	while (sc.hasNext()){
+	    String line = sc.nextLine();
+	    for (int col = 0; col < line.length(); col++){
+		char curr = line.charAt(col);
 		if (curr >= 'a' && curr <= 'z'){
-		    id = "Border_";
+		    s = "Border_";
 		    blocked = true;
 		}
 		if (curr >= 'A' && curr <= 'Z'){
-		    id = "Wall_";
+		    s = "Wall_";
 		    blocked = true;
 		}
 		if (curr >= '0' && curr <= '9'){
-		    id = "Floor_";
+		    s = "Floor_";
 		    blocked = false;
 		}
 		if (curr == ' '){
-		    id = "None";
+		    s = "None";
 		    blocked = false;
 		}
 		
-		id += curr;
-		t = new Tile(id, blocked);
+		s += curr;
+		t = new Tile(s, blocked);
 
 		t.setX(col * t.getWidth());
 		t.setY(row * t.getHeight());
 
-		tiles[row][col] = t;
+		tiles[row][col] = t;    
 	    }
-	}
+	    row++;
+	}	
+	sc.close();
     }
 
 
     //generate monsters in random locations
-    public void makeMonsters(int l){
+    public void makeMonsters(int lv){
 	monsters = new LinkedList<Monster>();
+	System.out.println(lv);
 
-	int num;
-	if (level < 3)
-	    num = 1;
-	else
-	    num = (int)(Math.random() * (20 - l)) + 5;
+	int num = 1;
+	if (level > 3 || !id.equals("Hall_8"))
+	    num = (int)(Math.random() * (15 - lv)) + 5;
 
 	//different monsters based on level
 	for (int i = 0; i < num; i++){
 
-	    int row = 0;
+	    int row = lv - 1;
 	    int col = 0;
-
-	    if (level == 2){
-		if (muk != null)
-		    col = 1;
-	    }
-	    else {
-		row = l - 1;
+ 
+	    if (!id.equals("Hall_8"))
 		col = (int)(Math.random() * names[row].length);
-	    }
 
 	    String s = names[row][col];
-	    Monster mon = new Monster(s, l, this);
+	    Monster mon = new Monster(s, lv, this);
 
 	    //limit spawning to 320 * 320 area centered within panel
 	    int x = (int)(Math.random() * 321) + 96;
@@ -177,32 +158,27 @@ public class TileMap{
 	    }	
 	    mon.setX(x);
 	    mon.setY(y);
-  
+
 	    /*
 	    //replicate Muk as miniMuks
-	    if (s.equals("MiniMuk")){
+	    if (s.equals("MiniMuk_")){
 		mon.setX(muk.getX());
 		mon.setY(muk.getY());	 
 	    }
-
 	    if (s.equals("Muk_"))
 		muk = mon;
-
 	    */
+  
 	    monsters.add(mon);
 	}
     }
 
     public void addToBounds(MapObject ob){
 	Rectangle r = ob.getBounds();
-	int rx = (int)r.getX();
-	int ry = (int)r.getY();
-	int rw = (int)r.getWidth();
-	int rh = (int)r.getHeight();
 
-	if (rh != 0 && rw != 0){
-	    for (int row = ry / 32; row < (ry + rh)/ 32; row++)
-		for (int col = rx / 32; col < (rx + rw) / 32; col++)
+	if ((int)r.getHeight() != 0 && (int)r.getWidth() != 0){
+	    for (int row = (int)r.getY()/32; row < ((int)r.getY() + (int)r.getHeight())/32; row++)
+		for (int col = (int)r.getX()/32; col < ((int)r.getX()+ (int)r.getWidth())/32; col++)
 		    tiles[row][col].setBlocked(true);
 	}   
 	if (ob.getID().contains("Stairs") || 
@@ -212,13 +188,9 @@ public class TileMap{
 	    ob.getID().contains("Exit")){
 
 	    Rectangle v = ob.getValid();
-	    int vx = (int)v.getX();
-	    int vy = (int)v.getY();
-	    int vw = (int)v.getWidth();
-	    int vh = (int)v.getHeight();
 
-	    for (int row = vy / 32; row <= (vy + vh)/ 32; row++){
-		for (int col = vx / 32; col <= (vx + vw) / 32; col++){
+	    for (int row = (int)v.getY()/32; row <= ((int)v.getY() + (int)v.getHeight())/32; row++){
+		for (int col = (int)v.getX()/32; col <= ((int)v.getX() + (int)v.getWidth())/32; col++){
 		    tiles[row][col].setBlocked(false);
 		    tiles[row][col].setTransferPoint(ob.getID());
 		}
@@ -269,17 +241,6 @@ public class TileMap{
 
     /*----------------------------------------- Misc ----------------------------------------*/
 
-    public String toString(){
-	String s = "";
-	for (int row = 0; row < height; row++){
-	    for (int col = 0; col < width; col++){
-		s += map[row][col];
-	    }
-	    s += "\n";
-	}
-	return s;
-    }
-
     public void draw(Graphics2D g){
 	//draw tiles
 	for (int row = 0; row < height; row++)
@@ -307,16 +268,17 @@ public class TileMap{
    /*----------------------------------------- Testing ----------------------------------------*/
  
     public static void main(String[] args){
-	String type = "Hall_1";
+	String type = "Hall_3";
 	TileMap t = new TileMap(type, 10);
 
-	System.out.println(t);
-	String s = "";
-
-	for (Monster m: t.monsters){
-	    System.out.println(m.getImage());
+	String s= "";
+	for (int row = 0; row < t.tiles.length; row++){
+	    for (int col = 0; col < t.tiles[row].length; col++){
+		s += t.tiles[row][col].getID() + " ";
+	    }
+	    s += "\n";
 	}
-
+	System.out.println(s);
     }
 
 }

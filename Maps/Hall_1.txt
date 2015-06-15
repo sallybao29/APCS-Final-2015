@@ -1,7 +1,7 @@
-aae      caaaaaa
-fbk      lbbbbbg
-eAA      AAAAAAc
-eBB      BBBBBBc
+aae      lbbbbbg
+fbk      AAAAAAc
+eAA      BBBBBBc
+eBB            c
 e              c
 e              c
 e              c

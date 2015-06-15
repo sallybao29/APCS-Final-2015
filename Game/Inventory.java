@@ -11,17 +11,14 @@ public class Inventory extends SuperList{
 	add(new Projectile("Physics_", 'U'));
 	add(new Projectile("Precalc_", 'U'));
 	add(new Projectile("History_", 'U'));
-	    
-	MapObject bagel = new MapObject("Bagel", 513, 0);
-	MapObject coffee =  new MapObject("Coffee", 598, 0);
-	MapObject key = new MapObject("Key", 683, 0);
-	bagel.changeQuantity(-1);
-	coffee.changeQuantity(-1);
-	key.changeQuantity(-1);
 
-	add(bagel);
-	add(coffee);
-	add(key);
+	add(new MapObject("Bagel", 513, 0));
+	add(new MapObject("Coffee", 598, 0));
+	add(new MapObject("Key", 683, 0));
+
+	get(4).changeQuantity(-1);
+	get(5).changeQuantity(-1);
+	get(6).changeQuantity(-1);
     }
 
     public void next(){

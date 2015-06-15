@@ -151,8 +151,7 @@ public class Monster extends Character{
 
     //checks if monster is outside of safespot
     public boolean outOfSafe(){
-	Rectangle m = this.getBounds();
-        return !m.intersects(tile.getSafeSpot());
+        return !getBounds().intersects(tile.getSafeSpot());
     }
 
     public void move(){
@@ -182,19 +181,6 @@ public class Monster extends Character{
 	}
     }
 
-    /*
-    public void move(String file){
-	AStar a = new AStar(file, this);
-	a.move(p);
-	if (cycle == 10){
-	    a = new AStar(file, this);
-	    a.move(p);
-	    cycle = 0;
-	}
-	a.nextStep();
-	cycle++;
-    }
-    */
    
     public void attack(){
     }
