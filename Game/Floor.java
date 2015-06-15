@@ -123,8 +123,6 @@ public class Floor{
     public void makeArt(){
 	id = "Art";
 	ay = 2;
-	MapObject ob = hall5.getProps().find("Escalator");
-	hall5.getProps().remove(ob);
 
 	hall3.add(new MapObject("Door_close", 56, 34));
 	hall4.add(new MapObject("Door_close", 216, 34));

@@ -51,8 +51,15 @@ public class TileMap{
 
 
     public void addProps(){
-	for (int i = 0; i < props.size(); i++){
-	    addToBounds(props.get(i));
+	int i = 0;
+	while (i < props.size()){
+	    if (level == 10 && props.get(i).getID().equals("Stairs_U")){
+		props.remove(i);
+	    }
+	    else {
+		addToBounds(props.get(i));
+		i++;
+	    }
 	}
     }
 
@@ -128,7 +135,7 @@ public class TileMap{
 	int num = 0;
 	if (level > 3)
 	    num = (int)(Math.random() * (15 - lv)) + 5;
-	if (id.equals("Hall_8"))
+	if (id.equals("Hall_8") || level == 1)
 	    num = 1;
 
 	//different monsters based on level

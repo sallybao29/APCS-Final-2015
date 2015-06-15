@@ -81,13 +81,14 @@ public class SuperList{
 	    break;
 	    /*------------------------ Hall 5 -----------------------------*/
 	case "Hall_5":
+	    add(new MapObject("Stairs_U", 96, 366));
+
 	    add(new MapObject("Locker_1", 96, 72));
 	    add(new MapObject("Locker_1", 128, 72));
 	    add(new MapObject("Locker_1", 160, 72));
 	    add(new MapObject("Locker_1", 192, 72));
 	    add(new MapObject("Locker_1", 224, 72));
 
-	    add(new MapObject("Stairs_U", 96, 366));
 	    break;
 	    /*------------------------ Hall 6 -----------------------------*/
 	case "Hall_6":

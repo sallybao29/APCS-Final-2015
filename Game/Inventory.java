@@ -12,9 +12,9 @@ public class Inventory extends SuperList{
 	add(new Projectile("Precalc_", 'U'));
 	add(new Projectile("History_", 'U'));
 
-	add(new MapObject("Bagel", 513, 0));
-	add(new MapObject("Coffee", 598, 0));
-	add(new MapObject("Key", 683, 0));
+	add(new MapObject("Bagel", 160, 8));
+	add(new MapObject("Coffee", 192, 12));
+	add(new MapObject("Key", 224, 11));
 
 	get(4).changeQuantity(-1);
 	get(5).changeQuantity(-1);

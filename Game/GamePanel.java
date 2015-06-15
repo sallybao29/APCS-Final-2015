@@ -117,7 +117,7 @@ public class GamePanel extends JPanel implements ActionListener{
     public GamePanel(){
 	super();
 	addKeyListener(new Key());
-	setPreferredSize(new Dimension(width+255, height));
+	setPreferredSize(new Dimension(width, height));
 	setFocusable(true);
 	setDoubleBuffered(true);
 	setVisible(true);
@@ -196,10 +196,10 @@ public class GamePanel extends JPanel implements ActionListener{
     public void paintGameOver(Graphics g){
 	setBackground(Color.BLACK);
 	Font font = new Font("Jokerman", Font.PLAIN, 35);
-	String message = "Congratulations! You have died!";
-	//JLabel label = new JLabel(message);
+	String message = "Congratulations!\n You have died!";
+
         setFont(font);
-	g.drawString(message, 128, 256);
+	g.drawString(message, 10, 256);
 
     }
 
@@ -231,8 +231,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	p.getInventory().draw(im);
 
 	drawStats(g);
-	drawDisplay(g);
-
     }
 
 
@@ -255,10 +253,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	g.drawImage(ppbar, 0, 40, this);
     }
 
-
-    public void drawDisplay(Graphics g){
-	g.drawRect(513, 0, 256, 640);
-    }
 
     /*------------------------------------------ Updating ----------------------------------------------*/
 
