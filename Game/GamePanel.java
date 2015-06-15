@@ -263,6 +263,8 @@ public class GamePanel extends JPanel implements ActionListener{
     /*------------------------------------------ Updating ----------------------------------------------*/
 
     public void actionPerformed(ActionEvent e){
+	if (p.getHP() <= 0)
+	    inGame = false;
         if (!inGame){
 	    timer.stop();
 	}
@@ -277,7 +279,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	    tilemap.add(new MapObject("Door_open", 216, 34));
 	    
 	}
-
 	updateBoard();
 	updatePlayer();
 	updateMonsters();
