@@ -133,9 +133,9 @@ public class TileMap{
 	monsters = new LinkedList<Monster>();
 
 	int num = 0;
-	if (level > 3)
+	if (lv > 3)
 	    num = (int)(Math.random() * (15 - lv)) + 5;
-	if (id.equals("Hall_8") || level == 1)
+	if (id.equals("Hall_8") || lv == 1)
 	    num = 1;
 
 	//different monsters based on level
