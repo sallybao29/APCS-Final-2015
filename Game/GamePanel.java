@@ -1,6 +1,5 @@
 import java.io.File;
 import java.util.LinkedList;
-import java.util.Random;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,7 +7,6 @@ import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.image.*;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -59,10 +57,10 @@ public class GamePanel extends JPanel implements ActionListener{
 		p.getInventory().next();
 		break;		
 	    case KeyEvent.VK_C:
-		p.use("Coffee");
+		p.use(5);
 		break;
 	    case KeyEvent.VK_B:
-		p.use("Bagel");
+		p.use(4);
 		break;
 	    case KeyEvent.VK_RIGHT:
 		p.setDirection('R');
@@ -127,7 +125,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-	level = 3;
+	level = 7;
 
 	currentFloor = floors[level];
 	currentFloor.setX(2);
@@ -250,29 +248,27 @@ public class GamePanel extends JPanel implements ActionListener{
     //check for moving out of bounds
     //or stepping on transfer point
     public void updateBoard(){
-	int px = p.getX();
-	int py = p.getY();
 	int fx = currentFloor.getX();
 	int fy = currentFloor.getY();
 	TileMap tmp = tilemap;
 
 	//if player moves off current map
-	if (px < 0 || px + p.getWidth() >= width ||
-	    py < 0 || py + p.getHeight() >= height){
+	if (p.getX() < 0 ||  p.getX() + p.getWidth() >= width ||
+	    p.getY() < 0 || p.getY() + p.getHeight() >= height){
 
-	    if (px < 0){
+	    if (p.getX() < 0){
 		p.setX(480);
 		currentFloor.setX(fx - 1);
 	    }
-	    else if (px + p.getWidth() >= width){
+	    else if (p.getX() + p.getWidth() >= width){
 	        p.setX(0);
         	currentFloor.setX(fx + 1);
 	    }
-	    else if (py < 0){
+	    else if (p.getY() < 0){
 	        p.setY(480);
 		currentFloor.setY(fy - 1);
 	    }
-	    else if (py + p.getHeight() >= height){
+	    else if (p.getY() + p.getHeight() >= height){
 		p.setY(0);
         	currentFloor.setY(fy + 1);
 	    }
@@ -284,7 +280,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	    transfer();
 	}
 	if (!tmp.equals(tilemap)){
-	    clearItems();
+	    itemDrop.clear();
 	    p.setMap(tilemap);
 	    p.getProjectiles().clear();
 	}	 
@@ -295,29 +291,30 @@ public class GamePanel extends JPanel implements ActionListener{
     public void transfer(){
 	int fx = currentFloor.getX();
 	int fy = currentFloor.getY();
-	int px = p.getX();
-	int py = p.getY();
 	int pw = p.getWidth();
 	int ph = p.getHeight();
 
-	Tile topRight = tilemap.getTile((px + pw)/32 , py/32);
-	Tile topLeft = tilemap.getTile(px/32, py/32);
-	Tile bottomRight = tilemap.getTile((px + pw)/32, (py + ph)/32);
-	Tile bottomLeft = tilemap.getTile(px/32, (py + ph)/32);
+	Tile topRight = tilemap.getTile((p.getX() + pw)/32 , p.getY()/32);
+	Tile topLeft = tilemap.getTile(p.getX()/32, p.getY()/32);
+	Tile bottomRight = tilemap.getTile((p.getX() + pw)/32, (p.getY() + ph)/32);
+	Tile bottomLeft = tilemap.getTile(p.getX()/32, (p.getY() + ph)/32);
 
 
 	if (p.getDY() == -1){
 	    if (topLeft.has("Escalator") && topRight.has("Escalator")){
 		checkLock();
 		if (!currentFloor.locked()){
-		    level -= 2;
+		    if (level == 3)
+			level -= 1;
+		    else 
+			level -= 2;
 		    currentFloor = floors[level];
 		    currentFloor.descend();
 		    p.setX(160);
 		    p.setY(416);
 		}
 	    }
-	    try {topLeft = tilemap.getTile(px/32, py/32 - 1);}
+	    try {topLeft = tilemap.getTile(p.getX()/32, p.getY()/32 - 1);}
 	    catch (IndexOutOfBoundsException e){}
 
 	    if (topLeft.has("Door")){
@@ -327,22 +324,16 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	if (p.getDX() == 1){
 	    if (topRight.has("Stairs_D") || bottomRight.has("Stairs_D")){
-		checkLock();
-		if (!currentFloor.locked()){
-		    level--;
-		    currentFloor = floors[level];
-		    currentFloor.descend();
-		    p.setX(160);
-		    p.setY(416);
-		}
+		level--;
+		currentFloor = floors[level];
+		currentFloor.descend();
+		p.setX(160);
+		p.setY(416);
+		p.setHP(p.getHP() - 5);
 	    }
-
-	    try {topRight = tilemap.getTile((px + pw)/32 + 1, py/32);}
-	    catch (IndexOutOfBoundsException e){}
-
 	    if (topRight.has("Exit_V")){
 		currentFloor.setX(fx + 1);
-		p.setX(32);
+		p.setX(33);
 	    }
 	}
 	if (p.getDX() == -1){
@@ -352,14 +343,11 @@ public class GamePanel extends JPanel implements ActionListener{
 		currentFloor.ascend();
 		p.setX(384);
 		p.setY(384);
+		p.setHP(p.getHP() - 5);
 	    }
-
-	    try {topLeft = tilemap.getTile(px/32 - 1, py/32);}
-	    catch (IndexOutOfBoundsException e){}
-
 	    if (topLeft.has("Exit_V")){
 		currentFloor.setX(fx - 1);
-		p.setX(480);
+		p.setX(479);
 	    }
 	}
 	if (p.getDY() == 1 && bottomLeft.has("Exit_H")){
@@ -372,21 +360,11 @@ public class GamePanel extends JPanel implements ActionListener{
 
     public void checkLock(){
 	if (currentFloor.locked() && p.hasKey()){
-	    p.use("Key");
+	    p.use(6);
 	    currentFloor.unlock();
 	}
     }
 
-    public void clearItems(){
-	MapObject key = null;
-	for (MapObject ob: itemDrop){
-	    if (ob.getID().equals("Key"))
-		key = ob;
-	}
-	itemDrop.clear();
-	if (key != null)
-	    itemDrop.add(key);
-    }
   
     /*-------------------------------------- Update Player -----------------------------------------*/
 
@@ -419,16 +397,14 @@ public class GamePanel extends JPanel implements ActionListener{
 	    Projectile b = books.get(i); 
 	    boolean removed = false;
 
-	    int x = b.getX();
-	    int y = b.getY();
-	    int tx = x / 32;
-	    int ty = y / 32;
+	    int tx = b.getX() / 32;
+	    int ty = b.getY() / 32;
 	    Tile t;
 
 	    //if projectiles go out of bounds
 	    //they disappear
-	    if  (x < 0 || x + b.getWidth() > width ||
-		 y < 0 || y + b.getHeight() > height){
+	    if  (b.getX() < 0 || b.getX() + b.getWidth() > width ||
+		 b.getY() < 0 || b.getY() + b.getHeight() > height){
 		books.remove(i);
 		removed = true;
 	    }
@@ -436,9 +412,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	    //crash into walls
 	    else {
 		if (b.getDirection() == 'D')
-		    ty = y / 32 + 1;   
+		    ty = b.getY() / 32 + 1;   
 		else if (b.getDirection() == 'R')
-		    tx = x / 32 + 1;
+		    tx = b.getX() / 32 + 1;
 		if (ty != 16 && tx != 16){
 		    t = tilemap.getTile(tx, ty);
 		    if (t.isBlocked()){
@@ -496,8 +472,6 @@ public class GamePanel extends JPanel implements ActionListener{
     /*------------------------------------------ Check Collisions ----------------------------------------------*/
 
     public void checkCollisions(){
-
-	Rectangle pl = p.getBounds();
 
 	for (Monster m: monsters){
 	    Rectangle mon = m.getBounds();

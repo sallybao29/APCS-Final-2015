@@ -45,13 +45,10 @@ public abstract class Character extends MapObject{
 	walkingUp = new BufferedImage[4];  
 	walkingDown = new BufferedImage[4]; 
 
-	String path = getPath();
-	String id = getID();
-
-	loadFrames(walkingLeft, path + id + "L"); 
-	loadFrames(walkingRight, path + id + "R"); 
-	loadFrames(walkingUp, path + id + "U"); 
-	loadFrames(walkingDown, path + id + "D"); 
+	loadFrames(walkingLeft, getPath() + getID() + "L"); 
+	loadFrames(walkingRight, getPath() + getID() + "R"); 
+	loadFrames(walkingUp, getPath() + getID() + "U"); 
+	loadFrames(walkingDown, getPath() + getID() + "D"); 
 
 	animation = new Animation();
 	animation.setFrames(walkingUp);

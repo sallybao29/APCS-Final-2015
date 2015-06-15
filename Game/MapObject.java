@@ -70,6 +70,11 @@ public class MapObject{
 		System.out.println("Error");
 		System.out.println(s);
 	    }
+	    catch(Exception e){
+		System.out.println("Error");
+		System.out.println(s);
+
+	    }
 	}
     }
 

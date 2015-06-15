@@ -1,9 +1,7 @@
-import java.io.*;
-import java.util.*;
+import java.util.LinkedList;
 import java.awt.image.BufferedImage;
-import java.awt.Graphics2D;;
+import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
-import java.awt.event.KeyEvent;
 
 
 public class Player extends Character{
@@ -63,7 +61,7 @@ public class Player extends Character{
     }
 
     public boolean hasKey(){
-	return inventory.find("Key").getQuantity() > 0;
+	return inventory.get(6).getQuantity() > 0;
     }
 
     public void setPower(int p){
@@ -79,17 +77,17 @@ public class Player extends Character{
 	return maxPower;
     }
 
-    public void use(String s){
+    public void use(int i){
 	int start, end;
 
-	MapObject ob = inventory.find(s);
+	MapObject ob = inventory.get(i);
 	start = ob.getQuantity();
 	ob.changeQuantity(-1);
 	end = ob.getQuantity();
 	if (start != end){
-	    if (s.equals("Bagel"))
+	    if (i == 4)
 		setHP(getHP() + 10);
-	    if (s.equals("Coffee")){
+	    if (i == 5){
 		setHP(getHP() + 5);
 		setPower(power + 10);
 	    }
