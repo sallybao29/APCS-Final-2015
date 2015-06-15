@@ -57,14 +57,14 @@ public class TileMap{
     }
 
     public void initNames(){
-	names = new String[][]{{"Klefki_",},
+	names = new String[][]{{"Klefki_"},
 			       {"Ghost_", "MiniMuk_"},
-			       {"Ghost_", "Arbok_", "Ekans_"},
+			       {"Ekans_"},
 			       {"Rabbit_"},
-			       {"A_", "Vanillite_"},
-			       {"A_", "Cat_"},
-			       {"Frog_", "Cat_"},
-			       {"Bird_", "BirdFly_"},
+			       {"Vanillite_"},
+			       {"A_"},
+			       {"Frog_"},
+			       {"Bird_"},
 			       {"Rabbit_"},
 			       {"Smeargle_"}};
     }
@@ -124,11 +124,12 @@ public class TileMap{
     //generate monsters in random locations
     public void makeMonsters(int lv){
 	monsters = new LinkedList<Monster>();
-	System.out.println(lv);
 
 	int num = 1;
 	if (level > 3 || !id.equals("Hall_8"))
 	    num = (int)(Math.random() * (15 - lv)) + 5;
+	if (id.equals("Office"))
+	    num = 0;
 
 	//different monsters based on level
 	for (int i = 0; i < num; i++){
@@ -136,7 +137,11 @@ public class TileMap{
 	    int row = lv - 1;
 	    int col = 0;
  
-	    if (!id.equals("Hall_8"))
+	    if (level == 2 && !id.equals("Hall_8"))
+		col = 1;
+	    else if (id.equals("Hall_8"))
+		col = 0;
+	    else 
 		col = (int)(Math.random() * names[row].length);
 
 	    String s = names[row][col];
@@ -160,15 +165,14 @@ public class TileMap{
 	    mon.setY(y);
 
 	    /*
+	    if (s.equals("Ghost_"))
+		muk = mon;
 	    //replicate Muk as miniMuks
 	    if (s.equals("MiniMuk_")){
 		mon.setX(muk.getX());
 		mon.setY(muk.getY());	 
 	    }
-	    if (s.equals("Muk_"))
-		muk = mon;
 	    */
-  
 	    monsters.add(mon);
 	}
     }
@@ -253,9 +257,7 @@ public class TileMap{
     
 
     public boolean equals(TileMap other){
-        boolean sameLevel = this.level == other.level;
-	boolean sameProps = this.props.equals(other.props);
-	return sameLevel && sameProps;
+	return this.level == other.level && this.props.equals(other.props);
     }
 
     //give one of the monsters the key
@@ -265,20 +267,5 @@ public class TileMap{
 	monsters.get(0).setItem("Key");
     }
 
-   /*----------------------------------------- Testing ----------------------------------------*/
- 
-    public static void main(String[] args){
-	String type = "Hall_3";
-	TileMap t = new TileMap(type, 10);
-
-	String s= "";
-	for (int row = 0; row < t.tiles.length; row++){
-	    for (int col = 0; col < t.tiles[row].length; col++){
-		s += t.tiles[row][col].getID() + " ";
-	    }
-	    s += "\n";
-	}
-	System.out.println(s);
-    }
 
 }

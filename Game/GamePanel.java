@@ -132,11 +132,11 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-	level = 7;
+	level = 2;
 
 	currentFloor = floors[level];
 	currentFloor.setX(2);
-	currentFloor.setY(1);
+	currentFloor.setY(2);
 
 	tilemap = currentFloor.getCurrent();
 
@@ -220,6 +220,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	int hwidth = (int)(((double)p.getHP())/p.getMaxHP() * 96);
 	int pwidth = (int)(((double)p.getPower())/p.getMaxP() * 96);
 
+	if (hwidth > 96)
+	    hwidth = 96;
+
 	hp.setSize(hwidth, (int)hp.getHeight());
 	pp.setSize(pwidth,(int)pp.getHeight());
 
@@ -243,6 +246,12 @@ public class GamePanel extends JPanel implements ActionListener{
 	if (currentFloor.cleared() && currentFloor.locked() && !currentFloor.keyMade()){
 	    currentFloor.genKey();
 	    currentFloor.setKeyMade(true);
+	}
+
+	if (tilemap.getID().equals("Hall_8") && tilemap.empty()){
+	    tilemap.getProps().remove(0);
+	    tilemap.add(new MapObject("Door_open", 216, 34));
+	    
 	}
 
 	updateBoard();
