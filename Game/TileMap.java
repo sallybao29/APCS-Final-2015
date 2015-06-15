@@ -124,7 +124,6 @@ public class TileMap{
     //generate monsters in random locations
     public void makeMonsters(int lv){
 	monsters = new LinkedList<Monster>();
-	System.out.println(lv);
 
 	int num = 1;
 	if (level > 3 || !id.equals("Hall_8"))

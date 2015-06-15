@@ -22,13 +22,13 @@ public class Monster extends Character{
     public Monster(String s, int level, TileMap t){
 	super(s, t);
 	int tmp;
-	if (level == -1) // if monsters are miniMuks
+	if (s.equals("MiniMuk_")) // if monsters are miniMuks
 	    tmp = 50;
 	else
 	    tmp = (10-level) * 10 + 100;
 	setHP(tmp);
 	setMaxHP(tmp);
-	radius = ((12 - level) / 2) * 32;
+	radius = ((10 - level) / 2) * 32;
 	damage = (14 - level) / 2;
 	tile = t;
 	idle = true;

@@ -32,6 +32,10 @@ public class SuperList{
 	things.remove(o);
     }
 
+    public void remove(int i){
+	things.remove(i);
+    }
+
     public void add(MapObject o){
 	things.add(o);
     }

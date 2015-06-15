@@ -19,8 +19,8 @@ public class Player extends Character{
 	super("PlayerF_" , t);
 	setHP(200);
 	setMaxHP(200);
-	setX(256);
-	setY(256);
+	setX(160);
+	setY(416);
 	setSpeed(2);
 
 	attacking = false;
