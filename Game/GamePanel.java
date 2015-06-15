@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements ActionListener{
     private final int DELAY = 15;
 
     private boolean inGame;
-    private boolean gameStart;
+    private boolean inStart;
 
     private Player p;
     private TileMap tilemap;
@@ -84,6 +84,10 @@ public class GamePanel extends JPanel implements ActionListener{
 		p.setDY(1);
 		p.setDX(0);
 		break;
+	    case KeyEvent.VK_S:
+		if (inStart)
+		    inStart = false;
+		break;
 	    }
 	}
 	
@@ -118,8 +122,8 @@ public class GamePanel extends JPanel implements ActionListener{
 	setDoubleBuffered(true);
 	setVisible(true);
 
-	inGame = false;
-	gameStart = true;
+	inGame = true;
+	inStart = true;
 
 	itemDrop = new LinkedList<MapObject>();
 	//setup floors 
@@ -166,7 +170,7 @@ public class GamePanel extends JPanel implements ActionListener{
     public void paint(Graphics g){
 	super.paint(g);
 
-	if (!gameStart){
+	if (inStart){
 	    paintStartScreen(g);
 	}
 	else if (!inGame){
@@ -181,7 +185,12 @@ public class GamePanel extends JPanel implements ActionListener{
     }
 
     public void paintStartScreen(Graphics g){
-
+	BufferedImage snake = null;
+	try{ 
+	    snake = ImageIO.read(new File("Snakes.png"));
+	}
+	catch (Exception e){}
+	g.drawImage(snake, 0, 0, this);
     }
 
     public void paintGameOver(Graphics g){
@@ -197,18 +206,17 @@ public class GamePanel extends JPanel implements ActionListener{
     public void paintComponents(Graphics g){
 	g.setColor(Color.CYAN);
 
-	//draw floor
 	BufferedImage f = currentFloor.getFloor();
-	if (tilemap.getID().contains("Hall")){
+	if (tilemap.getID().contains("Hall"))
 	    g.drawImage(f, 0, 0, this);
-	}
+    
 
 	Graphics2D im = (Graphics2D)g;
 	tilemap.draw(im);
 	p.draw(im);
 
 
-        books = p.getProjectiles();
+	books = p.getProjectiles();
 	for (Projectile p: books)
 	    p.draw(im);
       
@@ -224,7 +232,9 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	drawStats(g);
 	drawDisplay(g);
+
     }
+
 
     //draw hp and pp bars
     //change rectangle based on each and draw
