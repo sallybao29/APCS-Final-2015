@@ -125,11 +125,11 @@ public class GamePanel extends JPanel implements ActionListener{
 	for (int i = 2; i < 11; i++){
 	    floors[i] = new Floor(i);
 	}
-	level = 10;
+	level = 2;
 
 	currentFloor = floors[level];
 	currentFloor.setX(2);
-	currentFloor.setY(0);
+	currentFloor.setY(2);
 
 	tilemap = currentFloor.getCurrent();
 
@@ -233,7 +233,8 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	if (tilemap.getID().equals("Hall_8") && tilemap.empty()){
 	    tilemap.getProps().remove(0);
-	    tilemap.getProps().add(new MapObject("Door_open", 216, 34));
+	    tilemap.add(new MapObject("Door_open", 216, 34));
+	    
 	}
 
 	updateBoard();

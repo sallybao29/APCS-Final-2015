@@ -222,14 +222,10 @@ public class SuperList{
 	    add(new MapObject("Counter_2", 320, 338));
 	    add(new MapObject("Phone", 448, 352));
 
-	    add(new MapObject("Notice", 420, 332));
-
-	    add(new MapObject("Books", 352, 320));
 	    add(new MapObject("Books", 384, 320));
 	    add(new MapObject("Books", 100, 160));
 
 	    add(new MapObject("Book", 128, 160));
-	    add(new MapObject("Book", 128, 256));
 	    add(new MapObject("Book", 320, 384));
 	    break;
 	    /*------------------------ Library 2 -----------------------------*/
@@ -253,7 +249,6 @@ public class SuperList{
 	    add(new MapObject("Computer_R", 32, 352));
 
 	    add(new MapObject("Seat_3", 72, 128));
-	    add(new MapObject("Seat_3", 72, 192));
 	    add(new MapObject("Seat_3", 72, 256));
 	    add(new MapObject("Seat_3", 72, 320));
 	    add(new MapObject("Seat_3", 72, 384));
@@ -281,16 +276,12 @@ public class SuperList{
 	    add(new MapObject("Window_1", 352, 32));
 	    add(new MapObject("Window_1", 384, 32));
 
-	    add(new MapObject("ATM", 32, 64));
-
 	    add(new MapObject("Vending_machine", 96, 64));
 	    add(new MapObject("Vending_machine", 128, 64));
 	    add(new MapObject("Vending_machine", 160, 64));
 	    add(new MapObject("Vending_machine", 192, 64));
 
 	    add(new MapObject("Trashcan", 224, 96));
-	    add(new MapObject("Trashcan", 240, 96));
-	    add(new MapObject("Trashcan", 256, 96));
 
 	    add(new MapObject("Counter_1", 386, 64));
 
@@ -305,7 +296,6 @@ public class SuperList{
 
 	    add(new MapObject("Chair_R", 32, 194));
 	    add(new MapObject("Chair_R", 32, 226));
-	    add(new MapObject("Chair_L", 132, 194));
 	    add(new MapObject("Chair_L", 132, 226));
 
 	    add(new MapObject("Chair_R", 192, 226));
@@ -322,13 +312,10 @@ public class SuperList{
 	    add(new MapObject("Chair_L", 292, 354));
 
 	    add(new MapObject("Chair_R", 352, 322));
-	    add(new MapObject("Chair_R", 352, 354));
-	    add(new MapObject("Chair_L", 452, 322));
 	    add(new MapObject("Chair_L", 452, 386));
 	    add(new MapObject("Chair_L", 452, 418));
 
 	    add(new MapObject("Plate", 256, 196));
-	    add(new MapObject("Plate", 384, 96));
 	    add(new MapObject("Plate", 384, 224));
 
 	    add(new MapObject("Plate", 64, 320));
@@ -358,7 +345,6 @@ public class SuperList{
 
 	    add(new MapObject("Plant_2", 32, 128));
 	    add(new MapObject("Plant_2", 32, 224));
-	    add(new MapObject("Plant_2", 32, 320));
 
 	    add(new MapObject("Desk_5", 256, 128));
 
@@ -370,7 +356,6 @@ public class SuperList{
 	    add(new MapObject("Desk_5", 352, 384));
 
 	    add(new MapObject("Seat_1", 166, 224));
-	    add(new MapObject("Seat_1", 198, 224));
 	    add(new MapObject("Seat_1", 262, 224));
 
 	    add(new MapObject("Seat_1", 166, 320));
@@ -389,7 +374,6 @@ public class SuperList{
 
 	    add(new MapObject("Seat_1", 358, 416));
 	    add(new MapObject("Seat_1", 390, 416));
-	    add(new MapObject("Seat_1", 454, 416));
 
 	    break;
 	    /*-------------------------- Gym ------------------------------*/
@@ -412,8 +396,6 @@ public class SuperList{
 	    add(new MapObject("Weight_bench", 320, 352));
 
 	    add(new MapObject("Weight", 192, 96));
-	    add(new MapObject("Weight", 160, 320));
-	    add(new MapObject("Weight", 128, 352));
 	    add(new MapObject("Weight", 224, 416));
 
 	    break;
@@ -422,8 +404,6 @@ public class SuperList{
 	case "Office":
 
 	    add(new MapObject("Exit_H", 216, 480));
-
-	    add(new MapObject("Trashcan", 96, 66));
 
 	    add(new MapObject("Desk_2", 32, 64));
 	    add(new MapObject("Desk_2", 32, 160));
@@ -436,7 +416,6 @@ public class SuperList{
 	    add(new MapObject("Plant_4", 128, 64));
 	    add(new MapObject("Cabinet", 32, 64));
 
-	    add(new MapObject("Map", 256, 32));
 	    add(new MapObject("Fridge", 224, 64));
 	    add(new MapObject("Phone", 256, 64));
 

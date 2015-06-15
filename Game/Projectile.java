@@ -18,7 +18,7 @@ public class Projectile extends MapObject{
 	switch (id){
 	case "English_":
 	    speed = 5;
-	    cost = 2;
+	    cost = 1;
 	    damage = 5;
 	    break;
 	case "History_":
