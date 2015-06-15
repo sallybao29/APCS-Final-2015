@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
     private boolean inGame;
     private boolean inStart;
+    private boolean gameWon;
 
     private Player p;
     private TileMap tilemap;
@@ -124,6 +125,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	inGame = true;
 	inStart = true;
+	gameWon = false;
 
 	itemDrop = new LinkedList<MapObject>();
 	//setup floors 
@@ -173,7 +175,10 @@ public class GamePanel extends JPanel implements ActionListener{
 	if (inStart){
 	    paintStartScreen(g);
 	}
-	else if (!inGame){
+	else if (gameWon){
+	    paintWinScreen(g);
+	}
+	else if (!inGame && !gameWon){
 	    paintGameOver(g);
 	}
 	else {
@@ -193,9 +198,18 @@ public class GamePanel extends JPanel implements ActionListener{
 	g.drawImage(snake, 0, 0, this);
     }
 
+    public void paintWinScreen(Graphics g){
+	BufferedImage phone = null;
+	try{ 
+	    phone = ImageIO.read(new File("Phone.png"));
+	}
+	catch (Exception e){}
+	g.drawImage(phone, 0, 0, this);
+    }
+
     public void paintGameOver(Graphics g){
 	setBackground(Color.BLACK);
-	Font font = new Font("Jokerman", Font.PLAIN, 35);
+	Font font = new Font("Jokerman", Font.PLAIN, 30);
 	String message = "Congratulations!\n You have died!";
 
         setFont(font);
@@ -270,9 +284,9 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	if (tilemap.getID().equals("Hall_8") && tilemap.empty()){
 	    tilemap.getProps().remove(0);
-	    tilemap.add(new MapObject("Door_open", 216, 34));
-	    
+	    tilemap.add(new MapObject("Door_open", 216, 34));	    
 	}
+
 	updateBoard();
 	updatePlayer();
 	updateMonsters();
@@ -322,6 +336,9 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	if (!tmp.equals(tilemap)){
 	    itemDrop.clear();
+	    if (tilemap.getID().equals("Office")){
+		itemDrop.add(new MapObject("Cellphone", 320, 128));
+	    }
 	    p.setMap(tilemap);
 	    p.getProjectiles().clear();
 	}	 
@@ -418,7 +435,11 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	    //if player steps on dropped item
 	    if (p.getBounds().intersects(ob.getBounds())){
-		//increase quantity of item in inventory
+	        if (ob.getID().equals("Cellphone")){
+		    gameWon = true;
+		    inGame = false;
+		    return;
+		}
 		p.getInventory().find(ob.getID()).changeQuantity(1);
 		itemDrop.remove(i);				 
 	    }

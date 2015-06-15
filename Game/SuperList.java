@@ -429,8 +429,6 @@ public class SuperList{
 	    add(new MapObject("Couch_L", 448, 192));
 
 	    add(new MapObject("Table_8", 288, 192));
-	    add(new MapObject("Cellphone", 320, 203));
-
 	    break;
 
 	}
